@@ -1,6 +1,6 @@
 package client;
 
-/* petit test de pute */
+/* petit test secondaire de pute */
 
 import java.awt.Point;
 import java.rmi.RemoteException;
