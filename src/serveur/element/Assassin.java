@@ -1,20 +1,28 @@
 package serveur.element;
 
+import java.util.HashMap;
+
 /*
 Assassin
-    Santé 30
+    Santï¿½ 30
     Force 40 + CC 50
     Init 90
-    Facultés
+    Facultï¿½s
         Rapide
         CC possible
     Comportement
-        Check point de vie ennemi : si blessé, attaque ATTENTION AU CAS DU DERNIER SURVIVANT
+        Check point de vie ennemi : si blessï¿½, attaque ATTENTION AU CAS DU DERNIER SURVIVANT
         Tape puis recule
         Approche d'un objet avant ennemi
 */
 
+
 public class Assassin {
+	private HashMap<Caracteristique, Integer> caractsValues = new HashMap<Caracteristique, Integer>();
+	public Assassin(){
+		caractsValues.put(Caracteristique.VIE, 30); /*Le perso Ã  30PDV!*/ 
+		
+	}
 	
 }
 
