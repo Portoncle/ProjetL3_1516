@@ -1,6 +1,5 @@
 package client;
 
-
 import java.awt.Point;
 import java.rmi.RemoteException;
 import java.util.HashMap;
