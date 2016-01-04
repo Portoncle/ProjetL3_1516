@@ -24,7 +24,10 @@ public enum Caracteristique {
 	INITIATIVE("Initiative", "INIT", 0, 200, 50),
 	
 	/* Vitesse : défini la vitesse d'un personnage */
-	VITESSE("Vitesse", "VIT", 0, 4, 1);
+	VITESSE("Vitesse", "VIT", 0, 4, 1),
+	
+	/*Visibilité: défini la visibilité d'un personnage*/
+	VISIBILITE("Visibilite", "VIS", 0, 1, 0);
 	
 	/**
 	 * Nom complet.

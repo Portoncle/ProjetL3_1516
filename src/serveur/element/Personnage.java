@@ -57,4 +57,11 @@ public class Personnage extends Element {
 		Integer vie = caracts.get(Caracteristique.VIE);
 		return vie != null && vie > 0;
 	}
+	
+	/* Teste si le personnage est visible 
+	 * @return vrai si le personnage est visible, faux sinon
+	 */
+	public boolean estVisible(){
+		return caracts.get(Caracteristique.VISIBILITE) == 1;
+	}
 }
