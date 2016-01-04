@@ -1,5 +1,6 @@
 package client;
 
+/*restoast */
 
 import java.awt.Point;
 import java.rmi.RemoteException;
