@@ -3,7 +3,9 @@
  */
 package serveur.element;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import utilitaires.Calculs;
 
@@ -15,6 +17,11 @@ import utilitaires.Calculs;
 public class Personnage extends Element {
 	
 	private static final long serialVersionUID = 1L;
+	
+	/* Attributs */
+	private Equipement[] stuff;
+	private Potion[] consommable;
+	
 
 	/**
 	 * Cree un personnage avec un nom et un groupe.
@@ -24,6 +31,8 @@ public class Personnage extends Element {
 	 */
 	public Personnage(String nom, String groupe, HashMap<Caracteristique, Integer> caracts) {
 		super(nom, groupe, caracts);
+		this.stuff = new Equipement[3];
+		this.consommable = new Potion[2];
 	}
 	
 	/**
@@ -57,4 +66,44 @@ public class Personnage extends Element {
 		Integer vie = caracts.get(Caracteristique.VIE);
 		return vie != null && vie > 0;
 	}
+
+	
+	/* Getteurs */
+	public Equipement[] getStuff() {
+		return stuff;
+	}
+
+	public Potion[] getConsommable() {
+		return consommable;
+	}
+	
+	
+	/* Gestion inventaire */
+	public void addStuff(Equipement e)
+	{
+		if(this.stuff[e.indice] == null)
+		{
+			this.stuff[e.indice] = e;
+		}
+		/* Dépendra de la classe prochainement */
+		if(e.c == Caracteristique.VITESSE && e.val > this.stuff[e.indice].val)
+		{
+			this.stuff[e.indice] = e;
+		}
+	}
+	
+	/*public void addPotion(Potion p)
+	{
+		Collection fom = p.caracts.values();
+		
+		
+	}*/
+	
+	void main(){
+		
+	}
+	
+	
+	
+	
 }
