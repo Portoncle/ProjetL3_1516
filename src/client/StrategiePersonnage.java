@@ -2,7 +2,6 @@ package client;
 
 /*restoast */
 
-/*hhhhhhhhhhhhhhhh*/
 import java.awt.Point;
 import java.rmi.RemoteException;
 import java.util.HashMap;
@@ -16,7 +15,6 @@ import serveur.element.Personnage;
 import serveur.element.Potion;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
-//gggggggggggggggggggggggggggggggggg
 /**
  * Strategie d'un personnage. 
  */
