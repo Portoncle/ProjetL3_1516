@@ -1,7 +1,5 @@
 package client;
 
-/* tamerla pute */
-
 import java.awt.Point;
 import java.rmi.RemoteException;
 import java.util.HashMap;
