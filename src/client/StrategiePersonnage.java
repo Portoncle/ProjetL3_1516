@@ -16,7 +16,7 @@ import serveur.element.Personnage;
 import serveur.element.Potion;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
-
+//gggggggggggggggggggggggggggggggggg
 /**
  * Strategie d'un personnage. 
  */
