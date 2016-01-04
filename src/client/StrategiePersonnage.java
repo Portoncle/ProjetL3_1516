@@ -1,6 +1,6 @@
 package client;
 
-/* petit test de pute */
+/* billy prod */
 
 import java.awt.Point;
 import java.rmi.RemoteException;
