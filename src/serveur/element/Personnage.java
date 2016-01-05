@@ -21,7 +21,7 @@ public class Personnage extends Element {
 	/* Attributs */
 	private Equipement[] stuff;
 	private Potion[] consommable;
-	private PotionBu potionActive;
+	private Potion potionActive;
 	
 
 	/**
@@ -34,6 +34,7 @@ public class Personnage extends Element {
 		super(nom, groupe, caracts);
 		this.stuff = new Equipement[3];
 		this.consommable = new Potion[2];
+		this.potionActive = null;
 	}
 	
 	/**
@@ -93,11 +94,11 @@ public class Personnage extends Element {
 		return consommable;
 	}
 	
-	public PotionBu getPotionBu(){
+	public Potion getPotionBu(){
 		return potionActive;
 	}
 	
-	public void addPotionActive(PotionBu potionBu){
+	public void addPotionActive(Potion potionBu){
 		this.potionActive = potionBu;
 	}
 	
