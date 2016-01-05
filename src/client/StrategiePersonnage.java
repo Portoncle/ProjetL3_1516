@@ -1,4 +1,4 @@
-package client;
+ package client;
 
 import java.awt.Point;
 import java.rmi.RemoteException;

@@ -92,12 +92,12 @@ public class Personnage extends Element {
 		}
 	}
 	
-	/*public void addPotion(Potion p)
+	public void addPotion(Potion p)
 	{
 		Collection fom = p.caracts.values();
 		
 		
-	}*/
+	}
 	
 	void main(){
 		
@@ -106,4 +106,12 @@ public class Personnage extends Element {
 	
 	
 	
+
+	
+	/* Teste si le personnage est visible 
+	 * @return vrai si le personnage est visible, faux sinon
+	 */
+	public boolean estVisible(){
+		return caracts.get(Caracteristique.VISIBILITE) == 1;
+	}
 }
