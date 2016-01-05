@@ -62,7 +62,7 @@ public class StrategiePersonnage {
 	 * @param voisins element voisins de cet element (elements qu'il voit)
 	 * @throws RemoteException
 	 */
-	public void executeStrategie(HashMap<Integer, Point> voisins) throws RemoteException {
+	public void executeStrategie(Personnage perso,HashMap<Integer, Point> voisins) throws RemoteException {
 		// arene
 		IArene arene = console.getArene();
 		
@@ -79,6 +79,33 @@ public class StrategiePersonnage {
 			e.printStackTrace();
 		}
 		
+		// Choix de la stratagie a partir du nom du personnage
+		switch(console.getPerso().getNom()){
+			case("Altair"):{
+				execStratAssassin(perso, position, voisins, arene, refRMI);
+				break;
+			}
+			case("Shooter"):{
+				execStratSniper(position, voisins, arene, refRMI);
+				break;
+			}
+			case("Garen"):{
+				execStratGuerrier(perso, position, voisins, arene, refRMI);
+				break;
+			}
+			case("Dracula"):{
+				execStratVampire(perso, position, voisins, arene, refRMI);
+				break;
+			}
+			case("Belzebuth"):{
+				execStratInvocateur(perso, position, voisins, arene, refRMI);
+				break;
+			}
+			default: execStratPersonnage(perso, position, voisins, arene, refRMI);
+		}
+	}
+	
+	public void execStratPersonnage(Personnage perso, Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException{
 		if (voisins.isEmpty()) { // je n'ai pas de voisins, j'erre
 			console.setPhrase("J'erre...");
 			arene.deplace(refRMI, 0); 
@@ -108,9 +135,152 @@ public class StrategiePersonnage {
 				arene.deplace(refRMI, refCible);
 			}
 		}
-		
-		
+	}
+	
+	public void execStratAssassin(Personnage assassin, Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException {
+		if (voisins.isEmpty()) { // je n'ai pas de voisins, j'erre
+			console.setPhrase("J'erre...");
+			arene.deplace(refRMI, 0); 
+		}
+		else{
+			int refCible = Calculs.chercheElementProche(position, voisins);
+			int distPlusProche = Calculs.distanceChebyshev(position, arene.getPosition(refCible));
+
+			Element elemPlusProche = arene.elementFromRef(refCible);
+			
+			if(distPlusProche <= Constantes.DISTANCE_MIN_INTERACTION) { // si suffisamment proches
+				// j'interagis directement
+				if(elemPlusProche instanceof Potion) { // potion
+					// ramassage
+					console.setPhrase("Je ramasse une potion");
+					arene.ramassePotion(refRMI, refCible);
+				}
+				else { // personnage
+					// duel
+					// AJOUTER NOTION COUP CRITIQUE
+					
+					console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
+					arene.lanceAttaque(refRMI, refCible);
+				}
+			}
+			else { // si voisins, mais plus eloignes
+				// si potion, aller vers elle
+				if(elemPlusProche instanceof Potion){ //Potion
+					console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
+					arene.deplace(refRMI, refCible);
+				}
+				// sinon, aller vers l'ennemi s'il a moins de vie que l'assassin
+				else{
+					if(elemPlusProche.getCaract(Caracteristique.VIE) < assassin.getCaract(Caracteristique.FORCE)){
+						console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
+						arene.deplace(refRMI, refCible);
+					}
+					else{ // Sinon errer
+						console.setPhrase("J'erre...");
+						arene.deplace(refRMI, 0); 
+					}
+				}
+			}
+		}
 	}
 
+	private void execStratSniper(Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException {
+		if (voisins.isEmpty()) { // je n'ai pas de voisins, j'erre
+			console.setPhrase("J'erre...");
+			arene.deplace(refRMI, 0); 
+			
+		} else {
+			int refCible = Calculs.chercheElementProche(position, voisins);
+			int distPlusProche = Calculs.distanceChebyshev(position, arene.getPosition(refCible));
 	
+			Element elemPlusProche = arene.elementFromRef(refCible);
+	
+			if(distPlusProche <= 20) { // si suffisamment proches
+				// j'interagis directement
+				if(elemPlusProche instanceof Potion && distPlusProche == Constantes.DISTANCE_MIN_INTERACTION) { // potion
+					// ramassage
+					console.setPhrase("Je ramasse une potion");
+					arene.ramassePotion(refRMI, refCible);
+	
+				} else { // personnage
+					// duel
+					console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
+					 arene.lanceAttaqueSniper(refRMI, refCible);
+					 
+				}
+				
+			} else { // si voisins, mais plus eloignes
+				// je vais vers le plus proche
+				console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
+				arene.deplace(refRMI, refCible);
+			}
+		}
+		
+	}
+	
+	public void execStratGuerrier(Personnage guerrier, Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException{
+		if (voisins.isEmpty()) { // je n'ai pas de voisins, j'erre
+			console.setPhrase("J'erre...");
+			arene.deplace(refRMI, 0); 
+			
+		} else {
+			int refCible = Calculs.chercheElementProche(position, voisins);
+			int distPlusProche = Calculs.distanceChebyshev(position, arene.getPosition(refCible));
+
+			Element elemPlusProche = arene.elementFromRef(refCible);
+
+			if(distPlusProche <= Constantes.DISTANCE_MIN_INTERACTION) { // si suffisamment proches
+				// j'interagis directement
+				if(elemPlusProche instanceof Potion) { // potion
+					// ramassage
+					console.setPhrase("Je ramasse une potion");
+					arene.ramassePotion(refRMI, refCible);
+
+				} else { // personnage
+					// duel
+					console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
+					arene.lanceAttaque(refRMI, refCible);
+				}
+				
+			} else { // si voisins, mais plus eloignes
+				// je vais vers le plus proche
+				console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
+				arene.deplace(refRMI, refCible);
+			}
+		}
+	}
+	
+	public void execStratInvocateur(Personnage invocateur, Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException{
+		
+	}
+	
+	public void execStratVampire(Personnage vampire, Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException{
+		if (voisins.isEmpty()) { // je n'ai pas de voisins, j'erre
+			console.setPhrase("J'erre...");
+			arene.deplace(refRMI, 0); 
+			
+		} 
+		else{
+			int refCible = Calculs.chercheElementProche(position, voisins);
+			int distPlusProche = Calculs.distanceChebyshev(position, arene.getPosition(refCible));
+
+			Element elemPlusProche = arene.elementFromRef(refCible);
+
+			if(distPlusProche <= Constantes.DISTANCE_MIN_INTERACTION) { // si suffisamment proches
+				// j'interagis directement
+				if(elemPlusProche instanceof Personnage) { // personnage
+					// duel
+					/* DUEL VAMPIRIQUE A METTRE EN PLACE */
+					console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
+					arene.lanceAttaque(refRMI, refCible);
+				}
+				
+			} 
+			else if(elemPlusProche instanceof Personnage){ // si voisins, mais plus eloignes
+				// je vais vers le plus proche
+				console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
+				arene.deplace(refRMI, refCible);
+			}
+		}
+	}
 }

@@ -21,7 +21,6 @@ import java.util.HashMap;
 
 import client.StrategiePersonnage;
 import logger.LoggerProjet;
-import serveur.element.Element;
 import serveur.element.Assassin;
 import serveur.element.Caracteristique;
 import utilitaires.Calculs;

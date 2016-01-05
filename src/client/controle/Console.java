@@ -149,7 +149,7 @@ public class Console extends UnicastRemoteObject implements IConsole {
 		HashMap<Integer, Point> voisins = arene.getVoisins(refRMI);
 		
 		// applique la strategie du personnage
-		strategiePer.executeStrategie(voisins);
+		strategiePer.executeStrategie(perso, voisins);
 	}
 
 

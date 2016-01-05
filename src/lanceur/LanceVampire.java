@@ -8,6 +8,7 @@ import java.util.HashMap;
 import client.StrategiePersonnage;
 import logger.LoggerProjet;
 import serveur.element.Caracteristique;
+import serveur.element.Vampire;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
 
@@ -20,7 +21,8 @@ public class LanceVampire{
 	private static String usage = "USAGE : java " + LancePersonnage.class.getName() + " [ port [ ipArene ] ]";
 
 	public static void main(String[] args) {
-		String nom = "Altair";
+		Vampire vamp = new Vampire();
+		String nom = vamp.getNom();
 		
 		// TODO remplacer la ligne suivante par votre numero de groupe
 		String groupe = "G2";
@@ -67,19 +69,15 @@ public class LanceVampire{
 		try {
 			String ipConsole = InetAddress.getLocalHost().getHostAddress();
 			
-			logger.info("Lanceur", "Creation d'un Assassin...");
+			logger.info("Lanceur", "Creation d'un Vampire...");
 			
 			// caracteristiques du personnage
-			HashMap<Caracteristique, Integer> caracts = new HashMap<Caracteristique, Integer>();
-			caracts.put(Caracteristique.VIE, 40);
-			caracts.put(Caracteristique.FORCE, 30 + (int)(Math.random() * ((40 - 30) + 1)));
-			caracts.put(Caracteristique.INITIATIVE, 70);
-			caracts.put(Caracteristique.VITESSE, 2);
+			HashMap<Caracteristique, Integer> caracts = vamp.getCaracts();
 			
 			Point position = Calculs.positionAleatoireArene();
 			
 			new StrategiePersonnage(ipArene, port, ipConsole, nom, groupe, caracts, nbTours, position, logger);
-			logger.info("Lanceur", "Creation de l'Assassin reussie");
+			logger.info("Lanceur", "Creation du Vampire reussie");
 			
 		} catch (Exception e) {
 			logger.severe("Lanceur", "Erreur lancement :\n" + e.getCause());
