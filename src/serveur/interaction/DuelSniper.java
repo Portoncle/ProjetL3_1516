@@ -43,7 +43,7 @@ public class DuelSniper extends Duel {
 			Point positionEjection = positionEjection(defenseur.getPosition(), attaquant.getPosition(), forceAttaquant);
 
 			// ejection du defenseur
-			//defenseur.setPosition(positionEjection);
+			///defenseur.setPosition(positionEjection);
 
 			// degats
 			
