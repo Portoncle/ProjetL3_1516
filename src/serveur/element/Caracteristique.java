@@ -27,7 +27,7 @@ public enum Caracteristique {
 	VITESSE("Vitesse", "VIT", 0, 4, 1),
 	
 	/*Visibilité: défini la visibilité d'un personnage*/
-	VISIBILITE("Visibilite", "VIS", 0, 1, 0),
+	VISIBILITE("Visibilite", "VIS", 0, 1, 1),
 	
 	/*Armure : défini l'armure d'un personnage*/
 	ARMURE("Armure","ARM",0,40,0);
