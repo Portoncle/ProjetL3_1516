@@ -13,7 +13,7 @@ public class Guerrier extends Personnage {
 		this.caracts.put(Caracteristique.FORCE,60 + (int)(Math.random() * ((80 - 60) + 1)) );
 		this.caracts.put(Caracteristique.INITIATIVE, 20);
 		this.caracts.put(Caracteristique.VITESSE, 1);
-		this.caracts.put(Caracteristique.ARMURE, 40);
+
 		
 	}
 }
