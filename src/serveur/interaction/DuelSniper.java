@@ -39,13 +39,6 @@ public class DuelSniper extends Duel {
 			int armure = pDefenseur.getCaract(Caracteristique.ARMURE);
 			
 			int perteVie = forceAttaquant - armure ;
-		
-			Point positionEjection = positionEjection(defenseur.getPosition(), attaquant.getPosition(), forceAttaquant);
-
-			// ejection du defenseur
-			///defenseur.setPosition(positionEjection);
-
-			// degats
 			
 			if ( perteVie > 0) //Il a subit des degats
 			{
