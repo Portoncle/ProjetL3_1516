@@ -24,9 +24,9 @@ public enum Caracteristique {
 	INITIATIVE("Initiative", "INIT", 0, 200, 50),
 	
 	/* Vitesse : defini la vitesse d'un personnage */
-	VITESSE("Vitesse", "VIT", 0, 4, 1),
+	VITESSE("Vitesse", "VIT", 0, 6, 1),
 	
-	/*Chance de coup critique 0 pour tous le monde sauf l'assasin */
+	/*% Chance de coup critique 0 pour tous le monde sauf l'assasin */
 	COUPCRITIQUE("Coup Critique", "CRIT", 0 , 100,0),
 
 	/*Visibilite: defini la visibilite d'un personnage*/
@@ -92,6 +92,21 @@ public enum Caracteristique {
 		return caractsValues;
 	}
 
+	/**
+	 * Cree un map de caracteristiques contenant toutes les caracteristiques 
+	 * avec leur valeur d'initialisation au minimum. 
+	 * @return map caracteristique/valeur contenant les valeurs min.
+	 */
+	public static HashMap<Caracteristique,Integer> mapCaracteristiquesMin() {
+		HashMap<Caracteristique, Integer> caractsValues = new HashMap<Caracteristique, Integer>();
+		
+		for (Caracteristique caract : values()) {
+			caractsValues.put(caract, caract.min);
+		}
+		
+		return caractsValues;
+	}
+	
 	/**
 	 * Compte le nombre total de caracteristiques.
 	 * @return nombre de caracteristiques

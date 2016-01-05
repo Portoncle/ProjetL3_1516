@@ -1,3 +1,17 @@
+/*
+ *  Assassin
+	    Santé 30
+	    Force 40 + CC 50
+	    Init 90
+	    Facultés
+	        Rapide
+	        CC possible
+	    Comportement
+	        Check point de vie ennemi : si blessé, attaque ATTENTION AU CAS DU DERNIER SURVIVANT
+	        Tape puis recule
+        	Approche d'un objet avant ennemi
+ */
+
 package lanceur;
 
 import java.awt.Point;
@@ -75,6 +89,7 @@ public class LanceAssassin{
 			caracts.put(Caracteristique.FORCE, 40);
 			caracts.put(Caracteristique.INITIATIVE, 90);
 			caracts.put(Caracteristique.VITESSE, 4);
+			caracts.put(Caracteristique.COUPCRITIQUE, 20);
 			
 			Point position = Calculs.positionAleatoireArene();
 			

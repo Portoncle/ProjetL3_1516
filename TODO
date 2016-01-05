@@ -36,7 +36,7 @@ Regen de la vie du mec uniquement possible
                     Rapide
                     CC possible
                 Comportement
-                    Check point de vie ennemi : si blessé, attaque ATTENTION AU CAS DU DERNIER SURVIVANT
+                    Check point de vie ennemi : si moins de vie, attaque ATTENTION AU CAS DU DERNIER SURVIVANT
                     Tape puis recule
                     Approche d'un objet avant ennemi
                     
