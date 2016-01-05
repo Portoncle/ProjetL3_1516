@@ -160,7 +160,7 @@ public class StrategiePersonnage {
 					// AJOUTER NOTION COUP CRITIQUE
 					
 					console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
-					arene.lanceAttaque(refRMI, refCible);
+					arene.lanceAttaqueAssassin(refRMI, refCible);
 				}
 			}
 			else { // si voisins, mais plus eloignes
@@ -169,7 +169,7 @@ public class StrategiePersonnage {
 					console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
 					arene.deplace(refRMI, refCible);
 				}
-				// sinon, aller vers l'ennemi s'il a moins de vie que l'assassin
+				// sinon, aller vers l'ennemi s'il a moins de vie que la force de l'assassin
 				else{
 					if(elemPlusProche.getCaract(Caracteristique.VIE) < assassin.getCaract(Caracteristique.FORCE)){
 						console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
