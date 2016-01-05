@@ -85,26 +85,23 @@ public class Personnage extends Element {
 		{
 			this.stuff[e.indice] = e;
 		}
-		/* Dépendra de la classe prochainement */
-		if(e.c == Caracteristique.VITESSE && e.val > this.stuff[e.indice].val)
+		
+		/* BOTTES */
+		else if(e.c == Caracteristique.VITESSE && e.val > this.stuff[e.indice].val)
+		{
+			this.stuff[e.indice] = e;
+		}
+		/* ARMURE */
+		else if(e.c == Caracteristique.ARMURE && e.val > this.stuff[e.indice].val)
+		{
+			this.stuff[e.indice] = e;
+		}
+		/* ARMES */
+		else if(e.c == Caracteristique.FORCE && e.val > this.stuff[e.indice].val)
 		{
 			this.stuff[e.indice] = e;
 		}
 	}
-	
-	public void addPotion(Potion p)
-	{
-		Collection fom = p.caracts.values();
-		
-		
-	}
-	
-	void main(){
-		
-	}
-	
-	
-	
 	
 
 	
