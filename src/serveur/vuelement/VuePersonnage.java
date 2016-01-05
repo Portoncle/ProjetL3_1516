@@ -70,6 +70,10 @@ public class VuePersonnage extends VueElement<Personnage> implements Comparable<
 	 * et note qu'aucune action n'a ete executee. 
 	 */
 	public void termineTour() {
+		/*if(this.tour%5 == 0){
+			// Mob ?
+		}*/
+		
 		actionExecutee = false;
 		tour++;
 	}

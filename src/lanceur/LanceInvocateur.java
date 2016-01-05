@@ -59,7 +59,7 @@ public class LanceInvocateur{
 		// creation du logger
 		LoggerProjet logger = null;
 		try {
-			logger = new LoggerProjet(true, "personnage_" + nom + groupe);
+			logger = new LoggerProjet(true, "invocateur_" + nom + groupe);
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(ErreurLancement.suivant);
@@ -69,14 +69,14 @@ public class LanceInvocateur{
 		try {
 			String ipConsole = InetAddress.getLocalHost().getHostAddress();
 			
-			logger.info("Lanceur", "Creation d'un invocateur...");
+			logger.info("Lanceur", "Creation d'un Invocateur...");
 			
 			// caracteristiques du personnage
 			HashMap<Caracteristique, Integer> caracts = inv.getCaracts();
 			Point position = Calculs.positionAleatoireArene();
 			
 			new StrategiePersonnage(ipArene, port, ipConsole, nom, groupe, caracts, nbTours, position, logger);
-			logger.info("Lanceur", "Creation de l'invocateur reussie");
+			logger.info("Lanceur", "Creation d'un Invocateur reussie");
 			
 		} catch (Exception e) {
 			logger.severe("Lanceur", "Erreur lancement :\n" + e.getCause());
