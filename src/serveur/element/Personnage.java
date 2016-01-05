@@ -3,10 +3,7 @@
  */
 package serveur.element;
 
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
-
 import utilitaires.Calculs;
 
 /**
@@ -109,28 +106,42 @@ public class Personnage extends Element {
 	/*********************************/
 	/* Gestion inventaire EQUIPEMENT */
 	/*********************************/
-	public void addStuff(Equipement e)
+	/*public void addStuff(Equipement e)
 	{
 		if(this.stuff[e.indice] == null)
 		{
 			this.stuff[e.indice] = e;
 		}
-		/* BOTTES */
+		
 		else if(e.c == Caracteristique.VITESSE && e.val > this.stuff[e.indice].val)
 		{
 			this.stuff[e.indice] = e;
 		}
-		/* ARMURE */
+		
 		else if(e.c == Caracteristique.ARMURE && e.val > this.stuff[e.indice].val)
 		{
 			this.stuff[e.indice] = e;
 		}
-		/* ARMES */
+		
 		else if(e.c == Caracteristique.FORCE && e.val > this.stuff[e.indice].val)
 		{
 			this.stuff[e.indice] = e;
 		}
+	}*/
+	public void addStuff(Equipement e)
+	{
+		for(Caracteristique c : e.caracts.keySet()) {
+			if(this.stuff[e.indice] == null)
+			{
+				this.stuff[e.indice] = e;
+			}
+			else if(this.stuff[e.indice].caracts.get(c) < e.caracts.get(c))
+			{
+				this.stuff[e.indice] = e;
+			}
+		}
 	}
+	
 	
 	
 	

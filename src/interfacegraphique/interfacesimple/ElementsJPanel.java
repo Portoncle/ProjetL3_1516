@@ -31,6 +31,7 @@ import interfacegraphique.tablemodel.PotionTableModel;
 import interfacegraphique.tablerenderer.HeaderRenderer;
 import interfacegraphique.tablerenderer.NormalRenderer;
 import serveur.vuelement.VueElement;
+import serveur.vuelement.VueEquipement;
 import serveur.vuelement.VuePersonnage;
 import serveur.vuelement.VuePotion;
 
@@ -80,6 +81,7 @@ public class ElementsJPanel extends JPanel {
 	 * Tableau des personnages.
 	 */
 	private JTable jTablePersonnages;
+
 
 	/**
      * Tableau des potions.
@@ -266,6 +268,7 @@ public class ElementsJPanel extends JPanel {
 	}
 
 
+
 	/**
 	 * Traitement a realiser lors du clic sur un tableau.
 	 * @param ev evenement de la souris
@@ -314,15 +317,17 @@ public class ElementsJPanel extends JPanel {
 	 * morts
 	 * @param potions potions presentes dans l'arene
 	 */
+	/* ATTENTION : les parties commentées seront peut être utiles plus tard */
 	public void setElements(List<VuePersonnage> personnages, 
-			List<VuePersonnage> personnagesMorts, List<VuePotion> potions) {
+			List<VuePersonnage> personnagesMorts, List<VuePotion> potions/*,List<VueEquipement> equipement*/) {
 		
 		// tri des potions et des personnages (selon leur methode compareTo)
 		List<VuePersonnage> personnagesTous = new ArrayList<VuePersonnage>(personnages);
 		personnagesTous.addAll(personnagesMorts);
-
 		List<VuePotion> potionsTous = new ArrayList<VuePotion>(potions);
+		//List<VueEquipement> equipementTous = new ArrayList<VueEquipement>(equipement);
 		
+		/*Collections.sort(equipementTous);*/
 		Collections.sort(personnagesTous);
 		Collections.sort(potionsTous);
 		
@@ -339,12 +344,24 @@ public class ElementsJPanel extends JPanel {
 					vp.setSelectionne(true);					
 				}
 			}
+			
+			/*for(VueEquipement ve : equipementTous)
+			{
+				if(ve.getRefRMI() == ihm.getElementSelectionne().getRefRMI()){
+					ve.setSelectionne(true);
+				}
+			}*/
 		}
+		
+		/*modelTableEquip.setVues(equipementTous);
+		modelTableEquip.fireTableDataChanged();*/
 		
     	modelTablePersonnages.setVues(personnagesTous);
     	modelTablePersonnages.fireTableDataChanged();
     	
     	modelTablePotions.setVues(potionsTous);
     	modelTablePotions.fireTableDataChanged();    	
-    }              
+    }
+	
+	
 }

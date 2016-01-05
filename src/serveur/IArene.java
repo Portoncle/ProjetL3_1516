@@ -9,6 +9,7 @@ import client.controle.IConsole;
 import serveur.element.Element;
 import serveur.element.Personnage;
 import serveur.element.Potion;
+import serveur.element.Equipement;
 import serveur.vuelement.VueElement;
 
 /**
@@ -71,6 +72,7 @@ public interface IArene extends Remote {
 	 */
 	public void ajoutePotion(Potion potion, Point position) throws RemoteException;
 	
+	public void ajouteEquipement(Equipement eq, Point position) throws RemoteException;
 	
 
 	/**************************************************************************
