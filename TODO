@@ -11,6 +11,7 @@ Regen de la vie du mec uniquement possible
                 Init 20
                 Facultés
                     lent (se déplace d'une case les autres 3)
+                    non repoussé à l'attaque
                 Comportement
                     Fonce sur l'ennmi capté, stuff après
                     Consomme direct une potion

@@ -60,7 +60,7 @@ public class LanceSniper{
 		// creation du logger
 		LoggerProjet logger = null;
 		try {
-			logger = new LoggerProjet(true, "personnage_" + nom + groupe);
+			logger = new LoggerProjet(true, "sniper_" + nom + groupe);
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(ErreurLancement.suivant);

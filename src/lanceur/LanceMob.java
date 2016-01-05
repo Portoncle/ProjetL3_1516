@@ -1,17 +1,3 @@
-/*
- *  Assassin
-	    Santé 30
-	    Force 40 + CC 50
-	    Init 90
-	    Facultés
-	        Rapide
-	        CC possible
-	    Comportement
-	        Check point de vie ennemi : si blessé, attaque ATTENTION AU CAS DU DERNIER SURVIVANT
-	        Tape puis recule
-        	Approche d'un objet avant ennemi
- */
-
 package lanceur;
 
 import java.awt.Point;
@@ -21,8 +7,8 @@ import java.util.HashMap;
 
 import client.StrategiePersonnage;
 import logger.LoggerProjet;
-import serveur.element.Assassin;
 import serveur.element.Caracteristique;
+import serveur.element.Mob;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
 
@@ -30,14 +16,15 @@ import utilitaires.Constantes;
  * Lance une Console avec un Element sur l'Arene. 
  * A lancer apres le serveur, eventuellement plusieurs fois.
  */
-public class LanceAssassin{
+public class LanceMob{
 	
 	private static String usage = "USAGE : java " + LancePersonnage.class.getName() + " [ port [ ipArene ] ]";
 
 	public static void main(String[] args) {
-		Assassin ass = new Assassin();
-		String nom = ass.getNom();
+		Mob mob = new Mob();
+		String nom = mob.getNom();
 		
+		// TODO remplacer la ligne suivante par votre numero de groupe
 		String groupe = "G2";
 		
 		// nombre de tours pour ce personnage avant d'etre deconnecte 
@@ -72,7 +59,7 @@ public class LanceAssassin{
 		// creation du logger
 		LoggerProjet logger = null;
 		try {
-			logger = new LoggerProjet(true, "assassin_" + nom + groupe);
+			logger = new LoggerProjet(true, "mob_" + nom + groupe);
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(ErreurLancement.suivant);
@@ -82,20 +69,14 @@ public class LanceAssassin{
 		try {
 			String ipConsole = InetAddress.getLocalHost().getHostAddress();
 			
-			logger.info("Lanceur", "Creation d'un Assassin...");
+			logger.info("Lanceur", "Creation d'un mob...");
 			
 			// caracteristiques du personnage
-			/*HashMap<Caracteristique, Integer> caracts = new HashMap<Caracteristique, Integer>();
-			caracts.put(Caracteristique.VIE, 30);
-			caracts.put(Caracteristique.FORCE, 40);
-			caracts.put(Caracteristique.INITIATIVE, 90);
-			caracts.put(Caracteristique.VITESSE, 4);
-			caracts.put(Caracteristique.COUPCRITIQUE, 20);*/
-			HashMap<Caracteristique, Integer> caracts = ass.getCaracts();
+			HashMap<Caracteristique, Integer> caracts = mob.getCaracts();
 			Point position = Calculs.positionAleatoireArene();
 			
 			new StrategiePersonnage(ipArene, port, ipConsole, nom, groupe, caracts, nbTours, position, logger);
-			logger.info("Lanceur", "Creation de l'Assassin reussie");
+			logger.info("Lanceur", "Creation d'un Mob reussie");
 			
 		} catch (Exception e) {
 			logger.severe("Lanceur", "Erreur lancement :\n" + e.getCause());

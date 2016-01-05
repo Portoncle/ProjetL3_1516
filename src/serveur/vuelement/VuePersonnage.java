@@ -2,9 +2,14 @@ package serveur.vuelement;
 
 import java.awt.Color;
 import java.awt.Point;
+import java.util.HashMap;
+import java.util.logging.Level;
 
+import serveur.element.Caracteristique;
 import serveur.element.Personnage;
+import serveur.element.PotionBu;
 import utilitaires.Constantes;
+import serveur.interaction.*;
 
 /**
  * Donnees que le serveur doit conserver sur chacun de ces clients personnages.
@@ -69,7 +74,19 @@ public class VuePersonnage extends VueElement<Personnage> implements Comparable<
 	 * Termine le tour de ce personnage : decremente le nombre de tours restants
 	 * et note qu'aucune action n'a ete executee. 
 	 */
-	public void termineTour() {
+	public void termineTour(){
+		if(this.element.getCaract(Caracteristique.DUREE) > 1){
+			this.element.decrementeCaract(Caracteristique.DUREE, 1);
+		}
+		else if(this.element.getCaract(Caracteristique.DUREE) == 1){
+			PotionBu potionActive = this.element.getPotionBu();
+			HashMap<Caracteristique, Integer> valeursPotion = potionActive.getCaracts();
+			for(Caracteristique c : valeursPotion.keySet()) {
+				this.element.decrementeCaract(c, valeursPotion.get(c));;
+			}
+			this.element.delPotionActive();
+			this.element.decrementeCaract(Caracteristique.DUREE, 1);
+		}
 		actionExecutee = false;
 		tour++;
 	}

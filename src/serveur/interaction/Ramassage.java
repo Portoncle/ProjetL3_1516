@@ -6,6 +6,9 @@ import java.util.logging.Level;
 
 import serveur.Arene;
 import serveur.element.Caracteristique;
+import serveur.element.Potion;
+import serveur.element.PotionBu;
+import serveur.element.Assassin;
 import serveur.vuelement.VuePersonnage;
 import serveur.vuelement.VuePotion;
 import utilitaires.Constantes;
@@ -25,7 +28,7 @@ public class Ramassage extends Interaction<VuePotion> {
 	public Ramassage(Arene arene, VuePersonnage ramasseur, VuePotion potion) {
 		super(arene, ramasseur, potion);
 	}
-
+	
 	@Override
 	public void interagit() {
 		try {
@@ -33,21 +36,31 @@ public class Ramassage extends Interaction<VuePotion> {
 					Constantes.nomRaccourciClient(defenseur));
 			
 			// si le personnage est vivant
-			if(attaquant.getElement().estVivant()) {
+			if(attaquant.getElement().estVivant() ) {
+				
+				if(!attaquant.getElement().isFull() || (attaquant.getElement() instanceof Assassin)){
+					Potion p = defenseur.getElement();
+					// caracteristiques de la potion
+					HashMap<Caracteristique, Integer> valeursPotion = p.getCaracts();
+					
+					for(Caracteristique c : valeursPotion.keySet()) {
+						arene.incrementeCaractElement(attaquant, c, valeursPotion.get(c));
+					}
+					logs(Level.INFO, "Potion bue !");
 
-				// caracteristiques de la potion
-				HashMap<Caracteristique, Integer> valeursPotion = defenseur.getElement().getCaracts();
-				
-				for(Caracteristique c : valeursPotion.keySet()) {
-					arene.incrementeCaractElement(attaquant, c, valeursPotion.get(c));
+					
+					if(defenseur.getElement().getCaract(Caracteristique.DUREE) > 0 && (attaquant.getElement().getPotionBu() == null))
+						attaquant.getElement().addPotionActive((PotionBu)p);
+
+					// test si mort
+					if(!attaquant.getElement().estVivant()) {
+						arene.setPhrase(attaquant.getRefRMI(), "Je me suis empoisonne, je meurs ");
+						logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + " vient de boire un poison... Mort >_<");
+					}
 				}
-				
-				logs(Level.INFO, "Potion bue !");
-				
-				// test si mort
-				if(!attaquant.getElement().estVivant()) {
-					arene.setPhrase(attaquant.getRefRMI(), "Je me suis empoisonne, je meurs ");
-					logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + " vient de boire un poison... Mort >_<");
+				else{
+					attaquant.getElement().addPotion(defenseur.getElement());
+					logs(Level.INFO, "Potion ajouté à l'inventaire!");
 				}
 
 				// suppression de la potion
