@@ -21,6 +21,8 @@ import java.util.HashMap;
 
 import client.StrategiePersonnage;
 import logger.LoggerProjet;
+import serveur.element.Element;
+import serveur.element.Assassin;
 import serveur.element.Caracteristique;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
@@ -34,9 +36,9 @@ public class LanceAssassin{
 	private static String usage = "USAGE : java " + LancePersonnage.class.getName() + " [ port [ ipArene ] ]";
 
 	public static void main(String[] args) {
-		String nom = "Altair";
+		Assassin ass = new Assassin();
+		String nom = ass.getNom();
 		
-		// TODO remplacer la ligne suivante par votre numero de groupe
 		String groupe = "G2";
 		
 		// nombre de tours pour ce personnage avant d'etre deconnecte 
@@ -84,13 +86,13 @@ public class LanceAssassin{
 			logger.info("Lanceur", "Creation d'un Assassin...");
 			
 			// caracteristiques du personnage
-			HashMap<Caracteristique, Integer> caracts = new HashMap<Caracteristique, Integer>();
+			/*HashMap<Caracteristique, Integer> caracts = new HashMap<Caracteristique, Integer>();
 			caracts.put(Caracteristique.VIE, 30);
 			caracts.put(Caracteristique.FORCE, 40);
 			caracts.put(Caracteristique.INITIATIVE, 90);
 			caracts.put(Caracteristique.VITESSE, 4);
-			caracts.put(Caracteristique.COUPCRITIQUE, 20);
-			
+			caracts.put(Caracteristique.COUPCRITIQUE, 20);*/
+			HashMap<Caracteristique, Integer> caracts = ass.getCaracts();
 			Point position = Calculs.positionAleatoireArene();
 			
 			new StrategiePersonnage(ipArene, port, ipConsole, nom, groupe, caracts, nbTours, position, logger);
