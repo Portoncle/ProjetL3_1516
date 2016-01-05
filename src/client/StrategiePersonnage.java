@@ -62,7 +62,7 @@ public class StrategiePersonnage {
 	 * @param voisins element voisins de cet element (elements qu'il voit)
 	 * @throws RemoteException
 	 */
-	public void executeStrategie(Personnage perso, HashMap<Integer, Point> voisins) throws RemoteException {
+	public void executeStrategie(Personnage perso,HashMap<Integer, Point> voisins) throws RemoteException {
 		// arene
 		IArene arene = console.getArene();
 		

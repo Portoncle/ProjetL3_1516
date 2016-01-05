@@ -21,6 +21,7 @@ public class Personnage extends Element {
 	/* Attributs */
 	private Equipement[] stuff;
 	private Potion[] consommable;
+	private PotionBu potionActive;
 	
 
 	/**
@@ -51,6 +52,21 @@ public class Personnage extends Element {
 	}
 	
 	/**
+	 * Decremente la caracteristique donnee de la valeur donnee.
+	 * Si la caracteristique n'existe pas, elle sera cree avec la valeur 
+	 * donnee.
+	 * @param c caracteristique
+	 * @param dec decrement (peut etre positif ou negatif)
+	 */
+	public void decrementeCaract(Caracteristique c, int dec) {		
+		if(caracts.containsKey(c)) {
+			caracts.put(c, Calculs.restreintCarac(c, caracts.get(c) - dec));
+		} else {
+			caracts.put(c, Calculs.restreintCarac(c, dec));
+		}
+	}
+	
+	/**
 	 * Tue ce personnage en mettant son nombre de poins de vie a 0.
 	 */
 	public void tue() {
@@ -77,6 +93,21 @@ public class Personnage extends Element {
 		return consommable;
 	}
 	
+	public PotionBu getPotionBu(){
+		return potionActive;
+	}
+	
+	public boolean potionDejaActive(){
+		return potionActive != null;
+	}
+	
+	public void addPotionActive(Potion potionBu){
+		this.potionActive = (PotionBu)potionBu;
+	}
+	
+	public void delPotionActive(){
+		this.potionActive = null;
+	}
 	
 	
 	/*********************************/
