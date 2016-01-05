@@ -82,30 +82,30 @@ public class StrategiePersonnage {
 		// Choix de la stratagie a partir du nom du personnage
 		switch(console.getPerso().getNom()){
 			case("Altair"):{
-				execStratAssassin(position, voisins, arene, refRMI);
+				execStratAssassin(perso, position, voisins, arene, refRMI);
 				break;
 			}
 			case("Shooter"):{
-				execStratSniper(position, voisins, arene, refRMI);
+				execStratSniper(perso, position, voisins, arene, refRMI);
 				break;
 			}
 			case("Garen"):{
-				execStratGuerrier(position, voisins, arene, refRMI);
+				execStratGuerrier(perso, position, voisins, arene, refRMI);
 				break;
 			}
 			case("Dracula"):{
-				execStratVampire(position, voisins, arene, refRMI);
+				execStratVampire(perso, position, voisins, arene, refRMI);
 				break;
 			}
 			case("Belzebuth"):{
-				execStratInvocateur(position, voisins, arene, refRMI);
+				execStratInvocateur(perso, position, voisins, arene, refRMI);
 				break;
 			}
-			default: execStratPersonnage(position, voisins, arene, refRMI);
+			default: execStratPersonnage(perso, position, voisins, arene, refRMI);
 		}
 	}
 	
-	public void execStratPersonnage( Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException{
+	public void execStratPersonnage(Personnage perso, Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException{
 		if (voisins.isEmpty()) { // je n'ai pas de voisins, j'erre
 			console.setPhrase("J'erre...");
 			arene.deplace(refRMI, 0); 
@@ -137,23 +137,66 @@ public class StrategiePersonnage {
 		}
 	}
 	
-	public void execStratAssassin(Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException {
-		
+	public void execStratAssassin(Personnage assassin, Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException {
+		if (voisins.isEmpty()) { // je n'ai pas de voisins, j'erre
+			console.setPhrase("J'erre...");
+			arene.deplace(refRMI, 0); 
+		}
+		else{
+			int refCible = Calculs.chercheElementProche(position, voisins);
+			int distPlusProche = Calculs.distanceChebyshev(position, arene.getPosition(refCible));
+
+			Element elemPlusProche = arene.elementFromRef(refCible);
+			
+			if(distPlusProche <= Constantes.DISTANCE_MIN_INTERACTION) { // si suffisamment proches
+				// j'interagis directement
+				if(elemPlusProche instanceof Potion) { // potion
+					// ramassage
+					console.setPhrase("Je ramasse une potion");
+					arene.ramassePotion(refRMI, refCible);
+				}
+				else { // personnage
+					// duel
+					// AJOUTER NOTION COUP CRITIQUE
+					
+					console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
+					arene.lanceAttaque(refRMI, refCible);
+				}
+			}
+			else { // si voisins, mais plus eloignes
+				// si potion, aller vers elle
+				if(elemPlusProche instanceof Potion){ //Potion
+					console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
+					arene.deplace(refRMI, refCible);
+				}
+				// sinon, aller vers l'ennemi s'il a moins de vie que l'assassin
+				else{
+					if(elemPlusProche.getCaract(Caracteristique.VIE) < assassin.getCaract(Caracteristique.FORCE)){
+						console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
+						arene.deplace(refRMI, refCible);
+					}
+					else{ // Sinon errer
+						console.setPhrase("J'erre...");
+						arene.deplace(refRMI, 0); 
+					}
+				}
+			}
+		}
 	}
 
-	public void execStratSniper(Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException {
+	public void execStratSniper(Personnage sniper, Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException {
 		
 	}
 	
-	public void execStratGuerrier(Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException{
+	public void execStratGuerrier(Personnage guerrier, Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException{
 		
 	}
 	
-	public void execStratInvocateur(Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException{
+	public void execStratInvocateur(Personnage invocateur, Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException{
 		
 	}
 	
-	public void execStratVampire(Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException{
+	public void execStratVampire(Personnage vampire, Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException{
 		
 	}
 }
