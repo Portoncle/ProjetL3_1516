@@ -7,7 +7,7 @@ import java.util.logging.Level;
 
 import serveur.element.Caracteristique;
 import serveur.element.Personnage;
-import serveur.element.PotionBu;
+//import serveur.element.PotionBu;
 import utilitaires.Constantes;
 import serveur.interaction.*;
 

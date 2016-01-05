@@ -21,7 +21,7 @@ public class Personnage extends Element {
 	/* Attributs */
 	private Equipement[] stuff;
 	private Potion[] consommable;
-	private PotionBu potionActive;
+	//private PotionBu potionActive;
 	
 
 	/**
@@ -93,7 +93,7 @@ public class Personnage extends Element {
 		return consommable;
 	}
 	
-	public PotionBu getPotionBu(){
+	/*public PotionBu getPotionBu(){
 		return potionActive;
 	}
 	
@@ -108,7 +108,7 @@ public class Personnage extends Element {
 	public void delPotionActive(){
 		this.potionActive = null;
 	}
-	
+	*/
 	
 	/*********************************/
 	/* Gestion inventaire EQUIPEMENT */
