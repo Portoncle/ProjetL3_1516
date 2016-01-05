@@ -251,7 +251,42 @@ public class StrategiePersonnage {
 	}
 	
 	public void execStratInvocateur(Personnage invocateur, Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException{
-		
+		/* Invoque 1 mob tous les 5 tours */
+		/*if(){
+			// Invocation
+		}*/
+				
+		if (voisins.isEmpty()) { // je n'ai pas de voisins, j'erre
+			console.setPhrase("J'erre...");
+			arene.deplace(refRMI, 0); 
+			
+		} else {
+			int refCible = Calculs.chercheElementProche(position, voisins);
+			int distPlusProche = Calculs.distanceChebyshev(position, arene.getPosition(refCible));
+
+			Element elemPlusProche = arene.elementFromRef(refCible);
+
+			if(distPlusProche <= Constantes.DISTANCE_MIN_INTERACTION) { // si suffisamment proches
+				// j'interagis directement
+				if(elemPlusProche instanceof Potion) { // potion
+					// ramassage
+					console.setPhrase("Je ramasse une potion");
+					arene.ramassePotion(refRMI, refCible);
+
+				} else { // personnage
+					// duel
+					console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
+					arene.lanceAttaque(refRMI, refCible);
+				}
+				
+			} else { // si potion voisine, mais plus eloignes
+				// je vais vers le plus proche
+				if(elemPlusProche instanceof Potion){
+					console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
+					arene.deplace(refRMI, refCible);
+				}
+			}
+		}
 	}
 	
 	public void execStratVampire(Personnage vampire, Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException{
