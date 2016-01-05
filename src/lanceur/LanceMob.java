@@ -9,6 +9,7 @@ import client.StrategiePersonnage;
 import logger.LoggerProjet;
 import serveur.element.Caracteristique;
 import serveur.element.Mob;
+import serveur.element.Personnage;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
 
@@ -16,11 +17,11 @@ import utilitaires.Constantes;
  * Lance une Console avec un Element sur l'Arene. 
  * A lancer apres le serveur, eventuellement plusieurs fois.
  */
-public class LanceMob{
+public class LanceMob {
 	
 	private static String usage = "USAGE : java " + LancePersonnage.class.getName() + " [ port [ ipArene ] ]";
 
-	public static void main(String[] args) {
+	public static void exec(){
 		Mob mob = new Mob();
 		String nom = mob.getNom();
 		
@@ -35,26 +36,6 @@ public class LanceMob{
 		// init des arguments
 		int port = Constantes.PORT_DEFAUT;
 		String ipArene = Constantes.IP_DEFAUT;
-		
-		if (args.length > 0) {
-			if (args[0].equals("--help") || args[0].equals("-h")) {
-				ErreurLancement.aide(usage);
-			}
-			
-			if (args.length > 2) {
-				ErreurLancement.TROP_ARGS.erreur(usage);
-			}
-			
-			try {
-				port = Integer.parseInt(args[0]);
-			} catch (NumberFormatException e) {
-				ErreurLancement.PORT_NAN.erreur(usage);
-			}
-			
-			if (args.length > 1) {
-				ipArene = args[1];
-			}
-		}
 		
 		// creation du logger
 		LoggerProjet logger = null;
@@ -83,5 +64,9 @@ public class LanceMob{
 			e.printStackTrace();
 			System.exit(ErreurLancement.suivant);
 		}
+	}
+	
+	public static void main(String[] args) {
+		exec();
 	}
 }

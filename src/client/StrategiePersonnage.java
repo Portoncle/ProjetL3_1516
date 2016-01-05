@@ -25,9 +25,6 @@ public class StrategiePersonnage {
 	 * (l'arene).
 	 */
 	protected Console console;
-	
-	// nb tour joué
-	private int tour;
 
 	/**
 	 * Cree un personnage, la console associe et sa strategie.
@@ -45,7 +42,6 @@ public class StrategiePersonnage {
 			int nbTours, Point position, LoggerProjet logger) {
 		
 		logger.info("Lanceur", "Creation de la console...");
-		this.tour = 0;
 		try {
 			console = new Console(ipArene, port, ipConsole, this, 
 					new Personnage(nom, groupe, caracts), 
@@ -108,7 +104,6 @@ public class StrategiePersonnage {
 			}
 			default: execStratPersonnage(perso, position, voisins, arene, refRMI);
 		}
-		this.tour++;
 	}
 	
 	public void execStratPersonnage(Personnage perso, Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException{
@@ -257,13 +252,6 @@ public class StrategiePersonnage {
 	}
 	
 	public void execStratInvocateur(Personnage invocateur, Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException{
-		/* Invoque 1 mob tous les 5 tours */
-		if(this.tour %5 == 0){
-			// Invocation (execution de LanceMob.java)
-			/*Runtime runtime = Runtime.getRuntime();
-			runtime.exec("java LanceMob.java");*/
-		}
-				
 		if (voisins.isEmpty()) { // je n'ai pas de voisins, j'erre
 			console.setPhrase("J'erre...");
 			arene.deplace(refRMI, 0); 
@@ -294,6 +282,12 @@ public class StrategiePersonnage {
 					arene.deplace(refRMI, refCible);
 				}
 			}
+		}
+		/* se transforme en mob et se téléporte si danger */
+		if(invocateur.getCaract(Caracteristique.VIE) < 30){
+			// Invocation 
+			LanceMob moby = new LanceMob();
+			LanceMob.exec();
 		}
 	}
 	

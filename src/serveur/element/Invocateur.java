@@ -9,8 +9,8 @@ public class Invocateur extends Personnage {
 	
 	public Invocateur(){
 		super("Belzebuth", "G2", caractValues);
-		this.caracts.put(Caracteristique.VIE,35 );
-		this.caracts.put(Caracteristique.FORCE,40 );
+		this.caracts.put(Caracteristique.VIE,35);
+		this.caracts.put(Caracteristique.FORCE,40);
 		this.caracts.put(Caracteristique.INITIATIVE, 40);
 		this.caracts.put(Caracteristique.VITESSE, 2);
 		
