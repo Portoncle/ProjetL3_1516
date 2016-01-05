@@ -3,13 +3,11 @@ package serveur.vuelement;
 import java.awt.Color;
 import java.awt.Point;
 import java.util.HashMap;
-import java.util.logging.Level;
 
 import serveur.element.Caracteristique;
 import serveur.element.Personnage;
 import serveur.element.Potion;
 import utilitaires.Constantes;
-import serveur.interaction.*;
 
 /**
  * Donnees que le serveur doit conserver sur chacun de ces clients personnages.

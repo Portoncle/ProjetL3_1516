@@ -85,12 +85,6 @@ public class LanceAssassin{
 			logger.info("Lanceur", "Creation d'un Assassin...");
 			
 			// caracteristiques du personnage
-			/*HashMap<Caracteristique, Integer> caracts = new HashMap<Caracteristique, Integer>();
-			caracts.put(Caracteristique.VIE, 30);
-			caracts.put(Caracteristique.FORCE, 40);
-			caracts.put(Caracteristique.INITIATIVE, 90);
-			caracts.put(Caracteristique.VITESSE, 4);
-			caracts.put(Caracteristique.COUPCRITIQUE, 20);*/
 			HashMap<Caracteristique, Integer> caracts = ass.getCaracts();
 			Point position = Calculs.positionAleatoireArene();
 			

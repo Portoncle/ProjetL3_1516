@@ -31,7 +31,6 @@ import interfacegraphique.tablemodel.PotionTableModel;
 import interfacegraphique.tablerenderer.HeaderRenderer;
 import interfacegraphique.tablerenderer.NormalRenderer;
 import serveur.vuelement.VueElement;
-import serveur.vuelement.VueEquipement;
 import serveur.vuelement.VuePersonnage;
 import serveur.vuelement.VuePotion;
 
