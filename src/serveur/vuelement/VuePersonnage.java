@@ -7,7 +7,7 @@ import java.util.logging.Level;
 
 import serveur.element.Caracteristique;
 import serveur.element.Personnage;
-import serveur.element.PotionBu;
+import serveur.element.Potion;
 import utilitaires.Constantes;
 import serveur.interaction.*;
 
@@ -79,7 +79,7 @@ public class VuePersonnage extends VueElement<Personnage> implements Comparable<
 			this.element.decrementeCaract(Caracteristique.DUREE, 1);
 		}
 		else if(this.element.getCaract(Caracteristique.DUREE) == 1){
-			PotionBu potionActive = this.element.getPotionBu();
+			Potion potionActive = this.element.getPotionBu();
 			HashMap<Caracteristique, Integer> valeursPotion = potionActive.getCaracts();
 			for(Caracteristique c : valeursPotion.keySet()) {
 				this.element.decrementeCaract(c, valeursPotion.get(c));;
