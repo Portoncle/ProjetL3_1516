@@ -307,7 +307,7 @@ public class StrategiePersonnage {
 					// duel
 					/* DUEL VAMPIRIQUE A METTRE EN PLACE */
 					console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
-					arene.lanceAttaque(refRMI, refCible);
+					arene.lanceAttaqueVampire(refRMI, refCible);
 				}
 				
 			} 
