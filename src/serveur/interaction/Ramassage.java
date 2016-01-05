@@ -37,7 +37,7 @@ public class Ramassage extends Interaction<VuePotion> {
 			// si le personnage est vivant
 			if(attaquant.getElement().estVivant() ) {
 				
-				if(!attaquant.getElement().isFull() || (attaquant.getElement() instanceof Assassin)){
+				if(!(attaquant.getElement().isFull()) || (attaquant.getElement() instanceof Assassin)){
 					Potion p = defenseur.getElement();
 					// caracteristiques de la potion
 					HashMap<Caracteristique, Integer> valeursPotion = p.getCaracts();
