@@ -32,6 +32,7 @@ import interfacegraphique.interfacesimple.components.VictoryScreen;
 import logger.LoggerProjet;
 import serveur.IAreneIHM;
 import serveur.vuelement.VueElement;
+import serveur.vuelement.VueEquipement;
 import serveur.vuelement.VuePersonnage;
 import serveur.vuelement.VuePotion;
 import utilitaires.Calculs;
@@ -284,9 +285,10 @@ public class IHM extends JFrame implements Runnable {
 				List<VuePersonnage> personnages = arene.getPersonnages();
 				List<VuePersonnage> personnagesMorts = arene.getPersonnagesMorts();
 				List<VuePotion> potions = arene.getPotions();
+				List<VueEquipement> equip = arene.getEquipement();
 
 				infosPanel.setElements(personnages, personnagesMorts, potions);
-				arenePanel.setVues(personnages, potions);
+				arenePanel.setVues(personnages, potions, equip);
 
 				// MAJ du timer
 				int tempsRestant = arene.getNbToursRestants();
@@ -298,8 +300,7 @@ public class IHM extends JFrame implements Runnable {
 						+ Calculs.timerToString(tempsRestant));
 
 				if (!estPartieCommencee())
-					arenePanel
-							.afficheMessage("La partie n'a pas encore commence");
+					arenePanel.afficheMessage("La partie n'a pas encore commence");
 
 			} catch (RemoteException e) {
 				erreurConnexion(e);

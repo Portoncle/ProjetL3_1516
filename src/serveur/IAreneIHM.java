@@ -3,6 +3,7 @@ package serveur;
 import java.rmi.RemoteException;
 import java.util.List;
 
+import serveur.vuelement.VueEquipement;
 import serveur.vuelement.VuePersonnage;
 import serveur.vuelement.VuePotion;
 
@@ -34,6 +35,13 @@ public interface IAreneIHM extends IArene {
 	 * @throws RemoteException
 	 */
 	public List<VuePotion> getPotions() throws RemoteException;
+	
+	/**
+	 * Calcule la liste de toutes les equipements presents dans l'arene.
+	 * @return liste des equipements
+	 * @throws RemoteException
+	 */
+	public List<VueEquipement> getEquipement() throws RemoteException;
 	
 	/**
 	 * Renvoie la liste des personnages tries pour le classement final.
