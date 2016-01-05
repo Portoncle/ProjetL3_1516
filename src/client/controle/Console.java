@@ -57,6 +57,9 @@ public class Console extends UnicastRemoteObject implements IConsole {
 	 */
 	private LoggerProjet logger;
 	
+	//Personnage
+	private Personnage perso;
+	
 	/**
 	 * Cree une console associee a la strategie d'un personnage. 
 	 * @param ipArene ip de communication avec l'arene
@@ -79,6 +82,7 @@ public class Console extends UnicastRemoteObject implements IConsole {
 		this.strategiePer = strategiePer;
 		this.ipConsole = ipConsole;
 		this.logger = logger;
+		this.perso = pers;
 		
 		// valeur temporaire de la reference RMI
 		// passage par une variable temporaire car refRMI est final
@@ -145,9 +149,16 @@ public class Console extends UnicastRemoteObject implements IConsole {
 		HashMap<Integer, Point> voisins = arene.getVoisins(refRMI);
 		
 		// applique la strategie du personnage
-		strategiePer.executeStrategie(voisins);
+		strategiePer.executeStrategie(perso, voisins);
 	}
 
+
+	/**
+	 * @return the perso
+	 */
+	public Personnage getPerso() {
+		return perso;
+	}
 
 	@Override
 	public void deconnecte(String cause) throws RemoteException {

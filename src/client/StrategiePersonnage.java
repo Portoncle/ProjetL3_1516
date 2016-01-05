@@ -62,7 +62,7 @@ public class StrategiePersonnage {
 	 * @param voisins element voisins de cet element (elements qu'il voit)
 	 * @throws RemoteException
 	 */
-	public void executeStrategie(HashMap<Integer, Point> voisins) throws RemoteException {
+	public void executeStrategie(Personnage perso, HashMap<Integer, Point> voisins) throws RemoteException {
 		// arene
 		IArene arene = console.getArene();
 		
@@ -79,6 +79,15 @@ public class StrategiePersonnage {
 			e.printStackTrace();
 		}
 		
+		// Choix de la stratagie a partir du nom du personnage
+		/*switch(){
+		
+		}*/
+		if(console.getPerso().getNom() == "Altair") execStratAssassin();
+		else execStratPersonnage(position, voisins, arene, refRMI);
+	}
+	
+	public void execStratPersonnage( Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException{
 		if (voisins.isEmpty()) { // je n'ai pas de voisins, j'erre
 			console.setPhrase("J'erre...");
 			arene.deplace(refRMI, 0); 
@@ -108,6 +117,10 @@ public class StrategiePersonnage {
 				arene.deplace(refRMI, refCible);
 			}
 		}
+	}
+	
+	public void execStratAssassin(){
+		
 	}
 
 	
