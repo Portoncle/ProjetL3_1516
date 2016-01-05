@@ -15,7 +15,7 @@ import utilitaires.Constantes;
  * Represente un duel entre deux personnages.
  *
  */
-public class DuelSniper extends Duel {
+public class DuelAssassin extends Duel {
 	
 	/**
 	 * Cree une interaction de duel.
@@ -23,11 +23,11 @@ public class DuelSniper extends Duel {
 	 * @param attaquant attaquant
 	 * @param defenseur defenseur
 	 */
-	public DuelSniper(Arene arene, VuePersonnage attaquant, VuePersonnage defenseur) {
+	public DuelAssassin(Arene arene, VuePersonnage attaquant, VuePersonnage defenseur) {
 		super(arene, attaquant, defenseur);
 	}
 	
-	
+	@Override
 	public void interagit() {
 		try {
 			
@@ -43,7 +43,7 @@ public class DuelSniper extends Duel {
 			Point positionEjection = positionEjection(defenseur.getPosition(), attaquant.getPosition(), forceAttaquant);
 
 			// ejection du defenseur
-			///defenseur.setPosition(positionEjection);
+			defenseur.setPosition(positionEjection);
 
 			// degats
 			
@@ -52,27 +52,21 @@ public class DuelSniper extends Duel {
 				
 			    arene.incrementeCaractElement(defenseur, Caracteristique.ARMURE, 0); //l'armure est cassé on la remet a 0
 				int rnd = Calculs.nombreAleatoire (0,100);
-				int chanceDeTir = Calculs.nombreAleatoire(1,4);
-				if (chanceDeTir == 4 ) 
+				if ( rnd < chanceDeCrit) //Si il crit
 				{
-					if ( rnd < chanceDeCrit) //Si il crit
-					{
-						perteVie = (int) (perteVie + forceAttaquant*0.3 ) ;
-						arene.incrementeCaractElement(defenseur,Caracteristique.VIE, -perteVie);
-						logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + " fait un coup critque ("
-								+ perteVie + " points de degats) a " + Constantes.nomRaccourciClient(defenseur));
-					}
-					else
-					{
-					arene.incrementeCaractElement(defenseur, Caracteristique.VIE,- perteVie);
-					
-					logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + " colle une beigne ("
+					perteVie = (int) (perteVie + forceAttaquant*0.3 ) ;
+					arene.incrementeCaractElement(defenseur,Caracteristique.VIE, -perteVie);
+					logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + " fait un coup critque ("
 							+ perteVie + " points de degats) a " + Constantes.nomRaccourciClient(defenseur));
-					}
 				}
-			   else 
-				 logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + "Rate son tir" );
+				else
+				{
+				arene.incrementeCaractElement(defenseur, Caracteristique.VIE,- perteVie);
 				
+				logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + " colle une beigne ("
+						+ perteVie + " points de degats) a " + Constantes.nomRaccourciClient(defenseur));
+				}
+			
 			}
 			else
 				arene.incrementeCaractElement(defenseur, Caracteristique.ARMURE, armure- forceAttaquant);
@@ -84,7 +78,6 @@ public class DuelSniper extends Duel {
 			logs(Level.INFO, "\nErreur lors d'une attaque : " + e.toString());
 		}
 	}
-
 
 	/**
 	 * Incremente l'initiative du defenseur en cas de succes de l'attaque. 
@@ -115,7 +108,7 @@ public class DuelSniper extends Duel {
 	 * @return position d'ejection du personnage
 	 */
 	private Point positionEjection(Point posDefenseur, Point positionAtt, int forceAtt) {
-		int distance = 2; //le sniper projette tres peu 
+		int distance = forceVersDistance(forceAtt);
 		
 		// abscisses 
 		int dirX = posDefenseur.x - positionAtt.x;
@@ -144,6 +137,17 @@ public class DuelSniper extends Duel {
 		
 		return Calculs.restreintPositionArene(new Point(x, y));
 	}
-}
 	
-
+	/**
+	 * Calcule la distance a laquelle le defenseur est projete suite a un coup.
+	 * @param forceAtt force de l'attaquant
+	 * @return distance de projection
+	 */
+	private int forceVersDistance(int forceAtt) {
+		int max = Caracteristique.FORCE.getMax();
+		
+		int quart = (int) (4 * ((float) (forceAtt - 1) / max)); // -1 pour le cas force = 100
+		
+		return Constantes.DISTANCE_PROJECTION[quart];
+	}
+}
