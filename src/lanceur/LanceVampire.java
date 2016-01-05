@@ -15,7 +15,7 @@ import utilitaires.Constantes;
  * Lance une Console avec un Element sur l'Arene. 
  * A lancer apres le serveur, eventuellement plusieurs fois.
  */
-public class LanceAssassin{
+public class LanceVampire{
 	
 	private static String usage = "USAGE : java " + LancePersonnage.class.getName() + " [ port [ ipArene ] ]";
 
@@ -71,10 +71,10 @@ public class LanceAssassin{
 			
 			// caracteristiques du personnage
 			HashMap<Caracteristique, Integer> caracts = new HashMap<Caracteristique, Integer>();
-			caracts.put(Caracteristique.VIE, 30);
-			caracts.put(Caracteristique.FORCE, 40);
-			caracts.put(Caracteristique.INITIATIVE, 90);
-			caracts.put(Caracteristique.VITESSE, 4);
+			caracts.put(Caracteristique.VIE, 40);
+			caracts.put(Caracteristique.FORCE, 30 + (int)(Math.random() * ((40 - 30) + 1)));
+			caracts.put(Caracteristique.INITIATIVE, 70);
+			caracts.put(Caracteristique.VITESSE, 2);
 			
 			Point position = Calculs.positionAleatoireArene();
 			

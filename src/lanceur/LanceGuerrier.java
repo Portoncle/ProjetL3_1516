@@ -15,12 +15,12 @@ import utilitaires.Constantes;
  * Lance une Console avec un Element sur l'Arene. 
  * A lancer apres le serveur, eventuellement plusieurs fois.
  */
-public class LanceAssassin{
+public class LanceGuerrier{
 	
 	private static String usage = "USAGE : java " + LancePersonnage.class.getName() + " [ port [ ipArene ] ]";
 
 	public static void main(String[] args) {
-		String nom = "Altair";
+		String nom = "Garen";
 		
 		// TODO remplacer la ligne suivante par votre numero de groupe
 		String groupe = "G2";
@@ -67,19 +67,19 @@ public class LanceAssassin{
 		try {
 			String ipConsole = InetAddress.getLocalHost().getHostAddress();
 			
-			logger.info("Lanceur", "Creation d'un Assassin...");
+			logger.info("Lanceur", "Creation d'un Guerrier...");
 			
 			// caracteristiques du personnage
 			HashMap<Caracteristique, Integer> caracts = new HashMap<Caracteristique, Integer>();
-			caracts.put(Caracteristique.VIE, 30);
-			caracts.put(Caracteristique.FORCE, 40);
-			caracts.put(Caracteristique.INITIATIVE, 90);
-			caracts.put(Caracteristique.VITESSE, 4);
+			caracts.put(Caracteristique.VIE, 100);
+			caracts.put(Caracteristique.FORCE, 60 + (int)(Math.random() * ((80 - 60) + 1)));
+			caracts.put(Caracteristique.INITIATIVE, 20);
+			caracts.put(Caracteristique.VITESSE, 1);
 			
 			Point position = Calculs.positionAleatoireArene();
 			
 			new StrategiePersonnage(ipArene, port, ipConsole, nom, groupe, caracts, nbTours, position, logger);
-			logger.info("Lanceur", "Creation de l'Assassin reussie");
+			logger.info("Lanceur", "Creation du Guerrier reussie");
 			
 		} catch (Exception e) {
 			logger.severe("Lanceur", "Erreur lancement :\n" + e.getCause());
