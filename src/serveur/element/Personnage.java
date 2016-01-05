@@ -105,7 +105,6 @@ public class Personnage extends Element {
 		this.potionActive = null;
 	}
 	
-	
 	/*********************************/
 	/* Gestion inventaire EQUIPEMENT */
 	/*********************************/

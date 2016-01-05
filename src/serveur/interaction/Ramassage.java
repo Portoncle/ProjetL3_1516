@@ -49,8 +49,8 @@ public class Ramassage extends Interaction<VuePotion> {
 					logs(Level.INFO, "Potion bue !");
 
 					
-					/*if(defenseur.getElement().getCaract(Caracteristique.DUREE) > 0 && (attaquant.getElement().getPotionBu() == null))
-						attaquant.getElement().addPotionActive((PotionBu)p);*/
+					if(defenseur.getElement().getCaract(Caracteristique.DUREE) > 0 && (attaquant.getElement().getPotionBu() == null))
+						attaquant.getElement().addPotionActive((PotionBu)p);
 
 					// test si mort
 					if(!attaquant.getElement().estVivant()) {
