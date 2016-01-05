@@ -16,6 +16,7 @@ import javax.swing.Timer;
 
 import serveur.element.Caracteristique;
 import serveur.vuelement.VueElement;
+import serveur.vuelement.VueEquipement;
 import serveur.vuelement.VuePersonnage;
 import serveur.vuelement.VuePotion;
 import utilitaires.Constantes;
@@ -38,6 +39,12 @@ public class AreneJPanel extends JPanel {
 	 * Liste de toutes les potions connectees a l'interface.
 	 */
 	private List<VuePotion> potions = new ArrayList<VuePotion>();
+	
+	/**
+	 * Liste de tous les equipements connectes a l'interface.
+	 */
+	private List<VueEquipement> equip = new ArrayList<VueEquipement>();
+	
 	
 	/**
 	 * Message a afficher.
@@ -122,6 +129,10 @@ public class AreneJPanel extends JPanel {
 
 		for(VuePersonnage vuePersonnage : personnages) {
 			dessineElement(g, vuePersonnage);
+		}
+		
+		for(VueEquipement vueEquipement : equip){
+			dessineElement(g, vueEquipement);
 		}
 		
 		// affiche le decompte avant le debut de partie
@@ -332,6 +343,13 @@ public class AreneJPanel extends JPanel {
 	public void setVues(List<VuePersonnage> personnages, List<VuePotion> potions) {
 		this.potions = potions;
 		this.personnages = personnages;
+	}
+	
+	/* Necessaire pour afficher l'équipement */
+	public void setVues(List<VuePersonnage> personnages, List<VuePotion> potions, List<VueEquipement> equip) {
+		this.potions = potions;
+		this.personnages = personnages;
+		this.equip = equip;
 	}
 
 	/**
