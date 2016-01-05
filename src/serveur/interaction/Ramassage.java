@@ -6,6 +6,8 @@ import java.util.logging.Level;
 
 import serveur.Arene;
 import serveur.element.Caracteristique;
+import serveur.element.Potion;
+import serveur.element.PotionBu;
 import serveur.element.Assassin;
 import serveur.vuelement.VuePersonnage;
 import serveur.vuelement.VuePotion;
@@ -37,13 +39,18 @@ public class Ramassage extends Interaction<VuePotion> {
 			if(attaquant.getElement().estVivant() ) {
 				
 				if(!attaquant.getElement().isFull() || (attaquant.getElement() instanceof Assassin)){
+					Potion p = defenseur.getElement();
 					// caracteristiques de la potion
-					HashMap<Caracteristique, Integer> valeursPotion = defenseur.getElement().getCaracts();
+					HashMap<Caracteristique, Integer> valeursPotion = p.getCaracts();
 					
 					for(Caracteristique c : valeursPotion.keySet()) {
 						arene.incrementeCaractElement(attaquant, c, valeursPotion.get(c));
 					}
 					logs(Level.INFO, "Potion bue !");
+
+					
+					/*if(defenseur.getElement().getCaract(Caracteristique.DUREE) > 0 && (attaquant.getElement().getPotionBu() == null))
+						attaquant.getElement().addPotionActive((PotionBu)p);*/
 
 					// test si mort
 					if(!attaquant.getElement().estVivant()) {
