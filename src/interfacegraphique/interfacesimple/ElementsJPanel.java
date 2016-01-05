@@ -28,6 +28,7 @@ import javax.swing.table.JTableHeader;
 import interfacegraphique.IHM;
 import interfacegraphique.tablemodel.PersonnageTableModel;
 import interfacegraphique.tablemodel.PotionTableModel;
+import interfacegraphique.tablemodel.InventaireTableModel;
 import interfacegraphique.tablerenderer.HeaderRenderer;
 import interfacegraphique.tablerenderer.NormalRenderer;
 import serveur.vuelement.VueElement;
@@ -60,7 +61,7 @@ public class ElementsJPanel extends JPanel {
 	 * Modele de la table des potions.
 	 */
 	private PotionTableModel modelTablePotions;
-	
+	private InventaireTableModel modelTableInventaire;
 	/**
 	 * ScrollPane contenant les personnages.
 	 */
@@ -70,7 +71,7 @@ public class ElementsJPanel extends JPanel {
 	 * ScrollPane contenant les potions.
 	 */
 	private JScrollPane jScrollPanePotions;
-	
+	private JScrollPane jScrollPaneInventaire;
 	/**
 	 * SplitPane separant les personnages et les potions.
 	 */
@@ -86,7 +87,7 @@ public class ElementsJPanel extends JPanel {
      * Tableau des potions.
      */
     private JTable jTablePotions;
-    
+    private JTable jTableInventaire;
     /**
      * Menu contextuel (clic droit). 
      */
@@ -266,6 +267,56 @@ public class ElementsJPanel extends JPanel {
         jScrollPanePotions.setViewportView(jTablePotions);
 	}
 
+
+	/**
+     * Initialise la table des potions.
+     */
+	private void initTableInventaire() {
+		jTablePotions = new JTable();
+        
+        // mise en place du modele
+        modelTableInventaire = new InventaireTableModel();         
+        jTablePotions.setModel(modelTableInventaire);
+        
+        // ajustement de la taille des colonnes
+        for (int i = 0; i < modelTableInventaire.getColumnCount(); i++) {
+        	int width = modelTableInventaire.getColumnWidth(i);
+        	if (width != 0) {
+        		jTableInventaire.getColumnModel().getColumn(i).setMaxWidth(width);
+        		jTableInventaire.getColumnModel().getColumn(i).setPreferredWidth(width);
+        	}
+        }
+        
+        jTableInventaire.setDefaultRenderer(Object.class, new NormalRenderer(IHM.noir, IHM.grisClair));
+        jTableInventaire.setDefaultRenderer(Integer.class, new NormalRenderer(IHM.noir, IHM.grisClair));              
+        
+        jTableInventaire.setIntercellSpacing(new Dimension(0, 0));
+        jTableInventaire.setRowHeight(35);
+		
+        jTableInventaire.setTableHeader(new JTableHeader(jTableInventaire.getColumnModel()) {
+			private static final long serialVersionUID = 1L;
+			@Override
+			public Dimension getPreferredSize() {
+				Dimension d = super.getPreferredSize();
+				d.height = HEADER_HEIGHT;
+				return d;
+			}
+		});
+		
+        jTableInventaire.getTableHeader().setDefaultRenderer(new HeaderRenderer());
+
+        jScrollPaneInventaire = new JScrollPane();
+        jScrollPaneInventaire.getViewport().setBackground(IHM.grisFonce);
+        jScrollPaneInventaire.setBorder(BorderFactory.createTitledBorder(
+        		null, 
+        		"Potions", 
+        		TitledBorder.CENTER, 
+        		TitledBorder.DEFAULT_POSITION, 
+        		new Font("Helvetica Neue", 0, 14), 
+        		new Color(0, 0, 0)));
+        
+        jScrollPaneInventaire.setViewportView(jTableInventaire);
+	}
 
 
 	/**
