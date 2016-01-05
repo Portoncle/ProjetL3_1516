@@ -82,23 +82,23 @@ public class StrategiePersonnage {
 		// Choix de la stratagie a partir du nom du personnage
 		switch(console.getPerso().getNom()){
 			case("Altair"):{
-				execStratAssassin();
+				execStratAssassin(position, voisins, arene, refRMI);
 				break;
 			}
 			case("Shooter"):{
-				execStratSniper();
+				execStratSniper(position, voisins, arene, refRMI);
 				break;
 			}
 			case("Garen"):{
-				execStratGuerrier();
+				execStratGuerrier(position, voisins, arene, refRMI);
 				break;
 			}
 			case("Dracula"):{
-				execStratVampire();
+				execStratVampire(position, voisins, arene, refRMI);
 				break;
 			}
 			case("Belzebuth"):{
-				execStratInvocateur();
+				execStratInvocateur(position, voisins, arene, refRMI);
 				break;
 			}
 			default: execStratPersonnage(position, voisins, arene, refRMI);
@@ -137,23 +137,23 @@ public class StrategiePersonnage {
 		}
 	}
 	
-	public void execStratAssassin(){
+	public void execStratAssassin(Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException {
 		
 	}
 
-	public void execStratSniper() {
+	public void execStratSniper(Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException {
 		
 	}
 	
-	public void execStratGuerrier(){
+	public void execStratGuerrier(Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException{
 		
 	}
 	
-	public void execStratInvocateur(){
+	public void execStratInvocateur(Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException{
 		
 	}
 	
-	public void execStratVampire(){
+	public void execStratVampire(Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException{
 		
 	}
 }
