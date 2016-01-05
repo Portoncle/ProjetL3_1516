@@ -11,5 +11,6 @@ public class PotionInvisibilite extends Potion{
 	public PotionInvisibilite(){
 		super("Potion d'invisibilité","2",caractsValues);
 		this.caracts.put(Caracteristique.VISIBILITE, -1);
+		this.caracts.put(Caracteristique.DUREE, 15);
 	}
 }
