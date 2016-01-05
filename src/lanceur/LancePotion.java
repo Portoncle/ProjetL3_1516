@@ -5,9 +5,7 @@ import java.util.HashMap;
 
 import logger.LoggerProjet;
 import serveur.IArene;
-import serveur.element.Caracteristique;
-import serveur.element.Potion;
-import serveur.element.PotionInvisibilite;
+import serveur.element.*;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
 
@@ -71,6 +69,8 @@ public class LancePotion {
 			arene.ajoutePotion(new Potion(nom, groupe, caractsPotion), Calculs.positionAleatoireArene());
 			logger.info("Lanceur", "Lancement de la potion reussi");
 			arene.ajoutePotion(new PotionInvisibilite(), Calculs.positionAleatoireArene());
+			arene.ajoutePotion(new PotionVitesse(), Calculs.positionAleatoireArene());
+			arene.ajoutePotion(new PotionCC(), Calculs.positionAleatoireArene());
 			
 		} catch (Exception e) {
 			logger.severe("Lanceur", "Erreur lancement :\n" + e.getCause());

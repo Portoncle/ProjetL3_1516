@@ -37,7 +37,7 @@ public class Ramassage extends Interaction<VuePotion> {
 			// si le personnage est vivant
 			if(attaquant.getElement().estVivant() ) {
 				
-				if(!(attaquant.getElement().isFull()) || (attaquant.getElement() instanceof Assassin)){
+				if((attaquant.getElement().isFull()) || (attaquant.getElement() instanceof Assassin)){
 					Potion p = defenseur.getElement();
 					// caracteristiques de la potion
 					HashMap<Caracteristique, Integer> valeursPotion = p.getCaracts();
@@ -45,11 +45,14 @@ public class Ramassage extends Interaction<VuePotion> {
 					for(Caracteristique c : valeursPotion.keySet()) {
 						arene.incrementeCaractElement(attaquant, c, valeursPotion.get(c));
 					}
-					logs(Level.INFO, "Potion bue !");
 
 					
-					if(defenseur.getElement().getCaract(Caracteristique.DUREE) > 0 && (attaquant.getElement().getPotionBu() == null))
+					if(defenseur.getElement().getCaract(Caracteristique.DUREE) > 0 && ( 
+							(attaquant.getElement().getPotionBu() == null) || 
+							attaquant.getElement().getPotionBu() == defenseur.getElement())){
 						this.attaquant.getElement().addPotionActive(p);
+						logs(Level.INFO, "Potion bue !");
+					}
 
 					// test si mort
 					if(!attaquant.getElement().estVivant()) {
@@ -59,11 +62,12 @@ public class Ramassage extends Interaction<VuePotion> {
 				}
 				else{
 					attaquant.getElement().addPotion(defenseur.getElement());
-					logs(Level.INFO, "Potion ajouté à l'inventaire!");
+					arene.setPhrase(attaquant.getRefRMI(), "Potion ajouté à l'inventaire!");
 				}
 
 				// suppression de la potion
 				arene.ejectePotion(defenseur.getRefRMI());
+				
 				
 			} else {
 				logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + " ou " + 
