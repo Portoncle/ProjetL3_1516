@@ -30,9 +30,15 @@ public class Duel extends Interaction<VuePersonnage> {
 	@Override
 	public void interagit() {
 		try {
+			
 			Personnage pAttaquant = attaquant.getElement();
+			Personnage pDefenseur = defenseur.getElement();
+			
 			int forceAttaquant = pAttaquant.getCaract(Caracteristique.FORCE);
-			int perteVie = forceAttaquant;
+			int chanceDeCrit = pAttaquant.getCaract(Caracteristique.COUPCRITIQUE);
+			int armure = pDefenseur.getCaract(Caracteristique.ARMURE);
+			
+			int perteVie = forceAttaquant - armure ;
 		
 			Point positionEjection = positionEjection(defenseur.getPosition(), attaquant.getPosition(), forceAttaquant);
 
@@ -40,13 +46,30 @@ public class Duel extends Interaction<VuePersonnage> {
 			defenseur.setPosition(positionEjection);
 
 			// degats
-			if (perteVie > 0) {
-				arene.incrementeCaractElement(defenseur, Caracteristique.VIE, -perteVie);
+			
+			if ( perteVie > 0) //Il a subit des degats
+			{
+				
+			    arene.incrementeCaractElement(defenseur, Caracteristique.ARMURE, 0); //l'armure est cassé on la remet a 0
+				int rnd = Calculs.nombreAleatoire (0,100);
+				if ( rnd < chanceDeCrit) //Si il crit
+				{
+					perteVie = (int) (perteVie + forceAttaquant*0.3 ) ;
+					arene.incrementeCaractElement(defenseur,Caracteristique.VIE, -perteVie);
+					logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + " fait un coup critque ("
+							+ perteVie + " points de degats) a " + Constantes.nomRaccourciClient(defenseur));
+				}
+				else
+				{
+				arene.incrementeCaractElement(defenseur, Caracteristique.VIE,- perteVie);
 				
 				logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + " colle une beigne ("
 						+ perteVie + " points de degats) a " + Constantes.nomRaccourciClient(defenseur));
-			}
+				}
 			
+			}
+			else
+				arene.incrementeCaractElement(defenseur, Caracteristique.ARMURE, armure- forceAttaquant);
 			// initiative
 			incrementeInitiative(defenseur);
 			decrementeInitiative(attaquant);
@@ -55,6 +78,7 @@ public class Duel extends Interaction<VuePersonnage> {
 			logs(Level.INFO, "\nErreur lors d'une attaque : " + e.toString());
 		}
 	}
+
 
 	/**
 	 * Incremente l'initiative du defenseur en cas de succes de l'attaque. 

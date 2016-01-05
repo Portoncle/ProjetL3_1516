@@ -45,7 +45,7 @@ public class Equipement extends Element {
 	 */
 	public Equipement(String nom, String groupe, HashMap<Caracteristique, Integer> caracts, int indice) {
 		super(nom, groupe, caracts);
-		indice = indice;
+		this.indice = indice;
 	}
 	
 	/* Getteur */

@@ -5,12 +5,10 @@ import java.rmi.RemoteException;
 import java.util.HashMap;
 
 import client.controle.Console;
-import lanceur.LanceMob;
 import logger.LoggerProjet;
 import serveur.IArene;
 import serveur.element.Caracteristique;
 import serveur.element.Element;
-import serveur.element.Mob;
 import serveur.element.Personnage;
 import serveur.element.Potion;
 import utilitaires.Calculs;
@@ -25,9 +23,6 @@ public class StrategiePersonnage {
 	 * (l'arene).
 	 */
 	protected Console console;
-	
-	// nb tour joué
-	private int tour;
 
 	/**
 	 * Cree un personnage, la console associe et sa strategie.
@@ -45,7 +40,6 @@ public class StrategiePersonnage {
 			int nbTours, Point position, LoggerProjet logger) {
 		
 		logger.info("Lanceur", "Creation de la console...");
-		this.tour = 0;
 		try {
 			console = new Console(ipArene, port, ipConsole, this, 
 					new Personnage(nom, groupe, caracts), 
@@ -102,13 +96,12 @@ public class StrategiePersonnage {
 				execStratVampire(perso, position, voisins, arene, refRMI);
 				break;
 			}
-			case("Belzebuth"):{
-				execStratInvocateur(perso, position, voisins, arene, refRMI);
+			case("Jackie Chan"):{
+				execStratShaolin(perso, position, voisins, arene, refRMI);
 				break;
 			}
 			default: execStratPersonnage(perso, position, voisins, arene, refRMI);
 		}
-		this.tour++;
 	}
 	
 	public void execStratPersonnage(Personnage perso, Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException{
@@ -166,7 +159,7 @@ public class StrategiePersonnage {
 					// AJOUTER NOTION COUP CRITIQUE
 					
 					console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
-					arene.lanceAttaque(refRMI, refCible);
+					arene.lanceAttaqueAssassin(refRMI, refCible);
 				}
 			}
 			else { // si voisins, mais plus eloignes
@@ -175,7 +168,7 @@ public class StrategiePersonnage {
 					console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
 					arene.deplace(refRMI, refCible);
 				}
-				// sinon, aller vers l'ennemi s'il a moins de vie que l'assassin
+				// sinon, aller vers l'ennemi s'il a moins de vie que la force de l'assassin
 				else{
 					if(elemPlusProche.getCaract(Caracteristique.VIE) < assassin.getCaract(Caracteristique.FORCE)){
 						console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
@@ -256,14 +249,9 @@ public class StrategiePersonnage {
 		}
 	}
 	
-	public void execStratInvocateur(Personnage invocateur, Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException{
-		/* Invoque 1 mob tous les 5 tours */
-		if(this.tour %5 == 0){
-			// Invocation (execution de LanceMob.java)
-			/*Runtime runtime = Runtime.getRuntime();
-			runtime.exec("java LanceMob.java");*/
-		}
-				
+	/* Pacifiste et très difficile à vaincre au corps à corps */
+	public void execStratShaolin(Personnage invocateur, Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException{
+		
 		if (voisins.isEmpty()) { // je n'ai pas de voisins, j'erre
 			console.setPhrase("J'erre...");
 			arene.deplace(refRMI, 0); 
@@ -293,6 +281,10 @@ public class StrategiePersonnage {
 					console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
 					arene.deplace(refRMI, refCible);
 				}
+				else{
+					console.setPhrase("J'erre...");
+					arene.deplace(refRMI, 0); 
+				}
 			}
 		}
 	}
@@ -315,7 +307,7 @@ public class StrategiePersonnage {
 					// duel
 					/* DUEL VAMPIRIQUE A METTRE EN PLACE */
 					console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
-					arene.lanceAttaque(refRMI, refCible);
+					arene.lanceAttaqueVampire(refRMI, refCible);
 				}
 				
 			} 

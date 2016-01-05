@@ -32,7 +32,6 @@ import interfacegraphique.tablemodel.InventaireTableModel;
 import interfacegraphique.tablerenderer.HeaderRenderer;
 import interfacegraphique.tablerenderer.NormalRenderer;
 import serveur.vuelement.VueElement;
-import serveur.vuelement.VueEquipement;
 import serveur.vuelement.VuePersonnage;
 import serveur.vuelement.VuePotion;
 
