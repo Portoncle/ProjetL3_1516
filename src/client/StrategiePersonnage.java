@@ -165,7 +165,11 @@ public class StrategiePersonnage {
 			}
 			else { // si voisins, mais plus eloignes
 				// si potion ou equipement, s'y diriger
-				if(elemPlusProche instanceof Potion || elemPlusProche instanceof Equipement){ //Potion
+				if(elemPlusProche instanceof Potion /*|| elemPlusProche instanceof Equipement*/){ //Potion
+					console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
+					arene.deplace(refRMI, refCible);
+				}
+				else if(elemPlusProche instanceof Equipement){
 					console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
 					arene.deplace(refRMI, refCible);
 				}
