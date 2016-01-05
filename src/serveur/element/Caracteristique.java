@@ -27,7 +27,10 @@ public enum Caracteristique {
 	VITESSE("Vitesse", "VIT", 0, 4, 1),
 	
 	/*Visibilité: défini la visibilité d'un personnage*/
-	VISIBILITE("Visibilite", "VIS", 0, 1, 0);
+	VISIBILITE("Visibilite", "VIS", 0, 1, 0),
+	
+	/*Chance de coup critique 0 pour tous le monde sauf l'assasin */
+	COUPCRITIQUE("Coup Critique", "CRIT", 0 , 100,0);
 	
 	/**
 	 * Nom complet.
