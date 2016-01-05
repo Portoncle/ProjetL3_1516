@@ -36,7 +36,7 @@ public enum Caracteristique {
 	ARMURE("Armure","ARM",0,40,0),
 	
 	/*Durée: defini la durée d'un objet*/
-	DUREE("Durée","DUR",0,30,1);
+	DUREE("Durée","DUR",0,30,0);
 	
 	/**
 	 * Nom complet.
