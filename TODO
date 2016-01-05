@@ -1,5 +1,7 @@
+Position d'arrivée des personnages ?
+
 PAR DEFAUT vision de 30
-Vie = vie du mec + armure
+Armure = %d'absoroption des des degats
 Regen de la vie du mec uniquement possible
 
 5 Sortes de personnage
@@ -34,7 +36,7 @@ Regen de la vie du mec uniquement possible
                     Rapide
                     CC possible
                 Comportement
-                    Check point de vie ennemi : si blessé, attaque ATTENTION AU CAS DU DERNIER SURVIVANT
+                    Check point de vie ennemi : si moins de vie, attaque ATTENTION AU CAS DU DERNIER SURVIVANT
                     Tape puis recule
                     Approche d'un objet avant ennemi
                     
