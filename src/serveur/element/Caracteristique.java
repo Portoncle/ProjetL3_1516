@@ -24,7 +24,7 @@ public enum Caracteristique {
 	INITIATIVE("Initiative", "INIT", 0, 200, 50),
 	
 	/* Vitesse : defini la vitesse d'un personnage */
-	VITESSE("Vitesse", "VIT", 0, 6, 1),
+	VITESSE("Vitesse", "VIT", 0, 6, 3),
 	
 	/*% Chance de coup critique 0 pour tous le monde sauf l'assasin */
 	COUPCRITIQUE("Coup Critique", "CRIT", 0 , 100,0),
@@ -33,7 +33,10 @@ public enum Caracteristique {
 	VISIBILITE("Visibilite", "VIS", 0, 1, 1),
 	
 	/*Armure : defini l'armure d'un personnage*/
-	ARMURE("Armure","ARM",0,40,0);
+	ARMURE("Armure","ARM",0,40,0),
+	
+	/*Durée: defini la durée d'un objet*/
+	DUREE("Durée","DUR",0,30,1);
 	
 	/**
 	 * Nom complet.
