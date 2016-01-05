@@ -80,19 +80,31 @@ public class StrategiePersonnage {
 		}
 		
 		// Choix de la stratagie a partir du nom du personnage
-		/*switch(){
-		
-		}*/
-		if(console.getPerso().getNom() == "Altair") execStratAssassin();
-		else if (console.getPerso().getNom()== "Shooter") execStratSniper();
-		else execStratPersonnage(position, voisins, arene, refRMI);
+		switch(console.getPerso().getNom()){
+			case("Altair"):{
+				execStratAssassin();
+				break;
+			}
+			case("Shooter"):{
+				execStratSniper();
+				break;
+			}
+			case("Garen"):{
+				execStratGuerrier();
+				break;
+			}
+			case("Dracula"):{
+				execStratVampire();
+				break;
+			}
+			case("Belzebuth"):{
+				execStratInvocateur();
+				break;
+			}
+			default: execStratPersonnage(position, voisins, arene, refRMI);
+		}
 	}
 	
-	private void execStratSniper() {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public void execStratPersonnage( Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException{
 		if (voisins.isEmpty()) { // je n'ai pas de voisins, j'erre
 			console.setPhrase("J'erre...");
@@ -129,5 +141,19 @@ public class StrategiePersonnage {
 		
 	}
 
+	public void execStratSniper() {
+		
+	}
 	
+	public void execStratGuerrier(){
+		
+	}
+	
+	public void execStratInvocateur(){
+		
+	}
+	
+	public void execStratVampire(){
+		
+	}
 }
