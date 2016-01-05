@@ -84,12 +84,41 @@ public class StrategiePersonnage {
 		
 		}*/
 		if(console.getPerso().getNom() == "Altair") execStratAssassin();
-		else if (console.getPerso().getNom()== "Shooter") execStratSniper();
+		else if (console.getPerso().getNom()== "Shooter") execStratSniper(position, voisins, arene, refRMI);
 		else execStratPersonnage(position, voisins, arene, refRMI);
 	}
 	
-	private void execStratSniper() {
-		// TODO Auto-generated method stub
+	private void execStratSniper(Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException {
+		if (voisins.isEmpty()) { // je n'ai pas de voisins, j'erre
+			console.setPhrase("J'erre...");
+			arene.deplace(refRMI, 0); 
+			
+		} else {
+			int refCible = Calculs.chercheElementProche(position, voisins);
+			int distPlusProche = Calculs.distanceChebyshev(position, arene.getPosition(refCible));
+
+			Element elemPlusProche = arene.elementFromRef(refCible);
+
+			if(distPlusProche <= 20) { // si suffisamment proches
+				// j'interagis directement
+				if(elemPlusProche instanceof Potion && distPlusProche == Constantes.DISTANCE_MIN_INTERACTION) { // potion
+					// ramassage
+					console.setPhrase("Je ramasse une potion");
+					arene.ramassePotion(refRMI, refCible);
+
+				} else { // personnage
+					// duel
+					console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
+					 arene.lanceAttaqueSniper(refRMI, refCible);
+					 
+				}
+				
+			} else { // si voisins, mais plus eloignes
+				// je vais vers le plus proche
+				console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
+				arene.deplace(refRMI, refCible);
+			}
+		}
 		
 	}
 
@@ -128,6 +157,6 @@ public class StrategiePersonnage {
 	public void execStratAssassin(){
 		
 	}
-
+   
 	
 }
