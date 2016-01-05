@@ -8,7 +8,7 @@ public class Assassin extends Personnage {
 	private static HashMap<Caracteristique, Integer> caractValues = new HashMap<Caracteristique, Integer>();
 	
 	public Assassin(){
-		super("Assassin", "G2", caractValues);
+		super("Altair", "G2", caractValues);
 		this.caracts.put(Caracteristique.VIE, 30);
 		this.caracts.put(Caracteristique.FORCE, 40);
 		this.caracts.put(Caracteristique.INITIATIVE, 90);

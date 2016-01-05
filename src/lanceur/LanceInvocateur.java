@@ -8,6 +8,7 @@ import java.util.HashMap;
 import client.StrategiePersonnage;
 import logger.LoggerProjet;
 import serveur.element.Caracteristique;
+import serveur.element.Invocateur;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
 
@@ -20,7 +21,8 @@ public class LanceInvocateur{
 	private static String usage = "USAGE : java " + LancePersonnage.class.getName() + " [ port [ ipArene ] ]";
 
 	public static void main(String[] args) {
-		String nom = "Belzebuth";
+		Invocateur inv = new Invocateur();
+		String nom = inv.getNom();
 		
 		// TODO remplacer la ligne suivante par votre numero de groupe
 		String groupe = "G2";
@@ -70,12 +72,7 @@ public class LanceInvocateur{
 			logger.info("Lanceur", "Creation d'un invocateur...");
 			
 			// caracteristiques du personnage
-			HashMap<Caracteristique, Integer> caracts = new HashMap<Caracteristique, Integer>();
-			caracts.put(Caracteristique.VIE, 35);
-			caracts.put(Caracteristique.FORCE, 5);
-			caracts.put(Caracteristique.INITIATIVE, 40);
-			caracts.put(Caracteristique.VITESSE, 2);
-			
+			HashMap<Caracteristique, Integer> caracts = inv.getCaracts();
 			Point position = Calculs.positionAleatoireArene();
 			
 			new StrategiePersonnage(ipArene, port, ipConsole, nom, groupe, caracts, nbTours, position, logger);

@@ -8,6 +8,7 @@ import java.util.HashMap;
 import client.StrategiePersonnage;
 import logger.LoggerProjet;
 import serveur.element.Caracteristique;
+import serveur.element.Guerrier;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
 
@@ -20,7 +21,9 @@ public class LanceGuerrier{
 	private static String usage = "USAGE : java " + LancePersonnage.class.getName() + " [ port [ ipArene ] ]";
 
 	public static void main(String[] args) {
-		String nom = "Garen";
+		
+		Guerrier guer  = new Guerrier();
+		String nom = guer.getNom();
 		
 		// TODO remplacer la ligne suivante par votre numero de groupe
 		String groupe = "G2";
@@ -70,12 +73,7 @@ public class LanceGuerrier{
 			logger.info("Lanceur", "Creation d'un Guerrier...");
 			
 			// caracteristiques du personnage
-			HashMap<Caracteristique, Integer> caracts = new HashMap<Caracteristique, Integer>();
-			caracts.put(Caracteristique.VIE, 100);
-			caracts.put(Caracteristique.FORCE, 60 + (int)(Math.random() * ((80 - 60) + 1)));
-			caracts.put(Caracteristique.INITIATIVE, 20);
-			caracts.put(Caracteristique.VITESSE, 1);
-			
+			HashMap<Caracteristique, Integer> caracts = guer.getCaracts();
 			Point position = Calculs.positionAleatoireArene();
 			
 			new StrategiePersonnage(ipArene, port, ipConsole, nom, groupe, caracts, nbTours, position, logger);

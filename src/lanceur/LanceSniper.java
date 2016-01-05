@@ -8,6 +8,7 @@ import java.util.HashMap;
 import client.StrategiePersonnage;
 import logger.LoggerProjet;
 import serveur.element.Caracteristique;
+import serveur.element.Sniper;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
 
@@ -20,7 +21,9 @@ public class LanceSniper{
 	private static String usage = "USAGE : java " + LancePersonnage.class.getName() + " [ port [ ipArene ] ]";
 
 	public static void main(String[] args) {
-		String nom = "Shooter";
+		
+		Sniper snip = new Sniper();
+		String nom = snip.getNom();
 		
 		// TODO remplacer la ligne suivante par votre numero de groupe
 		String groupe = "G2";
@@ -70,11 +73,7 @@ public class LanceSniper{
 			logger.info("Lanceur", "Creation d'un Sniper...");
 			
 			// caracteristiques du personnage
-			HashMap<Caracteristique, Integer> caracts = new HashMap<Caracteristique, Integer>();
-			caracts.put(Caracteristique.VIE, 20);
-			caracts.put(Caracteristique.FORCE, 60 + (int)(Math.random() * ((100 - 60) + 1)));
-			caracts.put(Caracteristique.INITIATIVE, 40);
-			caracts.put(Caracteristique.VITESSE, 2);
+			HashMap<Caracteristique, Integer> caracts = snip.getCaracts();
 			
 			Point position = Calculs.positionAleatoireArene();
 			
