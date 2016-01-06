@@ -159,6 +159,10 @@ public class Personnage extends Element {
 		}
 	}
 	
+	public Potion getPotion ( int indice )
+	{
+		return this.consommable[indice];
+	}
 	/* Permet de savoir si on stocke ou on consomme */
 	public boolean isFull()
 	{
@@ -189,18 +193,22 @@ public class Personnage extends Element {
 	/* Permet de savoir si un potion est présente. 
 	/* Renvoie l'indice si oui, -1 sinon.
 	 */
-	public int findPotion(Potion p)
+	public int findPotion(String p)
 	{
 		if(this.isEmpty())
 		{
 			return -1;
 		}
-		else if(this.consommable[0] == p)
+		else if(this.consommable[0].getNom().compareTo(p) == 0)
 		{
 			return 0;
 		}
-		else
+		else if (this.consommable[1].getNom().compareTo(p) == 0)
+		{
 			return 1;
+		}
+		else
+			return -1;
 	}
 	
 	/* Teste si le personnage est visible 

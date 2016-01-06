@@ -9,7 +9,7 @@ public class PotionInvisibilite extends Potion{
 	protected static HashMap<Caracteristique, Integer> caractsValues = Caracteristique.mapCaracteristiquesMin();
 	
 	public PotionInvisibilite(){
-		super("Potion d'invisibilité","2",caractsValues);
+		super("Potion d'invisibilit","2",caractsValues);
 		this.caracts.put(Caracteristique.VISIBILITE, -1);
 		this.caracts.put(Caracteristique.DUREE, 15);
 	}

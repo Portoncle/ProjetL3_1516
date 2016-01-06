@@ -6,10 +6,16 @@ import java.util.logging.Level;
 
 import serveur.Arene;
 import serveur.element.Caracteristique;
-import serveur.element.Equipement;
-import serveur.element.Potion;
+
 import serveur.element.Guerrier;
+
+import serveur.element.Equipement;
+
+import serveur.element.Potion;
+
+
 import serveur.vuelement.VueElement;
+
 import serveur.vuelement.VuePersonnage;
 import utilitaires.Constantes;
 
@@ -38,6 +44,7 @@ public class Ramassage extends Interaction<VueElement<?>> {
 			// si le personnage est vivant
 			if(attaquant.getElement().estVivant() ) {
 				
+
 				/* Si c'est une potion */
 				if(defenseur.getElement() instanceof Potion){
 					arene.setPhrase(attaquant.getRefRMI(), "C'est une potion!");
@@ -70,6 +77,7 @@ public class Ramassage extends Interaction<VueElement<?>> {
 							arene.setPhrase(attaquant.getRefRMI(), "Je me suis empoisonne, je meurs ");
 							logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + " vient de boire un poison... Mort >_<");
 						}
+
 					}
 					else{
 						attaquant.getElement().addPotion((Potion)p);
@@ -78,10 +86,12 @@ public class Ramassage extends Interaction<VueElement<?>> {
 					//suppression de la potion
 					arene.ejectePotion(defenseur.getRefRMI());
 				}
+
 				/* Si c'est un équipement */
 				else if(defenseur.getElement() instanceof Equipement){
 					attaquant.getElement().addStuff((Equipement)defenseur.getElement());
 					arene.ejecteEquip(defenseur.getRefRMI());
+
 				}
 			} else {
 				logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + " ou " + 

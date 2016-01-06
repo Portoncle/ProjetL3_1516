@@ -10,7 +10,7 @@ public class Guerrier extends Personnage {
 	public Guerrier(){
 		super("Garen", "G2", caractValues);
 		this.caracts.put(Caracteristique.VIE, 100);
-		this.caracts.put(Caracteristique.FORCE,60 + (int)(Math.random() * ((80 - 60) + 1)) );
+		this.caracts.put(Caracteristique.FORCE,30 + (int)(Math.random() * (( 40- 30) + 1)) );
 		this.caracts.put(Caracteristique.INITIATIVE, 20);
 		this.caracts.put(Caracteristique.VITESSE, 1);
 
