@@ -43,12 +43,11 @@ public class DuelAssassin extends Duel {
 			
 			int perteVie = forceAttaquant * armure/100 ;
 			
-		    Potion po = new PotionCC();
-
-		  
+		   
 			  
 		    if( pAttaquant.findPotion("Potion de coup crtitique") != -1)
 			{
+		    	Potion po = new PotionCC();	 
 				pAttaquant.getPotion( pAttaquant.findPotion("Potion de coup crtitique"));
 				HashMap<Caracteristique, Integer> valeursPotion = po.getCaracts();
 				

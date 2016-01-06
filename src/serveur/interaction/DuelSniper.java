@@ -1,11 +1,14 @@
 package serveur.interaction;
 
 import java.rmi.RemoteException;
+import java.util.HashMap;
 import java.util.logging.Level;
 
 import serveur.Arene;
 import serveur.element.Caracteristique;
 import serveur.element.Personnage;
+import serveur.element.Potion;
+import serveur.element.PotionCC;
 import serveur.vuelement.VuePersonnage;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
@@ -39,6 +42,19 @@ public class DuelSniper extends Duel {
 			
 			int perteVie = forceAttaquant - (armure/100) ;
 			
+			if( pAttaquant.findPotion("Potion de coup crtitique") != -1)
+			{
+		    	Potion po = new PotionCC();	 
+				pAttaquant.getPotion( pAttaquant.findPotion("Potion de coup crtitique"));
+				HashMap<Caracteristique, Integer> valeursPotion = po.getCaracts();
+				
+				for(Caracteristique c : valeursPotion.keySet()) {
+					arene.incrementeCaractElement(attaquant, c, valeursPotion.get(c));
+				}
+				this.attaquant.getElement().addPotionActive(po);
+				logs(Level.INFO, "Je prend une potion de coup critique!");
+				
+			}
 			if ( perteVie > 0) //Il a subit des degats
 			{
 				
