@@ -1,10 +1,12 @@
 
 package interfacegraphique.interfacesimple;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.MouseInfo;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -153,18 +155,33 @@ public class ElementsJPanel extends JPanel {
         jTablePotions.addMouseListener(listener);
 		
 		// ajout des composants
+        
         jSplitPane = new JSplitPane();
         jSplitPane.setDividerLocation(350);
         jSplitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
-        
         jSplitPane.setTopComponent(jScrollPanePersonnages);
         jSplitPane.setBottomComponent(jScrollPanePotions);        
+        JPanel gauchePanel = new JPanel(new BorderLayout());
+		gauchePanel.add(jSplitPane);
         
-        add(jSplitPane);
+		
+        //add(jSplitPane);
         jSplitPane = new JSplitPane();
         jSplitPane.setDividerLocation(350);
         jSplitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
-        jSplitPane.setTopComponent(jScrollPaneEquipement);
+        jSplitPane.setTopComponent(jScrollPaneEquipement);  
+        
+        JPanel droitePanel = new JPanel(new BorderLayout());
+		droitePanel.add(jScrollPaneEquipement);
+		
+		JSplitPane jSplitPane = new JSplitPane();
+		Toolkit kit = Toolkit.getDefaultToolkit();
+		Dimension screenSize = kit.getScreenSize();
+		int fenWidth = 3 * screenSize.width / 4;
+		int dividerLocation = fenWidth / 3;
+		jSplitPane.setDividerLocation(dividerLocation);
+		jSplitPane.setLeftComponent(gauchePanel);
+		jSplitPane.setRightComponent(droitePanel);
         add(jSplitPane);
         
 	}

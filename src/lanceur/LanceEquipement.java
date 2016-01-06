@@ -61,18 +61,24 @@ public class LanceEquipement {
 			{
 				int valeur = Calculs.calculBuffStuff(Caracteristique.FORCE);
 				caractsEquip.put(Caracteristique.FORCE, valeur);
+				caractsEquip.put(Caracteristique.ARMURE, 0);
+				caractsEquip.put(Caracteristique.VITESSE, 0);
 				nom = "Epee." + valeur;
 			}
 			else if(indice == 1)
 			{
 				int valeur = Calculs.calculBuffStuff(Caracteristique.ARMURE);
 				caractsEquip.put(Caracteristique.ARMURE, valeur);
+				caractsEquip.put(Caracteristique.FORCE, 0);
+				caractsEquip.put(Caracteristique.VITESSE, 0);
 				nom = "Bouclier." + valeur;
 			}
 			else
 			{
 				int valeur = Calculs.calculBuffStuff(Caracteristique.VITESSE);
 				caractsEquip.put(Caracteristique.VITESSE, valeur);
+				caractsEquip.put(Caracteristique.ARMURE, 0);
+				caractsEquip.put(Caracteristique.FORCE, 0);
 				
 				nom = "Bottes." + valeur;
 			}
