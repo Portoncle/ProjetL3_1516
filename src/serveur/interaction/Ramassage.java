@@ -37,23 +37,24 @@ public class Ramassage extends Interaction<VueElement<?>> {
 			
 			// si le personnage est vivant
 			if(attaquant.getElement().estVivant() ) {
+				
+				/* Si c'est une potion */
 				if(defenseur.getElement() instanceof Potion){
 					arene.setPhrase(attaquant.getRefRMI(), "C'est une potion!");
+					Potion p = (Potion)defenseur.getElement();
+					// caracteristiques de la potion
+					HashMap<Caracteristique, Integer> valeursPotion = p.getCaracts();
+					
+					
 					if((attaquant.getElement().isFull()) || (attaquant.getElement() instanceof Guerrier)){
-						Potion p = (Potion)defenseur.getElement();
-						// caracteristiques de la potion
-						HashMap<Caracteristique, Integer> valeursPotion = p.getCaracts();
-						
-						
-	
 						//Test si la potion a un duree et l'ajoute a sa potion active si c'est le cas
-						if(defenseur.getElement().getCaract(Caracteristique.DUREE) > 0 &&  
-								(attaquant.getElement().potionDejaActive())){
+						if(p.getCaract(Caracteristique.DUREE) > 0 &&  
+								(attaquant.getElement().getCaract(Caracteristique.DUREE) == 0 )){
+							arene.setPhrase(attaquant.getRefRMI(), "Potion ACTIVE!");
 							this.attaquant.getElement().addPotionActive(p);
 							for(Caracteristique c : valeursPotion.keySet()) {
 								arene.incrementeCaractElement(attaquant, c, valeursPotion.get(c));
 							}
-							arene.setPhrase(attaquant.getRefRMI(), "Potion ACTIVE!");
 						}
 						
 						//Test si la potion a deja ete bue et ajoute une duree si c'est le cas
@@ -71,17 +72,17 @@ public class Ramassage extends Interaction<VueElement<?>> {
 						}
 					}
 					else{
-						attaquant.getElement().addPotion((Potion)defenseur.getElement());
-						arene.setPhrase(attaquant.getRefRMI(), "Potion ajouté à l'inventaire!");
+						attaquant.getElement().addPotion((Potion)p);
+						arene.setPhrase(attaquant.getRefRMI(), "Potion ajoutee à l'inventaire!");
 					}
 					//suppression de la potion
 					arene.ejectePotion(defenseur.getRefRMI());
 				}
+				/* Si c'est un équipement */
 				else if(defenseur.getElement() instanceof Equipement){
 					attaquant.getElement().addStuff((Equipement)defenseur.getElement());
+					arene.ejecteEquip(defenseur.getRefRMI());
 				}
-				
-				
 			} else {
 				logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + " ou " + 
 						Constantes.nomRaccourciClient(defenseur) + " est deja mort... Rien ne se passe");

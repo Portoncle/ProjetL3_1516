@@ -158,7 +158,7 @@ public class StrategiePersonnage {
 				}
 				else if(elemPlusProche instanceof Equipement){ // Equipement
 					console.setPhrase("Je ramasse un equipement");
-					
+					arene.ramasseEquipement(refRMI, refCible);
 				}
 				else { // personnage
 					// duel
@@ -185,7 +185,7 @@ public class StrategiePersonnage {
 						console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
 						arene.deplace(refRMI, refCible);
 					}
-					else{ // Sinon errer
+					else{ // Sinon erreur
 						console.setPhrase("J'erre...");
 						arene.deplace(refRMI, 0); 
 					}
@@ -260,7 +260,8 @@ public class StrategiePersonnage {
 		}
 	}
 	
-	/* Pacifiste et tr�s difficile � vaincre au corps � corps */
+
+	/* Pacifiste et tres difficile a vaincre au corps a corps */
 	public void execStratShaolin(Personnage invocateur, Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException{
 		
 		if (voisins.isEmpty()) { // je n'ai pas de voisins, j'erre
@@ -312,19 +313,20 @@ public class StrategiePersonnage {
 
 			Element elemPlusProche = arene.elementFromRef(refCible);
 
-			if(distPlusProche <= Constantes.DISTANCE_MIN_INTERACTION) { // si suffisamment proches
+			if(distPlusProche <= Constantes.DISTANCE_MIN_INTERACTION && elemPlusProche instanceof Personnage) { // si suffisamment proches
 				// j'interagis directement
-				if(elemPlusProche instanceof Personnage) { // personnage
-					// duel
-					console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
-					arene.lanceAttaqueVampire(refRMI, refCible);
-				}
-				
+				// duel
+				console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
+				arene.lanceAttaqueVampire(refRMI, refCible);				
 			} 
 			else if(elemPlusProche instanceof Personnage){ // si voisins, mais plus eloignes
 				// je vais vers le plus proche
 				console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
 				arene.deplace(refRMI, refCible);
+			}
+			else{
+				console.setPhrase("J'erre...");
+				arene.deplace(refRMI, 0); 
 			}
 		}
 	}

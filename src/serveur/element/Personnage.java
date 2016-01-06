@@ -4,6 +4,7 @@
 package serveur.element;
 
 import java.util.HashMap;
+
 import utilitaires.Calculs;
 
 /**
@@ -104,7 +105,7 @@ public class Personnage extends Element {
 	}
 	
 	public boolean potionDejaActive(){
-		return this.potionActive == null;
+		return this.potionActive != null;
 	}
 	
 	public void delPotionActive(){
@@ -114,40 +115,30 @@ public class Personnage extends Element {
 	/*********************************/
 	/* Gestion inventaire EQUIPEMENT */
 	/*********************************/
-	/*public void addStuff(Equipement e)
-	{
-		if(this.stuff[e.indice] == null)
-		{
-			this.stuff[e.indice] = e;
-		}
-		
-		else if(e.c == Caracteristique.VITESSE && e.val > this.stuff[e.indice].val)
-		{
-			this.stuff[e.indice] = e;
-		}
-		
-		else if(e.c == Caracteristique.ARMURE && e.val > this.stuff[e.indice].val)
-		{
-			this.stuff[e.indice] = e;
-		}
-		
-		else if(e.c == Caracteristique.FORCE && e.val > this.stuff[e.indice].val)
-		{
-			this.stuff[e.indice] = e;
-		}
-	}*/
 	public void addStuff(Equipement e)
 	{
-		for(Caracteristique c : e.caracts.keySet()) {
+			Caracteristique cTemp = null;
+			
+			switch(e.indice)
+			{
+				case 0: cTemp = Caracteristique.FORCE;
+				case 1: cTemp = Caracteristique.ARMURE;
+				case 2: cTemp = Caracteristique.VITESSE;
+			}
+			System.out.println(cTemp.toString());
+			System.out.println(e.caracts.get(cTemp));
+			
 			if(this.stuff[e.indice] == null)
 			{
+				//logs(Level.INFO, "Objet detruit");
+				this.incrementeCaract(cTemp, e.caracts.get(cTemp));
 				this.stuff[e.indice] = e;
 			}
-			else if(this.stuff[e.indice].caracts.get(c) < e.caracts.get(c))
+			else if(this.stuff[e.indice].caracts.get(cTemp) < e.caracts.get(cTemp))
 			{
+				this.incrementeCaract(cTemp, e.caracts.get(cTemp));
 				this.stuff[e.indice] = e;
 			}
-		}
 	}
 	
 	
