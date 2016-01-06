@@ -7,13 +7,11 @@ import java.util.logging.Level;
 import serveur.Arene;
 import serveur.element.Caracteristique;
 
-import serveur.element.Guerrier;
-
 import serveur.element.Equipement;
 
 import serveur.element.Potion;
-
-
+import serveur.element.PotionForce;
+import serveur.element.PotionVie;
 import serveur.vuelement.VueElement;
 
 import serveur.vuelement.VuePersonnage;
@@ -53,23 +51,18 @@ public class Ramassage extends Interaction<VueElement<?>> {
 					HashMap<Caracteristique, Integer> valeursPotion = p.getCaracts();
 					
 					
-					if((attaquant.getElement().isFull()) || (attaquant.getElement() instanceof Guerrier)){
-						//Test si la potion a un duree et l'ajoute a sa potion active si c'est le cas
-						if(p.getCaract(Caracteristique.DUREE) > 0 &&  
-								(attaquant.getElement().getCaract(Caracteristique.DUREE) == 0 )){
-							arene.setPhrase(attaquant.getRefRMI(), "Potion ACTIVE!");
-							this.attaquant.getElement().addPotionActive(p);
-							for(Caracteristique c : valeursPotion.keySet()) {
-								arene.incrementeCaractElement(attaquant, c, valeursPotion.get(c));
-							}
-						}
+					if((attaquant.getElement().isFull()) || 
+							(attaquant.getElement().getNom().compareTo("Garen") == 0) || 
+							(p instanceof PotionVie) || (p instanceof PotionForce)){
 						
-						//Test si la potion a deja ete bue et ajoute une duree si c'est le cas
-						else if((defenseur.getElement().getCaract(Caracteristique.DUREE) > 0) && 
-								(attaquant.getElement().potionDejaBue((Potion)defenseur.getElement()))){
-							int tmp = this.defenseur.getElement().getCaract(Caracteristique.DUREE);
-							this.attaquant.getElement().incrementeCaract(Caracteristique.DUREE, tmp);
-							arene.setPhrase(attaquant.getRefRMI(), "Potion deja bue!");
+						if(p.getCaract(Caracteristique.DUREE) > 0){
+							if(attaquant.getElement().getCaract(Caracteristique.DUREE) > 0)
+								attaquant.getElement().delPotionActive();
+							attaquant.getElement().addPotionActive(p);
+						}
+						arene.setPhrase(attaquant.getRefRMI(), "Potion bue");
+						for(Caracteristique c : valeursPotion.keySet()) {
+							arene.incrementeCaractElement(attaquant, c, valeursPotion.get(c));
 						}
 						logs(Level.INFO, "Potion bue !");
 						// test si mort
@@ -77,7 +70,7 @@ public class Ramassage extends Interaction<VueElement<?>> {
 							arene.setPhrase(attaquant.getRefRMI(), "Je me suis empoisonne, je meurs ");
 							logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + " vient de boire un poison... Mort >_<");
 						}
-
+						arene.ejectePotion(defenseur.getRefRMI());
 					}
 					else{
 						attaquant.getElement().addPotion((Potion)p);
@@ -91,7 +84,6 @@ public class Ramassage extends Interaction<VueElement<?>> {
 				else if(defenseur.getElement() instanceof Equipement){
 					attaquant.getElement().addStuff((Equipement)defenseur.getElement());
 					arene.ejecteEquip(defenseur.getRefRMI());
-
 				}
 			} else {
 				logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + " ou " + 

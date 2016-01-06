@@ -1,6 +1,3 @@
-/**
- * 
- */
 package serveur.element;
 
 import java.util.HashMap;
@@ -10,7 +7,6 @@ import utilitaires.Calculs;
 /**
  * Un personnage: un element possedant des caracteristiques et etant capable
  * de jouer une strategie.
- * 
  */
 public class Personnage extends Element {
 	
@@ -109,35 +105,42 @@ public class Personnage extends Element {
 	}
 	
 	public void delPotionActive(){
+		HashMap<Caracteristique, Integer> valeursPotion = potionActive.getCaracts();
+		for(Caracteristique c : valeursPotion.keySet()) {
+			this.decrementeCaract(c, valeursPotion.get(c));;
+		}
 		this.potionActive = null;
+		this.decrementeCaract(Caracteristique.DUREE, 1);
 	}
 	
 	/*********************************/
 	/* Gestion inventaire EQUIPEMENT */
 	/*********************************/
+	/* Permet d'ajouter des equipements s'ils sont avantageux */
 	public void addStuff(Equipement e)
 	{
 			Caracteristique cTemp = null;
 			
-			switch(e.indice)
+			switch(e.getIndice())
 			{
 				case 0: cTemp = Caracteristique.FORCE;
+						break;
 				case 1: cTemp = Caracteristique.ARMURE;
+						break;
 				case 2: cTemp = Caracteristique.VITESSE;
+						break;
 			}
-			System.out.println(cTemp.toString());
-			System.out.println(e.caracts.get(cTemp));
 			
-			if(this.stuff[e.indice] == null)
+			if(this.stuff[e.getIndice()] == null)
 			{
-				//logs(Level.INFO, "Objet detruit");
 				this.incrementeCaract(cTemp, e.caracts.get(cTemp));
-				this.stuff[e.indice] = e;
+				this.stuff[e.getIndice()] = e;
 			}
-			else if(this.stuff[e.indice].caracts.get(cTemp) < e.caracts.get(cTemp))
+			else if(this.stuff[e.getIndice()].caracts.get(cTemp) < e.caracts.get(cTemp))
 			{
+				this.decrementeCaract(cTemp, this.stuff[e.getIndice()].caracts.get(cTemp));
 				this.incrementeCaract(cTemp, e.caracts.get(cTemp));
-				this.stuff[e.indice] = e;
+				this.stuff[e.getIndice()] = e;
 			}
 	}
 	
@@ -159,10 +162,12 @@ public class Personnage extends Element {
 		}
 	}
 	
+	/* permet de recuperer une potion */
 	public Potion getPotion ( int indice )
 	{
 		return this.consommable[indice];
 	}
+	
 	/* Permet de savoir si on stocke ou on consomme */
 	public boolean isFull()
 	{
@@ -187,7 +192,6 @@ public class Personnage extends Element {
 			this.consommable[1] = null;
 		}
 	}
-	/* public void delPotion(Caracteristique c); */	
 	
 	
 	/* Permet de savoir si un potion est présente. 
@@ -210,6 +214,12 @@ public class Personnage extends Element {
 		else
 			return -1;
 	}
+	
+	
+	
+	/*********************************/
+	/* Permet de gerer la visibilite */
+	/*********************************/
 	
 	/* Teste si le personnage est visible 
 	 * return vrai si le personnage est visible, faux sinon

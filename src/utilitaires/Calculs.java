@@ -238,7 +238,6 @@ public class Calculs {
 				case 2: return 40;
 			}
 		}
-		
 		/* Si c'est des bottes */
 		else
 		{
