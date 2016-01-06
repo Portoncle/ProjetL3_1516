@@ -43,18 +43,26 @@ public class Ramassage extends Interaction<VueElement<?>> {
 						// caracteristiques de la potion
 						HashMap<Caracteristique, Integer> valeursPotion = p.getCaracts();
 						
-						for(Caracteristique c : valeursPotion.keySet()) {
-							arene.incrementeCaractElement(attaquant, c, valeursPotion.get(c));
-						}
-	
 						
-						if(defenseur.getElement().getCaract(Caracteristique.DUREE) > 0 && ( 
-								(attaquant.getElement().getPotionBu() == null) || 
-								attaquant.getElement().getPotionBu() == defenseur.getElement())){
-							this.attaquant.getElement().addPotionActive(p);
-							logs(Level.INFO, "Potion bue !");
-						}
 	
+						//Test si la potion a un duree et l'ajoute a sa potion active si c'est le cas
+						if(defenseur.getElement().getCaract(Caracteristique.DUREE) > 0 &&  
+								(attaquant.getElement().potionDejaActive())){
+							this.attaquant.getElement().addPotionActive(p);
+							for(Caracteristique c : valeursPotion.keySet()) {
+								arene.incrementeCaractElement(attaquant, c, valeursPotion.get(c));
+							}
+							arene.setPhrase(attaquant.getRefRMI(), "Potion ACTIVE!");
+						}
+						
+						//Test si la potion a deja ete bue et ajoute une duree si c'est le cas
+						else if((defenseur.getElement().getCaract(Caracteristique.DUREE) > 0) && 
+								(attaquant.getElement().potionDejaBue((Potion)defenseur.getElement()))){
+							int tmp = this.defenseur.getElement().getCaract(Caracteristique.DUREE);
+							this.attaquant.getElement().incrementeCaract(Caracteristique.DUREE, tmp);
+							arene.setPhrase(attaquant.getRefRMI(), "Potion deja bue!");
+						}
+						logs(Level.INFO, "Potion bue !");
 						// test si mort
 						if(!attaquant.getElement().estVivant()) {
 							arene.setPhrase(attaquant.getRefRMI(), "Je me suis empoisonne, je meurs ");
@@ -65,12 +73,12 @@ public class Ramassage extends Interaction<VueElement<?>> {
 						attaquant.getElement().addPotion((Potion)defenseur.getElement());
 						arene.setPhrase(attaquant.getRefRMI(), "Potion ajouté à l'inventaire!");
 					}
+					//suppression de la potion
+					arene.ejectePotion(defenseur.getRefRMI());
 				}
 				else if(defenseur.getElement() instanceof Equipement){
 					attaquant.getElement().addStuff((Equipement)defenseur.getElement());
 				}
-				// suppression de la potion
-				arene.ejectePotion(defenseur.getRefRMI());
 				
 				
 			} else {

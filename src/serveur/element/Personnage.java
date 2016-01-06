@@ -95,8 +95,16 @@ public class Personnage extends Element {
 		return potionActive;
 	}
 	
+	public boolean potionDejaBue(Potion potion){
+		return (potionActive == potion);
+	}
+	
 	public void addPotionActive(Potion potionBu){
 		this.potionActive = potionBu;
+	}
+	
+	public boolean potionDejaActive(){
+		return this.potionActive == null;
 	}
 	
 	public void delPotionActive(){
