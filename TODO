@@ -1,4 +1,21 @@
-Position d'arrivée des personnages ?
+Assassin:
+consomme invisibilite et vitesse quand il voit quelqu'un
+
+Sniper
+consomme invisibilite s'il voit quelqu'un
+consomme vitesse instant'
+
+guerrier
+consomme tout instant'
+
+Shaolin
+consomme vitesse instan'
+consome invisibilité quand voit quelqu'un
+
+Vampire
+osef des potions
+
+Potion vie, potion force
 
 PAR DEFAUT vision de 30
 Armure = %d'absoroption des des degats

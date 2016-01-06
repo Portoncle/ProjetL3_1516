@@ -1,13 +1,13 @@
 /*
  *  Assassin
-	    Santé 30
+	    Sante 30
 	    Force 40 + CC 50
 	    Init 90
-	    Facultés
+	    Facultes
 	        Rapide
 	        CC possible
 	    Comportement
-	        Check point de vie ennemi : si blessé, attaque ATTENTION AU CAS DU DERNIER SURVIVANT
+	        Check point de vie ennemi : si blesse, attaque ATTENTION AU CAS DU DERNIER SURVIVANT
 	        Tape puis recule
         	Approche d'un objet avant ennemi
  */

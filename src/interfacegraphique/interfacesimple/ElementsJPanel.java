@@ -29,7 +29,7 @@ import interfacegraphique.IHM;
 import interfacegraphique.tablemodel.EquipementTableModel;
 import interfacegraphique.tablemodel.PersonnageTableModel;
 import interfacegraphique.tablemodel.PotionTableModel;
-import interfacegraphique.tablemodel.InventaireTableModel;
+//import interfacegraphique.tablemodel.InventaireTableModel;
 import interfacegraphique.tablerenderer.HeaderRenderer;
 import interfacegraphique.tablerenderer.NormalRenderer;
 import serveur.vuelement.VueElement;
@@ -63,7 +63,7 @@ public class ElementsJPanel extends JPanel {
 	 * Modele de la table des potions.
 	 */
 	private PotionTableModel modelTablePotions;
-	private InventaireTableModel modelTableInventaire;
+	//private InventaireTableModel modelTableInventaire;
 	/**
 	 * Modele de la table des potions.
 	 */
@@ -78,7 +78,7 @@ public class ElementsJPanel extends JPanel {
 	 * ScrollPane contenant les potions.
 	 */
 	private JScrollPane jScrollPanePotions;
-	private JScrollPane jScrollPaneInventaire;
+	//private JScrollPane jScrollPaneInventaire;
 	/**
 	 * SplitPane separant les personnages et les potions.
 	 */
@@ -99,7 +99,7 @@ public class ElementsJPanel extends JPanel {
      * Tableau des potions.
      */
     private JTable jTablePotions;
-    private JTable jTableInventaire;
+    //private JTable jTableInventaire;
     /**
      * Menu contextuel (clic droit). 
      */
@@ -293,7 +293,7 @@ public class ElementsJPanel extends JPanel {
 	/**
      * Initialise la table des potions.
      */
-	private void initTableInventaire() {
+	/*private void initTableInventaire() {
 		jTablePotions = new JTable();
         
         // mise en place du modele
@@ -338,7 +338,7 @@ public class ElementsJPanel extends JPanel {
         		new Color(0, 0, 0)));
         
         jScrollPaneInventaire.setViewportView(jTableInventaire);
-	}
+	}*/
 
 
 	/**
