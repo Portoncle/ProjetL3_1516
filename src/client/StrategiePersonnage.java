@@ -260,7 +260,7 @@ public class StrategiePersonnage {
 		}
 	}
 	
-	/* Pacifiste et très difficile à vaincre au corps à corps */
+	/* Pacifiste et tres difficile e vaincre au corps a corps */
 	public void execStratShaolin(Personnage invocateur, Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException{
 		
 		if (voisins.isEmpty()) { // je n'ai pas de voisins, j'erre
