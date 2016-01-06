@@ -92,8 +92,16 @@ public class Personnage extends Element {
 		return potionActive;
 	}
 	
+	public boolean potionDejaBue(Potion potion){
+		return (potionActive == potion);
+	}
+	
 	public void addPotionActive(Potion potionBu){
 		this.potionActive = potionBu;
+	}
+	
+	public boolean potionDejaActive(){
+		return this.potionActive != null;
 	}
 	
 	public void delPotionActive(){
@@ -139,10 +147,8 @@ public class Personnage extends Element {
 	/*****************************/
 	public void addPotion(Potion p)
 	{
-		System.out.println(this.consommable[0].toString());
 		if(this.consommable[0] == null)
 		{
-			System.out.println("fdp");
 			this.consommable[0] = p;
 		}
 		else if(this.consommable[1] == null)
