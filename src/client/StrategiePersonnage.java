@@ -162,7 +162,7 @@ public class StrategiePersonnage {
 					console.setPhrase("Je ramasse un equipement");
 					arene.ramasseEquipement(refRMI, refCible);
 				}
-				else {
+				else{ // Personnage
 					console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
 					arene.lanceAttaqueAssassin(refRMI, refCible);
 				}
@@ -293,7 +293,6 @@ public class StrategiePersonnage {
 	
 
 	/* Pacifiste et tres difficile a vaincre au corps a corps */
-
 	public void execStratShaolin(Personnage invocateur, Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException{
 		
 		if (voisins.isEmpty()) { // je n'ai pas de voisins, j'erre
