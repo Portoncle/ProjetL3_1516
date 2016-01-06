@@ -111,12 +111,15 @@ public class Personnage extends Element {
 	public void addStuff(Equipement e)
 	{
 			Caracteristique cTemp = null;
+			
 			switch(e.indice)
 			{
 				case 0: cTemp = Caracteristique.FORCE;
 				case 1: cTemp = Caracteristique.ARMURE;
 				case 2: cTemp = Caracteristique.VITESSE;
 			}
+			System.out.println(cTemp.toString());
+			System.out.println(e.caracts.get(cTemp));
 			
 			if(this.stuff[e.indice] == null)
 			{
