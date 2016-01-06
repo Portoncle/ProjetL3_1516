@@ -304,8 +304,7 @@ public class StrategiePersonnage {
 			if(distPlusProche <= Constantes.DISTANCE_MIN_INTERACTION) { // si suffisamment proches
 				// j'interagis directement
 				if(elemPlusProche instanceof Personnage) { // personnage
-					// duel
-					/* DUEL VAMPIRIQUE A METTRE EN PLACE */
+			
 					console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
 					arene.lanceAttaqueVampire(refRMI, refCible);
 				}

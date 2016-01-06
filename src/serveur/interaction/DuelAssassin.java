@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import serveur.Arene;
 import serveur.element.Caracteristique;
 import serveur.element.Personnage;
+import serveur.element.PotionCC;
 import serveur.vuelement.VuePersonnage;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
@@ -39,7 +40,7 @@ public class DuelAssassin extends Duel {
 			int armure = pDefenseur.getCaract(Caracteristique.ARMURE);
 			
 			int perteVie = forceAttaquant - armure ;
-		
+		    PotionCC po = new PotionCC();
 			Point positionEjection = positionEjection(defenseur.getPosition(), attaquant.getPosition(), forceAttaquant);
 
 			// ejection du defenseur
@@ -49,7 +50,10 @@ public class DuelAssassin extends Duel {
 			
 			if ( perteVie > 0) //Il a subit des degats
 			{
-				
+				if( pAttaquant.findPotion(po) != -1)
+				{
+					pAttaquant.getPotion( pAttaquant.findPotion(po));
+				}
 			    arene.incrementeCaractElement(defenseur, Caracteristique.ARMURE, 0); //l'armure est cassé on la remet a 0
 				int rnd = Calculs.nombreAleatoire (0,100);
 				if ( rnd < chanceDeCrit) //Si il crit
