@@ -52,11 +52,10 @@ public class Ramassage extends Interaction<VueElement<?>> {
 					// caracteristiques de la potion
 					HashMap<Caracteristique, Integer> valeursPotion = p.getCaracts();
 					
-					
+					//Test si l'inventaire est plein, si c'est un guerrier, si la potion est de vie ou de force
 					if((attaquant.getElement().isFull()) || 
 							(attaquant.getElement().getNom().compareTo("Garen") == 0) || 
 							(p instanceof PotionVie) || (p instanceof PotionForce)){
-						
 						if(p.getCaract(Caracteristique.DUREE) > 0){
 							if(attaquant.getElement().getCaract(Caracteristique.DUREE) > 0)
 								attaquant.getElement().delPotionActive();
