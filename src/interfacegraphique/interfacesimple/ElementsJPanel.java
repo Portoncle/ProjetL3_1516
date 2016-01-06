@@ -1,10 +1,12 @@
 
 package interfacegraphique.interfacesimple;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.MouseInfo;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -78,6 +80,11 @@ public class ElementsJPanel extends JPanel {
 	 * ScrollPane contenant les potions.
 	 */
 	private JScrollPane jScrollPanePotions;
+	
+	/**
+	 * ScrollPane contenant les potions.
+	 */
+	private JScrollPane jScrollPaneEquipement;
 	//private JScrollPane jScrollPaneInventaire;
 	/**
 	 * SplitPane separant les personnages et les potions.
@@ -148,13 +155,33 @@ public class ElementsJPanel extends JPanel {
         jTablePotions.addMouseListener(listener);
 		
 		// ajout des composants
+        
         jSplitPane = new JSplitPane();
         jSplitPane.setDividerLocation(350);
         jSplitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
-        
         jSplitPane.setTopComponent(jScrollPanePersonnages);
         jSplitPane.setBottomComponent(jScrollPanePotions);        
+        JPanel gauchePanel = new JPanel(new BorderLayout());
+		gauchePanel.add(jSplitPane);
         
+		
+        //add(jSplitPane);
+        jSplitPane = new JSplitPane();
+        jSplitPane.setDividerLocation(350);
+        jSplitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+        jSplitPane.setTopComponent(jScrollPaneEquipement);  
+        
+        JPanel droitePanel = new JPanel(new BorderLayout());
+		droitePanel.add(jScrollPaneEquipement);
+		
+		JSplitPane jSplitPane = new JSplitPane();
+		Toolkit kit = Toolkit.getDefaultToolkit();
+		Dimension screenSize = kit.getScreenSize();
+		int fenWidth = 3 * screenSize.width / 4;
+		int dividerLocation = fenWidth / 3;
+		jSplitPane.setDividerLocation(dividerLocation);
+		jSplitPane.setLeftComponent(gauchePanel);
+		jSplitPane.setRightComponent(droitePanel);
         add(jSplitPane);
         
 	}
@@ -287,6 +314,45 @@ public class ElementsJPanel extends JPanel {
         // mise en place du modele
         modelTableEquip = new EquipementTableModel();         
         jTableEquipement.setModel(modelTableEquip);
+        
+        // ajustement de la taille des colonnes
+        for (int i = 0; i < modelTableEquip.getColumnCount(); i++) {
+        	int width = modelTableEquip.getColumnWidth(i);
+        	if (width != 0) {
+        		jTableEquipement.getColumnModel().getColumn(i).setMaxWidth(width);
+        		jTableEquipement.getColumnModel().getColumn(i).setPreferredWidth(width);
+        	}
+        }
+        
+        jTableEquipement.setDefaultRenderer(Object.class, new NormalRenderer(IHM.noir, IHM.grisClair));
+        jTableEquipement.setDefaultRenderer(Integer.class, new NormalRenderer(IHM.noir, IHM.grisClair));              
+        
+        jTableEquipement.setIntercellSpacing(new Dimension(0, 0));
+        jTableEquipement.setRowHeight(35);
+		
+        jTableEquipement.setTableHeader(new JTableHeader(jTableEquipement.getColumnModel()) {
+			private static final long serialVersionUID = 1L;
+			@Override
+			public Dimension getPreferredSize() {
+				Dimension d = super.getPreferredSize();
+				d.height = HEADER_HEIGHT;
+				return d;
+			}
+		});
+		
+        jTableEquipement.getTableHeader().setDefaultRenderer(new HeaderRenderer());
+
+        jScrollPaneEquipement = new JScrollPane();
+        jScrollPaneEquipement.getViewport().setBackground(IHM.grisFonce);
+        jScrollPaneEquipement.setBorder(BorderFactory.createTitledBorder(
+        		null, 
+        		"Equipement", 
+        		TitledBorder.CENTER, 
+        		TitledBorder.DEFAULT_POSITION, 
+        		new Font("Helvetica Neue", 0, 14), 
+        		new Color(0, 0, 0)));
+        
+        jScrollPaneEquipement.setViewportView(jTableEquipement);
 	}
 
 
