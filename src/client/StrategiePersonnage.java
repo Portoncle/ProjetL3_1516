@@ -4,7 +4,6 @@ import java.awt.Point;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 
-import client.controle.Console;
 import logger.LoggerProjet;
 import serveur.IArene;
 import serveur.element.Caracteristique;
