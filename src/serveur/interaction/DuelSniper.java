@@ -37,7 +37,7 @@ public class DuelSniper extends Duel {
 			int chanceDeCrit = pAttaquant.getCaract(Caracteristique.COUPCRITIQUE);
 			int armure = pDefenseur.getCaract(Caracteristique.ARMURE);
 			
-			int perteVie = forceAttaquant - armure ;
+			int perteVie = forceAttaquant - (armure/100) ;
 			
 			if ( perteVie > 0) //Il a subit des degats
 			{

@@ -41,7 +41,7 @@ public class DuelAssassin extends Duel {
 			int chanceDeCrit = pAttaquant.getCaract(Caracteristique.COUPCRITIQUE);
 			int armure = pDefenseur.getCaract(Caracteristique.ARMURE);
 			
-			int perteVie = forceAttaquant - armure ;
+			int perteVie = forceAttaquant * armure/100 ;
 			
 		    Potion po = new PotionCC();
 

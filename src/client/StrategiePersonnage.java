@@ -246,7 +246,7 @@ public class StrategiePersonnage {
 				}
 				
 			} else { // si voisins, mais plus eloignes
-				// je vais vers le plus proche
+				// je vais vers le plus proche et je prend une potion d'invisibilité
 				console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
 				arene.deplace(refRMI, refCible);
 			}
@@ -293,7 +293,7 @@ public class StrategiePersonnage {
 
 	/* Pacifiste et tres difficile a vaincre au corps a corps */
 
-	public void execStratShaolin(Personnage invocateur, Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException{
+	public void execStratShaolin(Personnage shaolin, Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException{
 		
 		if (voisins.isEmpty()) { // je n'ai pas de voisins, j'erre
 			console.setPhrase("J'erre...");
@@ -337,6 +337,8 @@ public class StrategiePersonnage {
 					console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
 					arene.deplace(refRMI, refCible);
 				}
+				
+			
 				// else = personnage. Arret en attente d'attaque pour se defendre
 			}
 		}
