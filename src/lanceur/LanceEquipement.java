@@ -59,18 +59,22 @@ public class LanceEquipement {
 		try {
 			if(indice == 0)
 			{
-				caractsEquip.put(Caracteristique.FORCE, Calculs.calculBuffStuff(Caracteristique.FORCE));
-				nom = "Epee";
+				int valeur = Calculs.calculBuffStuff(Caracteristique.FORCE);
+				caractsEquip.put(Caracteristique.FORCE, valeur);
+				nom = "Epee." + valeur;
 			}
 			else if(indice == 1)
 			{
-				caractsEquip.put(Caracteristique.ARMURE, Calculs.calculBuffStuff(Caracteristique.ARMURE));
-				nom = "Bouclier";
+				int valeur = Calculs.calculBuffStuff(Caracteristique.ARMURE);
+				caractsEquip.put(Caracteristique.ARMURE, valeur);
+				nom = "Bouclier." + valeur;
 			}
 			else
 			{
-				caractsEquip.put(Caracteristique.VITESSE, Calculs.calculBuffStuff(Caracteristique.VITESSE));
-				nom = "Bottes";
+				int valeur = Calculs.calculBuffStuff(Caracteristique.VITESSE);
+				caractsEquip.put(Caracteristique.VITESSE, valeur);
+				
+				nom = "Bottes." + valeur;
 			}
 			logger = new LoggerProjet(true, "equipement_"+nom+groupe);
 		} catch (IOException e) {
