@@ -69,20 +69,18 @@ public class Ramassage extends Interaction<VueElement<?>> {
 							arene.setPhrase(attaquant.getRefRMI(), "Je me suis empoisonne, je meurs ");
 							logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + " vient de boire un poison... Mort >_<");
 						}
-
+						arene.ejectePotion(defenseur.getRefRMI());
 					}
 					else{
 						attaquant.getElement().addPotion((Potion)defenseur.getElement());
 						arene.setPhrase(attaquant.getRefRMI(), "Potion ajoutee à l'inventaire!");
 					}
-					arene.ejectePotion(defenseur.getRefRMI());
 				}
 
 				/* Si c'est un équipement */
 				else if(defenseur.getElement() instanceof Equipement){
 					attaquant.getElement().addStuff((Equipement)defenseur.getElement());
 					arene.ejecteEquip(defenseur.getRefRMI());
-
 				}
 				
 				
