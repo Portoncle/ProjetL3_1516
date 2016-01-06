@@ -1,6 +1,5 @@
 package serveur.interaction;
 
-import java.awt.Point;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 
