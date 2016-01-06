@@ -38,6 +38,7 @@ public class Ramassage extends Interaction<VueElement<?>> {
 			// si le personnage est vivant
 			if(attaquant.getElement().estVivant() ) {
 				if(defenseur.getElement() instanceof Potion){
+					arene.setPhrase(attaquant.getRefRMI(), "C'est une potion!");
 					if((attaquant.getElement().isFull()) || (attaquant.getElement() instanceof Guerrier)){
 						Potion p = (Potion)defenseur.getElement();
 						// caracteristiques de la potion
