@@ -166,6 +166,17 @@ public interface IArene extends Remote {
 	public boolean ramassePotion(int refRMI, int refPotion) throws RemoteException;
 	
 	/**
+	 * Execute le ramassage d'un equipement par un personnage, si possible.
+	 * Le ramassage echoue si une action a deja ete executee ce tour par ce 
+	 * personnage, ou si l'equiement est trop loin du personnage.
+	 * @param refRMI reference RMI du personnage voulant ramasser un equipement
+	 * @param refEquipement reference RMI de l'equipement qui doit etre ramasse
+	 * @return vrai si l'action a ete effectuee, faux sinon
+	 * @throws RemoteException
+	 */
+	public boolean ramasseEquipement(int refRMI, int refPotion) throws RemoteException;
+	
+	/**
 	 * Execute un duel entre le personnage correspondant a la console donnee 
 	 * et l'adversaire correspondant a la reference RMI donnee.
 	 * Le duel echoue si une action a deja ete executee a ce tour par 

@@ -781,6 +781,36 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 		return res;
 	}
 	
+	public boolean ramasseEquipement(int refRMI, int refEquipement) throws RemoteException {
+		boolean res = false;
+		
+		VuePersonnage vuePersonnage = personnages.get(refRMI);
+		VueEquipement vueEquipement = equip.get(refEquipement);
+		
+		if (vuePersonnage.isActionExecutee()) {
+			// si une action a deja ete executee
+			logActionDejaExecutee(refRMI);
+			
+		} else {
+			// sinon, on tente de jouer l'interaction
+			int distance = Calculs.distanceChebyshev(vuePersonnage.getPosition(), vueEquipement.getPosition());
+			
+			// on teste la distance entre le personnage et la potion
+			if (distance <= Constantes.DISTANCE_MIN_INTERACTION) {
+				new Ramassage(this, vuePersonnage, vueEquipement).interagit();
+				personnages.get(refRMI).executeAction();
+				
+				res = true;
+			} else {
+				logger.warning(Constantes.nomClasse(this), nomRaccourciClient(refRMI) + 
+						" a tente d'interagir avec " + vueEquipement.getElement().getNom() + 
+						", alors qu'il est trop eloigne !\nDistance = " + distance);
+			}
+		}
+		
+		return res;
+	}
+	
 	@Override
 	public boolean lanceAttaque(int refRMI, int refRMIAdv) throws RemoteException {
 		boolean res = false;
