@@ -3,6 +3,7 @@
 import java.awt.Point;
 import java.rmi.RemoteException;
 import java.util.HashMap;
+import java.util.logging.Level;
 
 import client.controle.Console;
 import logger.LoggerProjet;
@@ -12,6 +13,7 @@ import serveur.element.Element;
 import serveur.element.Equipement;
 import serveur.element.Personnage;
 import serveur.element.Potion;
+import serveur.element.PotionInvisibilite;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
 /**
@@ -160,10 +162,7 @@ public class StrategiePersonnage {
 					console.setPhrase("Je ramasse un equipement");
 					arene.ramasseEquipement(refRMI, refCible);
 				}
-				else { // personnage
-					// duel
-					// AJOUTER NOTION COUP CRITIQUE
-					
+				else {
 					console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
 					arene.lanceAttaqueAssassin(refRMI, refCible);
 				}
@@ -185,8 +184,35 @@ public class StrategiePersonnage {
 						console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
 						arene.deplace(refRMI, refCible);
 					}
-					else{ // Sinon erreur
-						console.setPhrase("J'erre...");
+
+					else{ // Sinon fuit 
+						console.setPhrase("Je fuis");
+						if ( assassin.findPotion("Potion d'invisibilite") != -1 )
+						{
+							PotionInvisibilite po  =new PotionInvisibilite();
+							assassin.getPotion( assassin.findPotion("Potion de coup crtitique"));
+							HashMap<Caracteristique, Integer> valeursPotion = po.getCaracts();
+							
+							for(Caracteristique c : valeursPotion.keySet()) {
+								assassin.incrementeCaract( c, valeursPotion.get(c));
+							}
+							assassin.addPotionActive(po);
+							console.setPhrase("Je consomme une Potion d'invisibilite");
+							
+						}
+						else if (assassin.findPotion("Potion de vitesse") != -1 )
+						{
+							PotionInvisibilite po  =new PotionInvisibilite();
+							assassin.getPotion( assassin.findPotion("Potion de coup crtitique"));
+							HashMap<Caracteristique, Integer> valeursPotion = po.getCaracts();
+							
+							for(Caracteristique c : valeursPotion.keySet()) {
+								assassin.incrementeCaract( c, valeursPotion.get(c));
+							}
+							assassin.addPotionActive(po);
+							console.setPhrase("Je consomme une Potion de Vitesse");
+						}
+
 						arene.deplace(refRMI, 0); 
 					}
 				}
@@ -299,6 +325,7 @@ public class StrategiePersonnage {
 				// je vais vers le plus proche
 				if(elemPlusProche instanceof Potion){
 					console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
+					
 					arene.deplace(refRMI, refCible);
 				}
 				else if(elemPlusProche instanceof Equipement){
@@ -325,9 +352,11 @@ public class StrategiePersonnage {
 
 			if(distPlusProche <= Constantes.DISTANCE_MIN_INTERACTION && elemPlusProche instanceof Personnage) { // si suffisamment proches
 				// j'interagis directement
+
 				// duel
 				console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
 				arene.lanceAttaqueVampire(refRMI, refCible);				
+
 			} 
 			else if(elemPlusProche instanceof Personnage){ // si voisins, mais plus eloignes
 				// je vais vers le plus proche
