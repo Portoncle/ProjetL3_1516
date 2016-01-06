@@ -5,7 +5,6 @@ import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.logging.Level;
 
-import client.controle.Console;
 import logger.LoggerProjet;
 import serveur.IArene;
 import serveur.element.Caracteristique;
