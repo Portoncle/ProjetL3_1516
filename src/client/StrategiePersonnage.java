@@ -107,7 +107,6 @@ public class StrategiePersonnage {
 		}
 	}
 	
-	
 	public void execStratPersonnage(Personnage perso, Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException{
 		if (voisins.isEmpty()) { // je n'ai pas de voisins, j'erre
 			console.setPhrase("J'erre...");
@@ -139,7 +138,8 @@ public class StrategiePersonnage {
 			}
 		}
 	}
-		
+	
+	
 	public void execStratAssassin(Personnage assassin, Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException {
 		if (voisins.isEmpty()) { // je n'ai pas de voisins, j'erre
 			console.setPhrase("J'erre...");
@@ -267,11 +267,7 @@ public class StrategiePersonnage {
 
 			if(distPlusProche <= Constantes.DISTANCE_MIN_INTERACTION) { // si suffisamment proches
 				// j'interagis directement
-				if(elemPlusProche instanceof Equipement){
-					console.setPhrase("Je ramasse un equipement");
-					arene.ramasseEquipement(refRMI, refCible);
-				}
-				else if(elemPlusProche instanceof Potion) { // potion
+				if(elemPlusProche instanceof Potion) { // potion
 					// ramassage
 					console.setPhrase("Je ramasse une potion");
 					arene.ramassePotion(refRMI, refCible);

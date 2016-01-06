@@ -174,7 +174,7 @@ public interface IArene extends Remote {
 	 * @return vrai si l'action a ete effectuee, faux sinon
 	 * @throws RemoteException
 	 */
-	public boolean ramasseEquipement(int refRMI, int refPotion) throws RemoteException;
+	public boolean ramasseEquipement(int refRMI, int refEquipement) throws RemoteException;
 	
 	/**
 	 * Execute un duel entre le personnage correspondant a la console donnee 
