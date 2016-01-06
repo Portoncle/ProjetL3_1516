@@ -1,8 +1,12 @@
-PAR DEFAUT vision de 30
-Armure = %d'absoroption des des degats
+Quentin:
+	Armure = %d'absoroption des degats
 
-Corentin : Potion vie (10-40), potion force (10-20)
-			bug : duree potion d'invisibilite non fonctionnelle
+Corentin : 
+	bug : duree potion d'invisibilite non fonctionnelle
+	Fonction conso direct ou stockage
+			
+Clement:
+	Maj des stats au rammassage equipement
 
 5 Sortes de personnage
         Guerrier
@@ -23,7 +27,6 @@ Corentin : Potion vie (10-40), potion force (10-20)
                     
         Shaolin
                 Comportement
-                    S'en fou du stuff
                     Consomme invisibilite et vitesse quand il voit quelqu'un
                     Consomme le reste instant'
         		

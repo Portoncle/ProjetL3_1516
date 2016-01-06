@@ -265,7 +265,7 @@ public class StrategiePersonnage {
 	}
 	
 
-	/* Pacifiste et tr�s difficile � vaincre au corps � corps */
+	/* Pacifiste et tres difficile a vaincre au corps a corps */
 
 	public void execStratShaolin(Personnage invocateur, Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException{
 		
@@ -273,7 +273,8 @@ public class StrategiePersonnage {
 			console.setPhrase("J'erre...");
 			arene.deplace(refRMI, 0); 
 			
-		} else {
+		} 
+		else{
 			int refCible = Calculs.chercheElementProche(position, voisins);
 			int distPlusProche = Calculs.distanceChebyshev(position, arene.getPosition(refCible));
 
@@ -286,18 +287,26 @@ public class StrategiePersonnage {
 					console.setPhrase("Je ramasse une potion");
 					arene.ramassePotion(refRMI, refCible);
 
-				} else { // personnage
+				} 
+				else if(elemPlusProche instanceof Personnage){ // personnage
 					// duel
 					console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
 					arene.lanceAttaque(refRMI, refCible);
 				}
-				
-			} else { // si potion voisine, mais plus eloignes
+				// else Equipement, non interesse
+			}
+			else{ // si potion voisine, mais plus eloignes
 				// je vais vers le plus proche
 				if(elemPlusProche instanceof Potion){
 					console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
 					arene.deplace(refRMI, refCible);
 				}
+				else if(elemPlusProche instanceof Equipement){
+					// Si equipement, non interesse, errance
+					console.setPhrase("J'erre...");
+					arene.deplace(refRMI, 0); 
+				}
+				// else = personnage. Arret en attente d'attaque pour se defendre
 			}
 		}
 	}
