@@ -9,6 +9,7 @@ import logger.LoggerProjet;
 import serveur.IArene;
 import serveur.element.Caracteristique;
 import serveur.element.Element;
+import serveur.element.Equipement;
 import serveur.element.Personnage;
 import serveur.element.Potion;
 import utilitaires.Calculs;
@@ -136,6 +137,7 @@ public class StrategiePersonnage {
 		}
 	}
 	
+	
 	public void execStratAssassin(Personnage assassin, Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException {
 		if (voisins.isEmpty()) { // je n'ai pas de voisins, j'erre
 			console.setPhrase("J'erre...");
@@ -154,6 +156,10 @@ public class StrategiePersonnage {
 					console.setPhrase("Je ramasse une potion");
 					arene.ramassePotion(refRMI, refCible);
 				}
+				else if(elemPlusProche instanceof Equipement){ // Equipement
+					console.setPhrase("Je ramasse un equipement");
+					
+				}
 				else { // personnage
 					// duel
 					// AJOUTER NOTION COUP CRITIQUE
@@ -163,11 +169,16 @@ public class StrategiePersonnage {
 				}
 			}
 			else { // si voisins, mais plus eloignes
-				// si potion, aller vers elle
-				if(elemPlusProche instanceof Potion){ //Potion
+				// si potion ou equipement, s'y diriger
+				if(elemPlusProche instanceof Potion /*|| elemPlusProche instanceof Equipement*/){ //Potion
 					console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
 					arene.deplace(refRMI, refCible);
 				}
+				else if(elemPlusProche instanceof Equipement){
+					console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
+					arene.deplace(refRMI, refCible);
+				}
+				
 				// sinon, aller vers l'ennemi s'il a moins de vie que la force de l'assassin
 				else{
 					if(elemPlusProche.getCaract(Caracteristique.VIE) < assassin.getCaract(Caracteristique.FORCE)){
@@ -305,7 +316,6 @@ public class StrategiePersonnage {
 				// j'interagis directement
 				if(elemPlusProche instanceof Personnage) { // personnage
 					// duel
-					/* DUEL VAMPIRIQUE A METTRE EN PLACE */
 					console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
 					arene.lanceAttaqueVampire(refRMI, refCible);
 				}
