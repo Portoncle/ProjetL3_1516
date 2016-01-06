@@ -66,7 +66,7 @@ public class LancePotion {
 			caractsPotion.put(Caracteristique.INITIATIVE, Calculs.valeurCaracAleatoirePosNeg(Caracteristique.INITIATIVE));
 			
 			// ajout de la potion
-			arene.ajoutePotion(new Potion(nom, groupe, caractsPotion), Calculs.positionAleatoireArene());
+			//arene.ajoutePotion(new Potion(nom, groupe, caractsPotion), Calculs.positionAleatoireArene());
 			logger.info("Lanceur", "Lancement de la potion reussi");
 			arene.ajoutePotion(new PotionInvisibilite(), Calculs.positionAleatoireArene());
 			arene.ajoutePotion(new PotionVitesse(), Calculs.positionAleatoireArene());

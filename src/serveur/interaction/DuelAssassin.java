@@ -2,11 +2,13 @@ package serveur.interaction;
 
 import java.awt.Point;
 import java.rmi.RemoteException;
+import java.util.HashMap;
 import java.util.logging.Level;
 
 import serveur.Arene;
 import serveur.element.Caracteristique;
 import serveur.element.Personnage;
+import serveur.element.Potion;
 import serveur.element.PotionCC;
 import serveur.vuelement.VuePersonnage;
 import utilitaires.Calculs;
@@ -40,7 +42,24 @@ public class DuelAssassin extends Duel {
 			int armure = pDefenseur.getCaract(Caracteristique.ARMURE);
 			
 			int perteVie = forceAttaquant - armure ;
-		    PotionCC po = new PotionCC();
+			
+		    Potion po = new PotionCC();
+
+		  
+			  
+		    if( pAttaquant.findPotion("Potion de coup crtitique") != -1)
+			{
+				pAttaquant.getPotion( pAttaquant.findPotion("Potion de coup crtitique"));
+				HashMap<Caracteristique, Integer> valeursPotion = po.getCaracts();
+				
+				for(Caracteristique c : valeursPotion.keySet()) {
+					arene.incrementeCaractElement(attaquant, c, valeursPotion.get(c));
+				}
+				this.attaquant.getElement().addPotionActive(po);
+				logs(Level.INFO, "Je prend une potion de coup critique!");
+				
+			}
+			
 			Point positionEjection = positionEjection(defenseur.getPosition(), attaquant.getPosition(), forceAttaquant);
 
 			// ejection du defenseur
@@ -50,10 +69,7 @@ public class DuelAssassin extends Duel {
 			
 			if ( perteVie > 0) //Il a subit des degats
 			{
-				if( pAttaquant.findPotion(po) != -1)
-				{
-					pAttaquant.getPotion( pAttaquant.findPotion(po));
-				}
+				
 			    arene.incrementeCaractElement(defenseur, Caracteristique.ARMURE, 0); //l'armure est cassé on la remet a 0
 				int rnd = Calculs.nombreAleatoire (0,100);
 				if ( rnd < chanceDeCrit) //Si il crit

@@ -26,11 +26,14 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.JTableHeader;
 
 import interfacegraphique.IHM;
+import interfacegraphique.tablemodel.EquipementTableModel;
 import interfacegraphique.tablemodel.PersonnageTableModel;
 import interfacegraphique.tablemodel.PotionTableModel;
+import interfacegraphique.tablemodel.InventaireTableModel;
 import interfacegraphique.tablerenderer.HeaderRenderer;
 import interfacegraphique.tablerenderer.NormalRenderer;
 import serveur.vuelement.VueElement;
+import serveur.vuelement.VueEquipement;
 import serveur.vuelement.VuePersonnage;
 import serveur.vuelement.VuePotion;
 
@@ -60,6 +63,11 @@ public class ElementsJPanel extends JPanel {
 	 * Modele de la table des potions.
 	 */
 	private PotionTableModel modelTablePotions;
+	private InventaireTableModel modelTableInventaire;
+	/**
+	 * Modele de la table des potions.
+	 */
+	private EquipementTableModel modelTableEquip;
 	
 	/**
 	 * ScrollPane contenant les personnages.
@@ -70,7 +78,7 @@ public class ElementsJPanel extends JPanel {
 	 * ScrollPane contenant les potions.
 	 */
 	private JScrollPane jScrollPanePotions;
-	
+	private JScrollPane jScrollPaneInventaire;
 	/**
 	 * SplitPane separant les personnages et les potions.
 	 */
@@ -80,13 +88,18 @@ public class ElementsJPanel extends JPanel {
 	 * Tableau des personnages.
 	 */
 	private JTable jTablePersonnages;
+	
+	/**
+	 * Tableau des équipements
+	 */
+	private JTable jTableEquipement;
 
 
 	/**
      * Tableau des potions.
      */
     private JTable jTablePotions;
-    
+    private JTable jTableInventaire;
     /**
      * Menu contextuel (clic droit). 
      */
@@ -117,6 +130,7 @@ public class ElementsJPanel extends JPanel {
         // initialisation des tables
         initTablePersonnages();        
         initTablePotions();
+        initTableEquipement();
         
         // initialisation du menu de clic droit
         initMenuClickDroit();
@@ -265,7 +279,66 @@ public class ElementsJPanel extends JPanel {
         
         jScrollPanePotions.setViewportView(jTablePotions);
 	}
+	
+	
+	private void initTableEquipement() {
+		jTableEquipement = new JTable();
 
+        // mise en place du modele
+        modelTableEquip = new EquipementTableModel();         
+        jTableEquipement.setModel(modelTableEquip);
+	}
+
+
+	/**
+     * Initialise la table des potions.
+     */
+	private void initTableInventaire() {
+		jTablePotions = new JTable();
+        
+        // mise en place du modele
+        modelTableInventaire = new InventaireTableModel();         
+        jTablePotions.setModel(modelTableInventaire);
+        
+        // ajustement de la taille des colonnes
+        for (int i = 0; i < modelTableInventaire.getColumnCount(); i++) {
+        	int width = modelTableInventaire.getColumnWidth(i);
+        	if (width != 0) {
+        		jTableInventaire.getColumnModel().getColumn(i).setMaxWidth(width);
+        		jTableInventaire.getColumnModel().getColumn(i).setPreferredWidth(width);
+        	}
+        }
+        
+        jTableInventaire.setDefaultRenderer(Object.class, new NormalRenderer(IHM.noir, IHM.grisClair));
+        jTableInventaire.setDefaultRenderer(Integer.class, new NormalRenderer(IHM.noir, IHM.grisClair));              
+        
+        jTableInventaire.setIntercellSpacing(new Dimension(0, 0));
+        jTableInventaire.setRowHeight(35);
+		
+        jTableInventaire.setTableHeader(new JTableHeader(jTableInventaire.getColumnModel()) {
+			private static final long serialVersionUID = 1L;
+			@Override
+			public Dimension getPreferredSize() {
+				Dimension d = super.getPreferredSize();
+				d.height = HEADER_HEIGHT;
+				return d;
+			}
+		});
+		
+        jTableInventaire.getTableHeader().setDefaultRenderer(new HeaderRenderer());
+
+        jScrollPaneInventaire = new JScrollPane();
+        jScrollPaneInventaire.getViewport().setBackground(IHM.grisFonce);
+        jScrollPaneInventaire.setBorder(BorderFactory.createTitledBorder(
+        		null, 
+        		"Potions", 
+        		TitledBorder.CENTER, 
+        		TitledBorder.DEFAULT_POSITION, 
+        		new Font("Helvetica Neue", 0, 14), 
+        		new Color(0, 0, 0)));
+        
+        jScrollPaneInventaire.setViewportView(jTableInventaire);
+	}
 
 
 	/**
@@ -318,15 +391,15 @@ public class ElementsJPanel extends JPanel {
 	 */
 	/* ATTENTION : les parties commentées seront peut être utiles plus tard */
 	public void setElements(List<VuePersonnage> personnages, 
-			List<VuePersonnage> personnagesMorts, List<VuePotion> potions/*,List<VueEquipement> equipement*/) {
+			List<VuePersonnage> personnagesMorts, List<VuePotion> potions,List<VueEquipement> equipement) {
 		
 		// tri des potions et des personnages (selon leur methode compareTo)
 		List<VuePersonnage> personnagesTous = new ArrayList<VuePersonnage>(personnages);
 		personnagesTous.addAll(personnagesMorts);
 		List<VuePotion> potionsTous = new ArrayList<VuePotion>(potions);
-		//List<VueEquipement> equipementTous = new ArrayList<VueEquipement>(equipement);
+		List<VueEquipement> equipementTous = new ArrayList<VueEquipement>(equipement);
 		
-		/*Collections.sort(equipementTous);*/
+		Collections.sort(equipementTous);
 		Collections.sort(personnagesTous);
 		Collections.sort(potionsTous);
 		
@@ -344,16 +417,16 @@ public class ElementsJPanel extends JPanel {
 				}
 			}
 			
-			/*for(VueEquipement ve : equipementTous)
+			for(VueEquipement ve : equipementTous)
 			{
 				if(ve.getRefRMI() == ihm.getElementSelectionne().getRefRMI()){
 					ve.setSelectionne(true);
 				}
-			}*/
+			}
 		}
 		
-		/*modelTableEquip.setVues(equipementTous);
-		modelTableEquip.fireTableDataChanged();*/
+		modelTableEquip.setVues(equipementTous);
+		modelTableEquip.fireTableDataChanged();
 		
     	modelTablePersonnages.setVues(personnagesTous);
     	modelTablePersonnages.fireTableDataChanged();
