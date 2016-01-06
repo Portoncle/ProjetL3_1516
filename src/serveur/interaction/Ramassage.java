@@ -6,26 +6,27 @@ import java.util.logging.Level;
 
 import serveur.Arene;
 import serveur.element.Caracteristique;
+import serveur.element.Equipement;
 import serveur.element.Potion;
-import serveur.element.Assassin;
+import serveur.element.Guerrier;
+import serveur.vuelement.VueElement;
 import serveur.vuelement.VuePersonnage;
-import serveur.vuelement.VuePotion;
 import utilitaires.Constantes;
 
 /**
  * Represente le ramassage d'une potion par un personnage.
  *
  */
-public class Ramassage extends Interaction<VuePotion> {
+public class Ramassage extends Interaction<VueElement<?>> {
 
 	/**
 	 * Cree une interaction de ramassage.
 	 * @param arene arene
 	 * @param ramasseur personnage ramassant la potion
-	 * @param potion potion a ramasser
+	 * @param element potion a ramasser
 	 */
-	public Ramassage(Arene arene, VuePersonnage ramasseur, VuePotion potion) {
-		super(arene, ramasseur, potion);
+	public Ramassage(Arene arene, VuePersonnage ramasseur, VueElement<?> element) {
+		super(arene, ramasseur, element);
 	}
 	
 	@Override
@@ -36,35 +37,38 @@ public class Ramassage extends Interaction<VuePotion> {
 			
 			// si le personnage est vivant
 			if(attaquant.getElement().estVivant() ) {
-				
-				if((attaquant.getElement().isFull()) || (attaquant.getElement() instanceof Assassin)){
-					Potion p = defenseur.getElement();
-					// caracteristiques de la potion
-					HashMap<Caracteristique, Integer> valeursPotion = p.getCaracts();
-					
-					for(Caracteristique c : valeursPotion.keySet()) {
-						arene.incrementeCaractElement(attaquant, c, valeursPotion.get(c));
+				if(defenseur.getElement() instanceof Potion){
+					if((attaquant.getElement().isFull()) || (attaquant.getElement() instanceof Guerrier)){
+						Potion p = (Potion)defenseur.getElement();
+						// caracteristiques de la potion
+						HashMap<Caracteristique, Integer> valeursPotion = p.getCaracts();
+						
+						for(Caracteristique c : valeursPotion.keySet()) {
+							arene.incrementeCaractElement(attaquant, c, valeursPotion.get(c));
+						}
+	
+						
+						if(defenseur.getElement().getCaract(Caracteristique.DUREE) > 0 && ( 
+								(attaquant.getElement().getPotionBu() == null) || 
+								attaquant.getElement().getPotionBu() == defenseur.getElement())){
+							this.attaquant.getElement().addPotionActive(p);
+							logs(Level.INFO, "Potion bue !");
+						}
+	
+						// test si mort
+						if(!attaquant.getElement().estVivant()) {
+							arene.setPhrase(attaquant.getRefRMI(), "Je me suis empoisonne, je meurs ");
+							logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + " vient de boire un poison... Mort >_<");
+						}
 					}
-
-					
-					if(defenseur.getElement().getCaract(Caracteristique.DUREE) > 0 && ( 
-							(attaquant.getElement().getPotionBu() == null) || 
-							attaquant.getElement().getPotionBu() == defenseur.getElement())){
-						this.attaquant.getElement().addPotionActive(p);
-						logs(Level.INFO, "Potion bue !");
-					}
-
-					// test si mort
-					if(!attaquant.getElement().estVivant()) {
-						arene.setPhrase(attaquant.getRefRMI(), "Je me suis empoisonne, je meurs ");
-						logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + " vient de boire un poison... Mort >_<");
+					else{
+						attaquant.getElement().addPotion((Potion)defenseur.getElement());
+						arene.setPhrase(attaquant.getRefRMI(), "Potion ajouté à l'inventaire!");
 					}
 				}
-				else{
-					attaquant.getElement().addPotion(defenseur.getElement());
-					arene.setPhrase(attaquant.getRefRMI(), "Potion ajouté à l'inventaire!");
+				else if(defenseur.getElement() instanceof Equipement){
+					attaquant.getElement().addStuff((Equipement)defenseur.getElement());
 				}
-
 				// suppression de la potion
 				arene.ejectePotion(defenseur.getRefRMI());
 				
