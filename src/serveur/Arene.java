@@ -510,6 +510,13 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 			vueElement = potions.get(refRMI);
 		}
 		
+		if(vueElement == null)
+		{
+			vueElement = equip.get(refRMI);
+		}
+		
+		
+		
 		return vueElement;
 	}
 
@@ -601,6 +608,18 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 						
 			if(estVoisin(courant, tempPot)) {
 				res.put(refVoisin, tempPot.getPosition());
+			}
+		}
+		
+		// Equipement
+		VueEquipement tempEq;
+		for(int refVoisin : equip.keySet())
+		{
+			
+			tempEq = equip.get(refVoisin);
+			if(estVoisin(courant, tempEq))
+			{
+				res.put(refVoisin, tempEq.getPosition());
 			}
 		}
 		
@@ -1220,6 +1239,8 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 
 	@Override
 	public void lancePotion(Potion potion, Point position, String motDePasse) throws RemoteException {}
+	
+	public void lanceEquipement(Equipement eq, Point position, String motDePasse) throws RemoteException {}
 
 	
 }

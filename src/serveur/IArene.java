@@ -247,7 +247,7 @@ public interface IArene extends Remote {
 	 */
 	public void lancePotion(Potion potion, Point position, String motDePasse) throws RemoteException;
 
-	
+	public void lanceEquipement(Equipement eq, Point position, String motDePasse) throws RemoteException;
 
 	
 }
