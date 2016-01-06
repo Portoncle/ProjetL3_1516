@@ -7,8 +7,6 @@ import java.util.logging.Level;
 import serveur.Arene;
 import serveur.element.Caracteristique;
 
-import serveur.element.Guerrier;
-
 import serveur.element.Equipement;
 
 import serveur.element.Potion;

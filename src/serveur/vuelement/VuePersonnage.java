@@ -2,11 +2,9 @@ package serveur.vuelement;
 
 import java.awt.Color;
 import java.awt.Point;
-import java.util.HashMap;
 
 import serveur.element.Caracteristique;
 import serveur.element.Personnage;
-import serveur.element.Potion;
 import utilitaires.Constantes;
 
 /**
