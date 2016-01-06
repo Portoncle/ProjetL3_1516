@@ -70,7 +70,7 @@ public class DuelAssassin extends Duel {
 			if ( perteVie > 0) //Il a subit des degats
 			{
 				
-			    arene.incrementeCaractElement(defenseur, Caracteristique.ARMURE, 0); //l'armure est cassé on la remet a 0
+			    arene.incrementeCaractElement(defenseur, Caracteristique.ARMURE, 0); //l'armure est cassee on la remet a 0
 				int rnd = Calculs.nombreAleatoire (0,100);
 				if ( rnd < chanceDeCrit) //Si il crit
 				{

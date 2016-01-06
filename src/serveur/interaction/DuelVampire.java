@@ -50,14 +50,14 @@ public class DuelVampire extends Duel {
 			if ( perteVie > 0) //Il a subit des degats
 			{
 				
-			    arene.incrementeCaractElement(defenseur, Caracteristique.ARMURE, 0); //l'armure est cassé on la remet a 0
+			    arene.incrementeCaractElement(defenseur, Caracteristique.ARMURE, 0); //l'armure est cassee on la remet a 0
 				int rnd = Calculs.nombreAleatoire (0,100);
 				if ( rnd < chanceDeCrit) //Si il crit
 				{
 					perteVie = (int) (perteVie + forceAttaquant*0.3 ) ;
 					arene.incrementeCaractElement(defenseur,Caracteristique.VIE, -perteVie);
 					arene.incrementeCaractElement(attaquant, Caracteristique.VIE, forceAttaquant/2);
-					logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + " a regagné  ("
+					logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + " a aspire  ("
 							+ forceAttaquant/2 + " points de vie " );
 					logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + " fait un coup critque ("
 							+ perteVie + " points de degats) a " + Constantes.nomRaccourciClient(defenseur));
@@ -66,7 +66,7 @@ public class DuelVampire extends Duel {
 				{
 				arene.incrementeCaractElement(defenseur, Caracteristique.VIE,- perteVie);
 				arene.incrementeCaractElement(attaquant, Caracteristique.VIE, forceAttaquant/2);
-				logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + " a regagné  ("
+				logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + " a aspire  ("
 						+ forceAttaquant/2 + " points de vie " );
 				logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + " colle une beigne ("
 						+ perteVie + " points de degats) a " + Constantes.nomRaccourciClient(defenseur));

@@ -55,17 +55,17 @@ public class LanceEquipement {
 			
 			if(indice == 0)
 			{
-				caractsEquip.put(Caracteristique.FORCE, Calculs.valeurCaracAleatoire(Caracteristique.FORCE));
+				caractsEquip.put(Caracteristique.FORCE, Calculs.calculBuffStuff(Caracteristique.FORCE));
 				nom = "Epée";
 			}
 			else if(indice == 1)
 			{
-				caractsEquip.put(Caracteristique.ARMURE, Calculs.valeurCaracAleatoire(Caracteristique.ARMURE));
+				caractsEquip.put(Caracteristique.ARMURE, Calculs.calculBuffStuff(Caracteristique.ARMURE));
 				nom = "Bouclier";
 			}
 			else
 			{
-				caractsEquip.put(Caracteristique.VITESSE, Calculs.valeurCaracAleatoire(Caracteristique.VITESSE));
+				caractsEquip.put(Caracteristique.VITESSE, Calculs.calculBuffStuff(Caracteristique.VITESSE));
 				nom = "Bottes";
 			}
 			logger = new LoggerProjet(true, "equipement_"+nom+groupe);
@@ -79,14 +79,7 @@ public class LanceEquipement {
 			IArene arene = (IArene) java.rmi.Naming.lookup(Constantes.nomRMI(ipArene, port, "Arene"));
 
 			logger.info("Lanceur", "Lancement de l'équipement sur le serveur...");
-			
-			// caracteristiques de l'équipement
-			
-			
-			
-			
-			
-			
+
 			// ajout de l'équipement
 			arene.ajouteEquipement(new Equipement(nom, groupe, caractsEquip, indice), Calculs.positionAleatoireArene());
 			logger.info("Lanceur", "Lancement de l'équipement reussi");
