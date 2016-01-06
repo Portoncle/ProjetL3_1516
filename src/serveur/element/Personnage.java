@@ -136,7 +136,7 @@ public class Personnage extends Element {
 				this.incrementeCaract(cTemp, e.caracts.get(cTemp));
 				this.stuff[e.getIndice()] = e;
 			}
-			else if(this.stuff[e.getIndice()].caracts.get(cTemp) < e.caracts.get(cTemp))
+			else
 			{
 				this.decrementeCaract(cTemp, this.stuff[e.getIndice()].caracts.get(cTemp));
 				this.incrementeCaract(cTemp, e.caracts.get(cTemp));

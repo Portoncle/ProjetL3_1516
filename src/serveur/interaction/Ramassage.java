@@ -8,7 +8,7 @@ import serveur.Arene;
 import serveur.element.Caracteristique;
 
 import serveur.element.Equipement;
-
+import serveur.element.Personnage;
 import serveur.element.Potion;
 import serveur.element.PotionForce;
 import serveur.element.PotionVie;
@@ -82,7 +82,37 @@ public class Ramassage extends Interaction<VueElement<?>> {
 
 				/* Si c'est un équipement */
 				else if(defenseur.getElement() instanceof Equipement){
-					attaquant.getElement().addStuff((Equipement)defenseur.getElement());
+					
+					String str = null;
+					Caracteristique cTemp = null;
+					Equipement eq = (Equipement) defenseur.getElement();
+					Personnage pers = (Personnage) attaquant.getElement();
+					
+					switch(eq.getIndice())
+					{
+						case 0: cTemp = Caracteristique.FORCE;
+								str = "d'une epee.";
+								break;
+						case 1: cTemp = Caracteristique.ARMURE;
+								str = "d'une armure.";
+								break;
+						case 2: cTemp = Caracteristique.VITESSE;
+								str = "de bottes.";
+								break;
+					}
+					
+					/* Si l'equipement est interessant on le garde */
+					if( pers.getStuff()[eq.getIndice()] == null || 
+						pers.getStuff()[eq.getIndice()].getCaracts().get(cTemp) < eq.getCaracts().get(cTemp))
+					{
+						pers.addStuff(eq);
+						arene.setPhrase(attaquant.getRefRMI(), "Je m'equipe " + str);
+					}
+					/* Sinon on le detruit */
+					else
+					{
+						arene.setPhrase(attaquant.getRefRMI(), "Cet equipement m'est inutile, je le detruit !");
+					}
 					arene.ejecteEquip(defenseur.getRefRMI());
 				}
 			} else {
