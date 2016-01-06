@@ -18,7 +18,7 @@ public class LanceEquipement {
 		
 		String groupe = "G2"; 
 		
-		// init des arguments
+		/* init des arguments */
 		int port = Constantes.PORT_DEFAUT;
 		String ipArene = Constantes.IP_DEFAUT;
 		
@@ -45,28 +45,36 @@ public class LanceEquipement {
 		
 		HashMap<Caracteristique, Integer> caractsEquip = new HashMap<Caracteristique, Integer>();
 		
-		int indice;
-		String nom = null;
-		indice = Calculs.nombreAleatoire(0, 2);
+		
+		
 		
 		// creation du logger
 		LoggerProjet logger = null;
+		
+		
+		/* On va creer aleatoirement un equipement */
+		int indice;
+		String nom = null;
+		indice = Calculs.nombreAleatoire(0, 2);
 		try {
-			
 			if(indice == 0)
 			{
-				caractsEquip.put(Caracteristique.FORCE, Calculs.calculBuffStuff(Caracteristique.FORCE));
-				nom = "Epee";
+				int valeur = Calculs.calculBuffStuff(Caracteristique.FORCE);
+				caractsEquip.put(Caracteristique.FORCE, valeur);
+				nom = "Epee." + valeur;
 			}
 			else if(indice == 1)
 			{
-				caractsEquip.put(Caracteristique.ARMURE, Calculs.calculBuffStuff(Caracteristique.ARMURE));
-				nom = "Bouclier";
+				int valeur = Calculs.calculBuffStuff(Caracteristique.ARMURE);
+				caractsEquip.put(Caracteristique.ARMURE, valeur);
+				nom = "Bouclier." + valeur;
 			}
 			else
 			{
-				caractsEquip.put(Caracteristique.VITESSE, Calculs.calculBuffStuff(Caracteristique.VITESSE));
-				nom = "Bottes";
+				int valeur = Calculs.calculBuffStuff(Caracteristique.VITESSE);
+				caractsEquip.put(Caracteristique.VITESSE, valeur);
+				
+				nom = "Bottes." + valeur;
 			}
 			logger = new LoggerProjet(true, "equipement_"+nom+groupe);
 		} catch (IOException e) {
@@ -74,10 +82,13 @@ public class LanceEquipement {
 			System.exit(ErreurLancement.suivant);
 		}
 		
-		// lancement de l'équipement
+		
+		
+		
+		
+		/* On cree une instance d'equipement*/
 		try {
 			IArene arene = (IArene) java.rmi.Naming.lookup(Constantes.nomRMI(ipArene, port, "Arene"));
-
 			logger.info("Lanceur", "Lancement de l'équipement sur le serveur...");
 
 			// ajout de l'équipement

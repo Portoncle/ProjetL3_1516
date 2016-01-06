@@ -13,7 +13,9 @@ import serveur.element.Element;
 import serveur.element.Equipement;
 import serveur.element.Personnage;
 import serveur.element.Potion;
+import serveur.element.PotionCC;
 import serveur.element.PotionInvisibilite;
+import serveur.element.PotionVitesse;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
 /**
@@ -88,7 +90,7 @@ public class StrategiePersonnage {
 				break;
 			}
 			case("Shooter"):{
-				execStratSniper(position, voisins, arene, refRMI);
+				execStratSniper(perso,position, voisins, arene, refRMI);
 				break;
 			}
 			case("Garen"):{
@@ -189,8 +191,7 @@ public class StrategiePersonnage {
 						console.setPhrase("Je fuis");
 						if ( assassin.findPotion("Potion d'invisibilite") != -1 )
 						{
-							PotionInvisibilite po  =new PotionInvisibilite();
-							assassin.getPotion( assassin.findPotion("Potion de coup crtitique"));
+							PotionInvisibilite po  = new PotionInvisibilite();
 							HashMap<Caracteristique, Integer> valeursPotion = po.getCaracts();
 							
 							for(Caracteristique c : valeursPotion.keySet()) {
@@ -202,8 +203,7 @@ public class StrategiePersonnage {
 						}
 						else if (assassin.findPotion("Potion de vitesse") != -1 )
 						{
-							PotionInvisibilite po  =new PotionInvisibilite();
-							assassin.getPotion( assassin.findPotion("Potion de coup crtitique"));
+							PotionVitesse po  =new PotionVitesse();
 							HashMap<Caracteristique, Integer> valeursPotion = po.getCaracts();
 							
 							for(Caracteristique c : valeursPotion.keySet()) {
@@ -220,8 +220,23 @@ public class StrategiePersonnage {
 		}
 	}
 
-	private void execStratSniper(Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException {
+	private void execStratSniper(Personnage sniper,Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException {
 		if (voisins.isEmpty()) { // je n'ai pas de voisins, j'erre
+			//J'utilise la potion de vitesse pour chercher une cible plus vite
+		
+			logs(Level.INFO, "Je prend une potion de coup critique!");
+			if ( sniper.findPotion("Potion de vitesse") != -1 )
+			{
+				PotionVitesse po =new PotionVitesse();
+				HashMap<Caracteristique, Integer> valeursPotion = po.getCaracts();
+				
+				for(Caracteristique c : valeursPotion.keySet()) {
+					sniper.incrementeCaract( c, valeursPotion.get(c));
+				}
+				sniper.addPotionActive(po);
+				console.setPhrase("Je consomme une potion de Vitesse");
+				
+			}
 			console.setPhrase("J'erre...");
 			arene.deplace(refRMI, 0); 
 			
@@ -267,6 +282,18 @@ public class StrategiePersonnage {
 				else{ // si voisins, mais plus eloignes et non stuff
 					// je vais vers le plus proche
 					console.setPhrase("Je vais vers " + elemPlusProche.getNom());
+					if ( sniper.findPotion("Potion d'invisibilite") != -1 ) // il consomme une potion d'invisibilté pour se rapprocher
+					{
+						PotionInvisibilite po  =new PotionInvisibilite();
+						HashMap<Caracteristique, Integer> valeursPotion = po.getCaracts();
+						
+						for(Caracteristique c : valeursPotion.keySet()) {
+							sniper.incrementeCaract( c, valeursPotion.get(c));
+						}
+						sniper.addPotionActive(po);
+						console.setPhrase("Je consomme une Potion d'invisibilite");
+						
+					}
 					arene.deplace(refRMI, refCible);
 				}
 
@@ -275,6 +302,11 @@ public class StrategiePersonnage {
 		
 	}
 	
+	private void logs(Level info, String string) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	public void execStratGuerrier(Personnage guerrier, Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException{
 		if (voisins.isEmpty()) { // je n'ai pas de voisins, j'erre
 			console.setPhrase("J'erre...");
@@ -293,6 +325,12 @@ public class StrategiePersonnage {
 					console.setPhrase("Je ramasse une potion");
 					arene.ramassePotion(refRMI, refCible);
 				} 
+				
+				else if(elemPlusProche instanceof Equipement){
+					console.setPhrase("Je ramasse un equipement");
+					arene.ramasseEquipement(refRMI, refCible);
+				}
+
 				else{ // personnage
 					// duel
 					console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
@@ -314,6 +352,19 @@ public class StrategiePersonnage {
 	public void execStratShaolin(Personnage shaolin, Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException{
 		
 		if (voisins.isEmpty()) { // je n'ai pas de voisins, j'erre
+			
+			if ( shaolin.findPotion("Potion de vitesse") != -1 )
+			{
+				PotionVitesse po =new PotionVitesse();
+				HashMap<Caracteristique, Integer> valeursPotion = po.getCaracts();
+				
+				for(Caracteristique c : valeursPotion.keySet()) {
+					shaolin.incrementeCaract( c, valeursPotion.get(c));
+				}
+				shaolin.addPotionActive(po);
+				console.setPhrase("Je consomme une potion de Vitesse");
+				
+			}
 			console.setPhrase("J'erre...");
 			arene.deplace(refRMI, 0); 
 			
@@ -356,6 +407,33 @@ public class StrategiePersonnage {
 					arene.deplace(refRMI, refCible);
 				}
 				
+				while ( ! shaolin.isEmpty() ) //il consomme toute ces potion pour se preparer au combat
+				{
+					if ( shaolin.findPotion("Potion d'invisibilite") != -1 )
+					{
+						PotionInvisibilite po = new PotionInvisibilite();
+						HashMap<Caracteristique, Integer> valeursPotion = po.getCaracts();
+						
+						for(Caracteristique c : valeursPotion.keySet()) {
+							shaolin.incrementeCaract( c, valeursPotion.get(c));
+						}
+						shaolin.addPotionActive(po);
+						console.setPhrase("Je consomme une Potion d'invisibilite");
+						
+					}
+					else if ( shaolin.findPotion("Potion de coup critique") != -1 )
+					{
+						PotionCC po  =new PotionCC();
+						HashMap<Caracteristique, Integer> valeursPotion = po.getCaracts();
+						
+						for(Caracteristique c : valeursPotion.keySet()) {
+							shaolin.incrementeCaract( c, valeursPotion.get(c));
+						}
+						shaolin.addPotionActive(po);
+						console.setPhrase("Je consomme de coup critique");
+						
+					}
+				}
 			
 				// else = personnage. Arret en attente d'attaque pour se defendre
 			}
