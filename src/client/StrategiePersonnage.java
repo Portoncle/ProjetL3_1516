@@ -158,7 +158,7 @@ public class StrategiePersonnage {
 				}
 				else if(elemPlusProche instanceof Equipement){ // Equipement
 					console.setPhrase("Je ramasse un equipement");
-					
+					arene.ramasseEquipement(refRMI, refCible);
 				}
 				else { // personnage
 					// duel
@@ -185,7 +185,7 @@ public class StrategiePersonnage {
 						console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
 						arene.deplace(refRMI, refCible);
 					}
-					else{ // Sinon errer
+					else{ // Sinon erreur
 						console.setPhrase("J'erre...");
 						arene.deplace(refRMI, 0); 
 					}
@@ -264,7 +264,9 @@ public class StrategiePersonnage {
 		}
 	}
 	
-	/* Pacifiste et tres difficile e vaincre au corps a corps */
+
+	/* Pacifiste et tr�s difficile � vaincre au corps � corps */
+
 	public void execStratShaolin(Personnage invocateur, Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException{
 		
 		if (voisins.isEmpty()) { // je n'ai pas de voisins, j'erre

@@ -37,6 +37,8 @@ public class Ramassage extends Interaction<VueElement<?>> {
 			
 			// si le personnage est vivant
 			if(attaquant.getElement().estVivant() ) {
+				
+				/* Si c'est une potion */
 				if(defenseur.getElement() instanceof Potion){
 					if((attaquant.getElement().isFull()) || (attaquant.getElement() instanceof Guerrier)){
 						Potion p = (Potion)defenseur.getElement();
@@ -63,14 +65,17 @@ public class Ramassage extends Interaction<VueElement<?>> {
 					}
 					else{
 						attaquant.getElement().addPotion((Potion)defenseur.getElement());
-						arene.setPhrase(attaquant.getRefRMI(), "Potion ajouté à l'inventaire!");
+						arene.setPhrase(attaquant.getRefRMI(), "Potion ajoutee à l'inventaire!");
 					}
+					arene.ejectePotion(defenseur.getRefRMI());
 				}
+				/* Si c'est un équipement */
 				else if(defenseur.getElement() instanceof Equipement){
 					attaquant.getElement().addStuff((Equipement)defenseur.getElement());
+					arene.ejecteEquip(defenseur.getRefRMI());
 				}
-				// suppression de la potion
-				arene.ejectePotion(defenseur.getRefRMI());
+				
+				
 				
 				
 			} else {

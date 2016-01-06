@@ -220,4 +220,32 @@ public class Calculs {
 		
 		return res;
 	}
+	
+	/* 
+	 * Prend une caracteristique en parametre, et renvoie une valeur aleatoire associee
+	 * -1 en cas d'erreur
+	 * */
+	public static int calculBuffStuff(Caracteristique c)
+	{
+		int valeur = Calculs.nombreAleatoire(0, 2);
+		/* Si c'est une armure ou une epee */
+		if(c == Caracteristique.FORCE || c == Caracteristique.ARMURE)
+		{
+			switch(valeur)
+			{
+				case 0: return 10;
+				case 1: return 20;
+				case 2: return 40;
+			}
+		}
+		
+		/* Si c'est des bottes */
+		else
+		{
+			return 2;
+		}
+		
+		
+		return -1;
+	}
 }
