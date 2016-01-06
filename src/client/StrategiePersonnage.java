@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.logging.Level;
 
+import client.controle.Console;
 import logger.LoggerProjet;
 import serveur.IArene;
 import serveur.element.Caracteristique;
@@ -222,7 +223,7 @@ public class StrategiePersonnage {
 	private void execStratSniper(Personnage sniper,Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException {
 		if (voisins.isEmpty()) { // je n'ai pas de voisins, j'erre
 			//J'utilise la potion de vitesse pour chercher une cible plus vite
-			Potion tab [] = sniper.getConsommable();
+		
 			logs(Level.INFO, "Je prend une potion de coup critique!");
 			if ( sniper.findPotion("Potion de vitesse") != -1 )
 			{
