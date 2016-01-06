@@ -38,7 +38,7 @@ public class DuelVampire extends Duel {
 			int chanceDeCrit = pAttaquant.getCaract(Caracteristique.COUPCRITIQUE);
 			int armure = pDefenseur.getCaract(Caracteristique.ARMURE);
 			
-			int perteVie = forceAttaquant - armure ;
+			int perteVie = forceAttaquant - (armure/100) ;
 		
 			Point positionEjection = positionEjection(defenseur.getPosition(), attaquant.getPosition(), forceAttaquant);
 
