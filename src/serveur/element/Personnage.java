@@ -105,7 +105,12 @@ public class Personnage extends Element {
 	}
 	
 	public void delPotionActive(){
+		HashMap<Caracteristique, Integer> valeursPotion = potionActive.getCaracts();
+		for(Caracteristique c : valeursPotion.keySet()) {
+			this.decrementeCaract(c, valeursPotion.get(c));;
+		}
 		this.potionActive = null;
+		this.decrementeCaract(Caracteristique.DUREE, 1);
 	}
 	
 	/*********************************/

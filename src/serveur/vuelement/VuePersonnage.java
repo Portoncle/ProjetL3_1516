@@ -77,13 +77,7 @@ public class VuePersonnage extends VueElement<Personnage> implements Comparable<
 			this.element.decrementeCaract(Caracteristique.DUREE, 1);
 		}
 		else if(this.element.getCaract(Caracteristique.DUREE) == 1){
-			Potion potionActive = this.element.getPotionBu();
-			HashMap<Caracteristique, Integer> valeursPotion = potionActive.getCaracts();
-			for(Caracteristique c : valeursPotion.keySet()) {
-				this.element.decrementeCaract(c, valeursPotion.get(c));;
-			}
 			this.element.delPotionActive();
-			this.element.decrementeCaract(Caracteristique.DUREE, 1);
 		}
 		actionExecutee = false;
 		tour++;
