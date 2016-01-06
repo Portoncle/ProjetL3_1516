@@ -341,19 +341,22 @@ public class StrategiePersonnage {
 
 			Element elemPlusProche = arene.elementFromRef(refCible);
 
-			if(distPlusProche <= Constantes.DISTANCE_MIN_INTERACTION) { // si suffisamment proches
+			if(distPlusProche <= Constantes.DISTANCE_MIN_INTERACTION && elemPlusProche instanceof Personnage) { // si suffisamment proches
 				// j'interagis directement
-				if(elemPlusProche instanceof Personnage) { // personnage
 
-					console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
-					arene.lanceAttaqueVampire(refRMI, refCible);
-				}
-				
+				// duel
+				console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
+				arene.lanceAttaqueVampire(refRMI, refCible);				
+
 			} 
 			else if(elemPlusProche instanceof Personnage){ // si voisins, mais plus eloignes
 				// je vais vers le plus proche
 				console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
 				arene.deplace(refRMI, refCible);
+			}
+			else{
+				console.setPhrase("J'erre...");
+				arene.deplace(refRMI, 0); 
 			}
 		}
 	}

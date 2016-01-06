@@ -1,128 +1,29 @@
-Assassin:
-consomme invisibilite et vitesse quand il voit quelqu'un
-
-Sniper
-consomme invisibilite s'il voit quelqu'un
-consomme vitesse instant'
-
-guerrier
-consomme tout instant'
-
-Shaolin
-consomme vitesse instan'
-consome invisibilité quand voit quelqu'un
-
-Vampire
-osef des potions
-
-Potion vie, potion force
-
 PAR DEFAUT vision de 30
 Armure = %d'absoroption des des degats
-Regen de la vie du mec uniquement possible
+
+Corentin : Potion vie (10-40), potion force (10-20)
+			bug : duree potion d'invisibilite non fonctionnelle
 
 5 Sortes de personnage
         Guerrier
-                Santé 100 
-                Force 60-80
-                Init 20
-                Facultés
-                    lent (se déplace d'une case les autres 3)
-                    non repoussé à l'attaque
                 Comportement
-                    Fonce sur l'ennmi capté, stuff après
                     Consomme direct une potion
         
         Sniper
-                Santé 20
-                Force 60-100
-                Init 40
-                Facultés
-                    Miss possible
-                    Attaque à distance 
                 Comportement
-                    Recule à l'approche d'un ennemi
+                	Consomme invisibilite quand il voit quelqu'un
+                	Consomme le reste instant'
                     S'en fous du stuff
-                    Une fois ennemi vu : passe son tour x fois
-                    Une fois tiré : passe son tour x fois
                     
         Assassin
-                Santé 30
-                Force 40 + CC 50
-                Init 90
-                Facultés
-                    Rapide
-                    CC possible
+        		Bug : n'attaque pas quand moins de force (avait un potion d'invisibilite active)
                 Comportement
-                    Check point de vie ennemi : si moins de vie, attaque ATTENTION AU CAS DU DERNIER SURVIVANT
-                    Tape puis recule
-                    Approche d'un objet avant ennemi
+                    consomme invisibilite et vitesse quand il voit quelqu'un
+                    Consomme le reste instant'                    
                     
-        Invocateur
-                Santé 35
-                Force 5
-                Init 40
-                Faculté
-                    Relativement lent
-                    Invoque de petits mobs
-                    Mobs gagnent en ataque la moitié de l'arme de l'invocateur
+        Shaolin
                 Comportement
-                    Prends que les objets
-                    Se tient à distance, invoque 1mob/30s 10 10 20
-                    
-        Vampires
-            Santé 40
-            Force 30-40
-            Init 70
-            Faculté
-                Gagne la moitié des degats infligés en vie
-            Comportement
-                S'en fou des objets
-                Se jette sur la cible en vue
-
-3 Sortes de potion
-        Potion random
-        Potion d'invisibilité (15s)
-        Potion de vitesse (+3 cases 15s)
-        Potion CC (+30 force 20% chance CC 30s)
-
-3 méthodes de mises en oeuvres des capacités
-        
-Inventaire taille de 5 : 1 arme 1 armure 1 bottes 2 potions
-(Tableau de stuff, arme, armures etc. extend de stuff)
-(Si sac plein, consomme la potion trouvée)
-(Si a deja un objet du même type, garde la meilleure, détruit l'autre)
-        ARMES
-            Epée de ouf +40
-            Hache passable +20
-            Gourdin tamer +10
-            
-        ARMURES
-            Acier de ouf +40
-            Fer rouillé +20
-            Papier de qualité +10
-            
-        BOTTES
-            (choix des bottes dépendants du personnage)
-            Bottes de vitesse +2
-            
-            (Bottes d'equive +10%)
-
-
-
-CORENTIN (le mec le plus stylé du monde)
-        Test IHM sur serveur
-        Potions
-
-SYLVAIN <3
-        Test Programme sur pc fac
-        Inventaire
-        
-QUENTIN
-        Personnages
-
-CLEMENT
-        Inventaire
-
-NICOLAS
-        Personnages
+                    S'en fou du stuff
+                    Consomme invisibilite et vitesse quand il voit quelqu'un
+                    Consomme le reste instant'
+        		

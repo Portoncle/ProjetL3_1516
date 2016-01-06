@@ -56,7 +56,7 @@ public class LanceEquipement {
 			if(indice == 0)
 			{
 				caractsEquip.put(Caracteristique.FORCE, Calculs.calculBuffStuff(Caracteristique.FORCE));
-				nom = "Epée";
+				nom = "Epee";
 			}
 			else if(indice == 1)
 			{
