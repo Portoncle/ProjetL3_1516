@@ -4,6 +4,7 @@ Quentin:
 Corentin : 
 	bug : duree potion d'invisibilite non fonctionnelle
 	Fonction conso direct ou stockage
+	Equipement graphique
 			
 Clement:
 	Maj des stats au rammassage equipement
@@ -15,18 +16,18 @@ Clement:
         
         Sniper
                 Comportement
-                	Consomme invisibilite quand il voit quelqu'un
+                	Consomme invisibilite et CC quand il voit quelqu'un
                 	Consomme le reste instant'
                     S'en fous du stuff
                     
         Assassin
         		Bug : n'attaque pas quand moins de force (avait un potion d'invisibilite active)
                 Comportement
-                    consomme invisibilite et vitesse quand il voit quelqu'un
+                    consomme invisibilite CC et vitesse quand il voit quelqu'un
                     Consomme le reste instant'                    
                     
         Shaolin
                 Comportement
-                    Consomme invisibilite et vitesse quand il voit quelqu'un
+                    Consomme invisibilite CC et vitesse quand il voit quelqu'un
                     Consomme le reste instant'
         		

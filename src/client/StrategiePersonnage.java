@@ -325,13 +325,17 @@ public class StrategiePersonnage {
 				// je vais vers le plus proche
 				if(elemPlusProche instanceof Potion){
 					console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
-					
 					arene.deplace(refRMI, refCible);
 				}
 				else if(elemPlusProche instanceof Equipement){
 					// Si equipement, non interesse, errance
 					console.setPhrase("J'erre...");
 					arene.deplace(refRMI, 0); 
+				}
+				else if(elemPlusProche.getNom() == "Jackie Chan"){
+					// Evite le cas de deux Shaolin en attente
+					console.setPhrase("Je vais vers mon voisin " + elemPlusProche.getNom());
+					arene.deplace(refRMI, refCible);
 				}
 				// else = personnage. Arret en attente d'attaque pour se defendre
 			}
