@@ -40,7 +40,12 @@ public class DuelSniper extends Duel {
 			int chanceDeCrit = pAttaquant.getCaract(Caracteristique.COUPCRITIQUE);
 			int armure = pDefenseur.getCaract(Caracteristique.ARMURE);
 			
-			int perteVie = forceAttaquant - (armure/100) ;
+			int perteVie;
+			
+			if ( armure == 0)
+				perteVie = forceAttaquant ;
+			else
+				perteVie = forceAttaquant * (armure/100);
 			
 			if( pAttaquant.findPotion("Potion de coup crtitique") != -1)
 			{
@@ -58,7 +63,7 @@ public class DuelSniper extends Duel {
 			if ( perteVie > 0) //Il a subit des degats
 			{
 				
-			    arene.incrementeCaractElement(defenseur, Caracteristique.ARMURE, 0); //l'armure est cassee on la remet a 0
+			   
 				int rnd = Calculs.nombreAleatoire (0,100);
 				int chanceDeTir = Calculs.nombreAleatoire(1,4);
 				if (chanceDeTir == 4 ) 
@@ -82,8 +87,8 @@ public class DuelSniper extends Duel {
 				 logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + "Rate son tir" );
 				
 			}
-			else
-				arene.incrementeCaractElement(defenseur, Caracteristique.ARMURE, armure- forceAttaquant);
+			
+		
 			// initiative
 			incrementeInitiative(defenseur);
 			decrementeInitiative(attaquant);
@@ -93,26 +98,5 @@ public class DuelSniper extends Duel {
 		}
 	}
 
-
-	/**
-	 * Incremente l'initiative du defenseur en cas de succes de l'attaque. 
-	 * @param defenseur defenseur
-	 * @throws RemoteException
-	 */
-	private void incrementeInitiative(VuePersonnage defenseur) throws RemoteException {
-		arene.incrementeCaractElement(defenseur, Caracteristique.INITIATIVE, 
-				Constantes.INCR_DECR_INITIATIVE_DUEL);
-	}
-	
-	/**
-	 * Decremente l'initiative de l'attaquant en cas de succes de l'attaque. 
-	 * @param attaquant attaquant
-	 * @throws RemoteException
-	 */
-	private void decrementeInitiative(VuePersonnage attaquant) throws RemoteException {
-		arene.incrementeCaractElement(attaquant, Caracteristique.INITIATIVE, 
-				-Constantes.INCR_DECR_INITIATIVE_DUEL);
-	}
 }
-	
 
