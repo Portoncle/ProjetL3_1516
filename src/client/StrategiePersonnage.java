@@ -154,7 +154,12 @@ public class StrategiePersonnage {
 					// ramassage
 					console.setPhrase("Je ramasse une potion");
 					arene.ramassePotion(refRMI, refCible);
-
+				}
+				else if(elemPlusProche instanceof Equipement){ //equipement
+					// ramassage
+					console.setPhrase("Je ramasse un equipement");
+					arene.ramasseEquipement(refRMI, refCible);
+					
 				} else { // personnage
 					// duel
 					console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());

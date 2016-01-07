@@ -30,6 +30,7 @@ import serveur.interaction.DuelVampire;
 import serveur.interaction.Ramassage;
 import serveur.vuelement.VueElement;
 import serveur.vuelement.VueEquipement;
+import serveur.vuelement.VueInventaire;
 import serveur.vuelement.VuePersonnage;
 import serveur.vuelement.VuePotion;
 import utilitaires.Calculs;
@@ -89,6 +90,11 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 	 * Associe les references RMI et les equipements connectes au serveur.
 	 */
 	protected Hashtable<Integer, VueEquipement> equip = null;
+	
+	/**
+	 * Associe les references RMI et les equipements de l'inventaire connectes au serveur.
+	 */
+	protected Hashtable<Integer, VueInventaire> inventaire = null;
 
 	/**
 	 * Vrai si la partie est terminee.
@@ -102,7 +108,12 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 	 * Gestionnaire des logs.
 	 */
 	protected LoggerProjet logger;
-
+	
+	/*
+	 * Tableau contenant les ref des objet de l'inventaire
+	 */
+	private int tabRefEquip[] = new int[3];
+	
 	/**
 	 * Constructeur de l'arene.
 	 * @param port le port de connexion
@@ -124,6 +135,7 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 		personnages = new Hashtable<Integer, VuePersonnage>();
 		potions = new Hashtable<Integer, VuePotion>();
 		equip = new Hashtable<Integer, VueEquipement>();
+		inventaire = new Hashtable<Integer, VueInventaire>();
 		personnagesMorts = new ArrayList<VuePersonnage>();
 		
 		this.logger = logger;
@@ -584,6 +596,11 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 	}
 
 	@Override
+	public List<VueInventaire> getInventaire() throws RemoteException {
+		return new ArrayList<VueInventaire>(inventaire.values());
+	}
+	
+	@Override
 	public HashMap<Integer, Point> getVoisins(int refRMI) throws RemoteException {
 		HashMap<Integer, Point> res = new HashMap<Integer, Point>();
 	
@@ -718,6 +735,9 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 	}	
 	public void ejecteEquip(int refRMI) {
 		equip.remove(refRMI);
+	}
+	public void ejecteInventaire(int indice) {
+		inventaire.remove(tabRefEquip[indice]);
 	}	
 	
 
@@ -747,6 +767,20 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 				Constantes.nomCompletClient(vueEq) + " (" + refRMI + ")");
 		
 		logElements();
+	}
+	
+	public void ajouteInventaireEquipement(Equipement eq, int refObjet, int refPerso, int indice) throws RemoteException{
+		VueInventaire vueInv = new VueInventaire(eq,refObjet, null,refPerso);
+		
+		//ajout de l'équipement a la liste
+		inventaire.put(refObjet, vueInv);
+		tabRefEquip[indice] = refObjet;
+	}
+	
+	public void ajoutInventairePotion(Potion p, int refObjet, int refPerso) throws RemoteException{
+		VueInventaire vueInv = new VueInventaire(p,refObjet, null,refPerso);
+		//ajout de la potion a la liste
+		inventaire.put(refObjet, vueInv);	
 	}
 	
 	public void bois(Potion p,int refRMI) throws RemoteException{
@@ -1291,6 +1325,10 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 	public void lancePotion(Potion potion, Point position, String motDePasse) throws RemoteException {}
 	
 	public void lanceEquipement(Equipement eq, Point position, String motDePasse) throws RemoteException {}
+
+
+
+		
 
 	
 }

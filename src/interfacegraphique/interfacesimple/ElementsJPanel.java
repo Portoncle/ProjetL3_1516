@@ -29,6 +29,7 @@ import javax.swing.table.JTableHeader;
 
 import interfacegraphique.IHM;
 import interfacegraphique.tablemodel.EquipementTableModel;
+import interfacegraphique.tablemodel.InventaireTableModel;
 import interfacegraphique.tablemodel.PersonnageTableModel;
 import interfacegraphique.tablemodel.PotionTableModel;
 //import interfacegraphique.tablemodel.InventaireTableModel;
@@ -36,6 +37,7 @@ import interfacegraphique.tablerenderer.HeaderRenderer;
 import interfacegraphique.tablerenderer.NormalRenderer;
 import serveur.vuelement.VueElement;
 import serveur.vuelement.VueEquipement;
+import serveur.vuelement.VueInventaire;
 import serveur.vuelement.VuePersonnage;
 import serveur.vuelement.VuePotion;
 
@@ -65,7 +67,12 @@ public class ElementsJPanel extends JPanel {
 	 * Modele de la table des potions.
 	 */
 	private PotionTableModel modelTablePotions;
-	//private InventaireTableModel modelTableInventaire;
+	
+	/*
+	 * Modele de la table de l'inventaire
+	 */
+	private InventaireTableModel modelTableInventaire;
+	
 	/**
 	 * Modele de la table des potions.
 	 */
@@ -85,7 +92,12 @@ public class ElementsJPanel extends JPanel {
 	 * ScrollPane contenant les potions.
 	 */
 	private JScrollPane jScrollPaneEquipement;
-	//private JScrollPane jScrollPaneInventaire;
+	
+	/*
+	 * ScrollPane contenant l'inventaire
+	 */
+	private JScrollPane jScrollPaneInventaire;
+	
 	/**
 	 * SplitPane separant les personnages et les potions.
 	 */
@@ -106,7 +118,11 @@ public class ElementsJPanel extends JPanel {
      * Tableau des potions.
      */
     private JTable jTablePotions;
-    //private JTable jTableInventaire;
+    
+    /*
+     * Tableau des Inventaires.    
+     */
+    private JTable jTableInventaire;
     /**
      * Menu contextuel (clic droit). 
      */
@@ -138,6 +154,7 @@ public class ElementsJPanel extends JPanel {
         initTablePersonnages();        
         initTablePotions();
         initTableEquipement();
+        initTableInventaire();
         
         // initialisation du menu de clic droit
         initMenuClickDroit();
@@ -155,9 +172,13 @@ public class ElementsJPanel extends JPanel {
         jTablePotions.addMouseListener(listener);
 		
 		// ajout des composants
+		Toolkit kit = Toolkit.getDefaultToolkit();
+		Dimension screenSize = kit.getScreenSize();
+		int fenWidth = 3 * screenSize.width / 4;
+		int fenHeight  = 2 * screenSize.height / 3;
         
         jSplitPane = new JSplitPane();
-        jSplitPane.setDividerLocation(350);
+        jSplitPane.setDividerLocation(2*fenHeight/3);
         jSplitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
         jSplitPane.setTopComponent(jScrollPanePersonnages);
         jSplitPane.setBottomComponent(jScrollPanePotions);        
@@ -167,17 +188,15 @@ public class ElementsJPanel extends JPanel {
 		
         //add(jSplitPane);
         jSplitPane = new JSplitPane();
-        jSplitPane.setDividerLocation(350);
+        jSplitPane.setDividerLocation(2*fenHeight/3);
         jSplitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
         jSplitPane.setTopComponent(jScrollPaneEquipement);  
+        jSplitPane.setBottomComponent(jScrollPaneInventaire);
         
         JPanel droitePanel = new JPanel(new BorderLayout());
-		droitePanel.add(jScrollPaneEquipement);
+		droitePanel.add(jSplitPane);
 		
 		JSplitPane jSplitPane = new JSplitPane();
-		Toolkit kit = Toolkit.getDefaultToolkit();
-		Dimension screenSize = kit.getScreenSize();
-		int fenWidth = 3 * screenSize.width / 4;
 		int dividerLocation = fenWidth / 3;
 		jSplitPane.setDividerLocation(dividerLocation);
 		jSplitPane.setLeftComponent(gauchePanel);
@@ -357,14 +376,14 @@ public class ElementsJPanel extends JPanel {
 
 
 	/**
-     * Initialise la table des potions.
+     * Initialise la table de l'inventaire.
      */
-	/*private void initTableInventaire() {
-		jTablePotions = new JTable();
+	private void initTableInventaire() {
+		jTableInventaire = new JTable();
         
         // mise en place du modele
         modelTableInventaire = new InventaireTableModel();         
-        jTablePotions.setModel(modelTableInventaire);
+        jTableInventaire.setModel(modelTableInventaire);
         
         // ajustement de la taille des colonnes
         for (int i = 0; i < modelTableInventaire.getColumnCount(); i++) {
@@ -397,14 +416,14 @@ public class ElementsJPanel extends JPanel {
         jScrollPaneInventaire.getViewport().setBackground(IHM.grisFonce);
         jScrollPaneInventaire.setBorder(BorderFactory.createTitledBorder(
         		null, 
-        		"Potions", 
+        		"Inventaire", 
         		TitledBorder.CENTER, 
         		TitledBorder.DEFAULT_POSITION, 
         		new Font("Helvetica Neue", 0, 14), 
         		new Color(0, 0, 0)));
         
         jScrollPaneInventaire.setViewportView(jTableInventaire);
-	}*/
+	}
 
 
 	/**
@@ -457,17 +476,20 @@ public class ElementsJPanel extends JPanel {
 	 */
 	/* ATTENTION : les parties commentées seront peut être utiles plus tard */
 	public void setElements(List<VuePersonnage> personnages, 
-			List<VuePersonnage> personnagesMorts, List<VuePotion> potions,List<VueEquipement> equipement) {
+			List<VuePersonnage> personnagesMorts, List<VuePotion> potions,List<VueEquipement> equipement,List<VueInventaire> inventaire) {
 		
 		// tri des potions et des personnages (selon leur methode compareTo)
 		List<VuePersonnage> personnagesTous = new ArrayList<VuePersonnage>(personnages);
 		personnagesTous.addAll(personnagesMorts);
 		List<VuePotion> potionsTous = new ArrayList<VuePotion>(potions);
 		List<VueEquipement> equipementTous = new ArrayList<VueEquipement>(equipement);
+		List<VueInventaire> inventaireTous = new ArrayList<VueInventaire>(inventaire);
+		
 		
 		Collections.sort(equipementTous);
 		Collections.sort(personnagesTous);
 		Collections.sort(potionsTous);
+		Collections.sort(inventaireTous);
 		
 		if (ihm.getElementSelectionne() != null) {
 			// recherche de l'element selectionne
@@ -489,6 +511,13 @@ public class ElementsJPanel extends JPanel {
 					ve.setSelectionne(true);
 				}
 			}
+			
+			for(VueInventaire ve : inventaireTous)
+			{
+				if(ve.getRefRMI() == ihm.getElementSelectionne().getRefRMI()){
+					ve.setSelectionne(true);
+				}
+			}
 		}
 		
 		modelTableEquip.setVues(equipementTous);
@@ -498,7 +527,10 @@ public class ElementsJPanel extends JPanel {
     	modelTablePersonnages.fireTableDataChanged();
     	
     	modelTablePotions.setVues(potionsTous);
-    	modelTablePotions.fireTableDataChanged();    	
+    	modelTablePotions.fireTableDataChanged();  
+    	
+    	modelTableInventaire.setVues(inventaireTous);
+    	modelTableInventaire.fireTableDataChanged();   	
     }
 	
 	

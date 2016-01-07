@@ -33,6 +33,7 @@ import logger.LoggerProjet;
 import serveur.IAreneIHM;
 import serveur.vuelement.VueElement;
 import serveur.vuelement.VueEquipement;
+import serveur.vuelement.VueInventaire;
 import serveur.vuelement.VuePersonnage;
 import serveur.vuelement.VuePotion;
 import utilitaires.Calculs;
@@ -286,9 +287,10 @@ public class IHM extends JFrame implements Runnable {
 				List<VuePersonnage> personnagesMorts = arene.getPersonnagesMorts();
 				List<VuePotion> potions = arene.getPotions();
 				List<VueEquipement> equip = arene.getEquipement();
+				List<VueInventaire> inventaire = arene.getInventaire();
 
-				infosPanel.setElements(personnages, personnagesMorts, potions, equip);
-				arenePanel.setVues(personnages, potions, equip);
+				infosPanel.setElements(personnages, personnagesMorts, potions, equip, inventaire);
+				arenePanel.setVues(personnages, potions, equip, inventaire);
 
 				// MAJ du timer
 				int tempsRestant = arene.getNbToursRestants();
