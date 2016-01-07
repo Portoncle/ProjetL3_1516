@@ -208,7 +208,7 @@ public class StrategiePersonnage {
 				}
 				else{ // Personnage
 					console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
-					arene.lanceAttaque(refRMI, refCible);
+					arene.lanceAttaqueAssassin(refRMI, refCible);
 				}
 			}
 			else { // si voisins, mais plus eloignes
@@ -227,6 +227,11 @@ public class StrategiePersonnage {
 				}
 				else{ // Sinon fuit 
 						console.setPhrase("Je fuis");
+						
+						Potion tab[] = new Potion[2];
+						tab=assassin.getConsommable();
+						
+						console.setPhrase ("vide "+assassin.isEmpty());
 						if ( assassin.findPotion("Potion d'invisibilite") != -1 )
 						{
 							PotionInvisibilite po  = new PotionInvisibilite();

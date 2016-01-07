@@ -74,6 +74,7 @@ public class Ramassage extends Interaction<VueElement<?>> {
 					else{
 						attaquant.getElement().addPotion((Potion)p);
 						arene.setPhrase(attaquant.getRefRMI(), "Potion ajoutee à l'inventaire!");
+						arene.setPhrase(attaquant.getRefRMI(),"vide"+attaquant.getElement().isEmpty());
 					}
 					//suppression de la potion
 					arene.ejectePotion(defenseur.getRefRMI());
