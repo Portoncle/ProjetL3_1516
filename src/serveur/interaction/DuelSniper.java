@@ -98,26 +98,5 @@ public class DuelSniper extends Duel {
 		}
 	}
 
-
-	/**
-	 * Incremente l'initiative du defenseur en cas de succes de l'attaque. 
-	 * @param defenseur defenseur
-	 * @throws RemoteException
-	 */
-	private void incrementeInitiative(VuePersonnage defenseur) throws RemoteException {
-		arene.incrementeCaractElement(defenseur, Caracteristique.INITIATIVE, 
-				Constantes.INCR_DECR_INITIATIVE_DUEL);
-	}
-	
-	/**
-	 * Decremente l'initiative de l'attaquant en cas de succes de l'attaque. 
-	 * @param attaquant attaquant
-	 * @throws RemoteException
-	 */
-	private void decrementeInitiative(VuePersonnage attaquant) throws RemoteException {
-		arene.incrementeCaractElement(attaquant, Caracteristique.INITIATIVE, 
-				-Constantes.INCR_DECR_INITIATIVE_DUEL);
-	}
 }
-	
 
