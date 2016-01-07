@@ -483,7 +483,10 @@ public class StrategiePersonnage {
 					console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
 					arene.lanceAttaque(refRMI, refCible);
 				}
-				// else Equipement, non interesse
+				else{
+					console.setPhrase("J'erre...");
+					arene.deplace(refRMI, 0); 
+				}
 			}
 			// si voisin, mais plus eloignes
 			else
@@ -503,7 +506,7 @@ public class StrategiePersonnage {
 					console.setPhrase("Je vais vers " + elemPlusProche.getNom());
 					arene.deplace(refRMI, refCible);
 				}
-				else
+				else // personnage
 				{
 					while ( ! shaolin.isEmpty() ) //il consomme toute ces potion pour se preparer au combat
 					{
