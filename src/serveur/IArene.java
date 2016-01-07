@@ -6,11 +6,13 @@ import java.rmi.RemoteException;
 import java.util.HashMap;
 
 import client.controle.IConsole;
+import serveur.element.Caracteristique;
 import serveur.element.Element;
 import serveur.element.Personnage;
 import serveur.element.Potion;
 import serveur.element.Equipement;
 import serveur.vuelement.VueElement;
+import serveur.vuelement.VuePersonnage;
 
 /**
  * Definit les methodes qui pourront s'appliquer a l'arene par le reseau.
@@ -259,6 +261,8 @@ public interface IArene extends Remote {
 	public void lancePotion(Potion potion, Point position, String motDePasse) throws RemoteException;
 
 	public void lanceEquipement(Equipement eq, Point position, String motDePasse) throws RemoteException;
+
+	public void bois(Potion p,int refRMI) throws RemoteException;
 
 	
 }

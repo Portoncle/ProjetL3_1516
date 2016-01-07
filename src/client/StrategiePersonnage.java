@@ -7,6 +7,7 @@ import java.util.logging.Level;
 
 import client.controle.Console;
 import logger.LoggerProjet;
+import serveur.Arene;
 import serveur.IArene;
 import serveur.element.Caracteristique;
 import serveur.element.Element;
@@ -16,6 +17,7 @@ import serveur.element.Potion;
 import serveur.element.PotionCC;
 import serveur.element.PotionInvisibilite;
 import serveur.element.PotionVitesse;
+import serveur.vuelement.VuePersonnage;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
 
@@ -185,8 +187,13 @@ public class StrategiePersonnage {
 	/* ASSASSIN */
 	/************/
 	public void execStratAssassin(Personnage assassin, Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException {
+		
+		assassin = (Personnage)arene.elementFromRef(refRMI);
+	    VuePersonnage ass = (VuePersonnage)arene.vueFromRef(refRMI);
+	    
 		if (voisins.isEmpty()) { // je n'ai pas de voisins, j'erre
-			console.setPhrase("J'erre...");
+			console.setPhrase("J'erre...");		
+			
 			arene.deplace(refRMI, 0); 
 		}
 		else{
@@ -228,19 +235,14 @@ public class StrategiePersonnage {
 				else{ // Sinon fuit 
 						console.setPhrase("Je fuis");
 						
-						Potion tab[] = new Potion[2];
-						tab=assassin.getConsommable();
 						
 						console.setPhrase ("vide "+assassin.isEmpty());
 						if ( assassin.findPotion("Potion d'invisibilite") != -1 )
 						{
-							PotionInvisibilite po  = new PotionInvisibilite();
-							HashMap<Caracteristique, Integer> valeursPotion = po.getCaracts();
+						    PotionInvisibilite po = new PotionInvisibilite ();
+							arene.bois(po,refRMI );
+						    
 							
-							for(Caracteristique c : valeursPotion.keySet()) {
-								assassin.incrementeCaract( c, valeursPotion.get(c));
-							}
-							assassin.addPotionActive(po);
 							console.setPhrase("Je consomme une Potion d'invisibilite");
 							
 						}
@@ -248,9 +250,10 @@ public class StrategiePersonnage {
 						{
 							PotionVitesse po  =new PotionVitesse();
 							HashMap<Caracteristique, Integer> valeursPotion = po.getCaracts();
+						
 							
 							for(Caracteristique c : valeursPotion.keySet()) {
-								assassin.incrementeCaract( c, valeursPotion.get(c));
+								assassin.incrementeCaract(c, valeursPotion.get(c));					
 							}
 							assassin.addPotionActive(po);
 							console.setPhrase("Je consomme une Potion de Vitesse");

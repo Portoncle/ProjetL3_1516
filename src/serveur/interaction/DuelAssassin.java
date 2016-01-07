@@ -56,6 +56,7 @@ public class DuelAssassin extends Duel {
 					arene.incrementeCaractElement(attaquant, c, valeursPotion.get(c));
 				}
 				this.attaquant.getElement().addPotionActive(po);
+				pAttaquant.delPotion(po);
 				logs(Level.INFO, "Je prend une potion de coup critique!");
 				
 			}

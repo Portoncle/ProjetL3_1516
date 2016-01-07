@@ -184,18 +184,18 @@ public class Personnage extends Element {
 	/* Supprimer potion */
 	public void delPotion(Potion p)
 	{
-		if(this.consommable[0] == p)
+		if(this.consommable[0].equals(p))
 		{
 			this.consommable[0] = null;
 		}
-		if(this.consommable[1] == p)
+		if(this.consommable[1].equals(p))
 		{
 			this.consommable[1] = null;
 		}
 	}
 	
 	
-	/* Permet de savoir si un potion est présente. 
+	/* Permet de savoir si un potion est presente. 
 	/* Renvoie l'indice si oui, -1 sinon.
 	 */
 	public int findPotion(String p)
