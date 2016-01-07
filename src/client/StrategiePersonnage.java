@@ -498,38 +498,42 @@ public class StrategiePersonnage {
 					console.setPhrase("Je vais vers " + elemPlusProche.getNom());
 					arene.deplace(refRMI, refCible);
 				}
-				
-				while ( ! shaolin.isEmpty() ) //il consomme toute ces potion pour se preparer au combat
-				{
-					if ( shaolin.findPotion("Potion d'invisibilite") != -1 )
+				// personnage
+				else{ 
+					console.setPhrase("Pret pour defense");
+					while ( ! shaolin.isEmpty() ) //il consomme toute ces potion pour se preparer au combat
 					{
-						PotionInvisibilite po = new PotionInvisibilite();
-						HashMap<Caracteristique, Integer> valeursPotion = po.getCaracts();
-						
-						for(Caracteristique c : valeursPotion.keySet()) {
-							shaolin.incrementeCaract( c, valeursPotion.get(c));
+						if ( shaolin.findPotion("Potion d'invisibilite") != -1 )
+						{
+							PotionInvisibilite po = new PotionInvisibilite();
+							HashMap<Caracteristique, Integer> valeursPotion = po.getCaracts();
+							
+							for(Caracteristique c : valeursPotion.keySet()) {
+								shaolin.incrementeCaract( c, valeursPotion.get(c));
+							}
+							shaolin.addPotionActive(po);
+							console.setPhrase("Je consomme une Potion d'invisibilite");
+							
 						}
-						shaolin.addPotionActive(po);
-						console.setPhrase("Je consomme une Potion d'invisibilite");
-						
-					}
-					else if ( shaolin.findPotion("Potion de coup critique") != -1 )
-					{
-						PotionCC po  =new PotionCC();
-						HashMap<Caracteristique, Integer> valeursPotion = po.getCaracts();
-						
-						for(Caracteristique c : valeursPotion.keySet()) {
-							shaolin.incrementeCaract( c, valeursPotion.get(c));
+						else if ( shaolin.findPotion("Potion de coup critique") != -1 )
+						{
+							PotionCC po  =new PotionCC();
+							HashMap<Caracteristique, Integer> valeursPotion = po.getCaracts();
+							
+							for(Caracteristique c : valeursPotion.keySet()) {
+								shaolin.incrementeCaract( c, valeursPotion.get(c));
+							}
+							shaolin.addPotionActive(po);
+							console.setPhrase("Je consomme de coup critique");
+							
 						}
-						shaolin.addPotionActive(po);
-						console.setPhrase("Je consomme de coup critique");
-						
-					}
 				}
+				
 				// else = personnage. Arret en attente d'attaque pour se defendre
 			}
 		}
 	}
+}
 	
 	
 	
