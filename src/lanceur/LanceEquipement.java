@@ -61,6 +61,8 @@ public class LanceEquipement {
 			{
 				int valeur = Calculs.calculBuffStuff(Caracteristique.FORCE);
 				caractsEquip.put(Caracteristique.FORCE, valeur);
+				caractsEquip.put(Caracteristique.ARMURE, 0);
+				caractsEquip.put(Caracteristique.VITESSE, 0);
 				nom = "Epee." + valeur;
 			}
 			else if(indice == 1)

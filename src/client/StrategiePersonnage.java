@@ -221,9 +221,10 @@ public class StrategiePersonnage {
 	}
 
 	private void execStratSniper(Personnage sniper,Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException {
-		if (voisins.isEmpty()) { // je n'ai pas de voisins, j'erre
-			//J'utilise la potion de vitesse pour chercher une cible plus vite
 		
+		// je n'ai pas de voisins, j'erre
+		//J'utilise la potion de vitesse pour chercher une cible plus vite
+		if (voisins.isEmpty()) {
 			logs(Level.INFO, "Je prend une potion de coup critique!");
 			if ( sniper.findPotion("Potion de vitesse") != -1 )
 			{
@@ -232,6 +233,7 @@ public class StrategiePersonnage {
 				
 				for(Caracteristique c : valeursPotion.keySet()) {
 					sniper.incrementeCaract( c, valeursPotion.get(c));
+					console.getPerso();
 				}
 				sniper.addPotionActive(po);
 				console.setPhrase("Je consomme une potion de Vitesse");
@@ -282,7 +284,7 @@ public class StrategiePersonnage {
 				else{ // si voisins, mais plus eloignes et non stuff
 					// je vais vers le plus proche
 					console.setPhrase("Je vais vers " + elemPlusProche.getNom());
-					if ( sniper.findPotion("Potion d'invisibilite") != -1 ) // il consomme une potion d'invisibilté pour se rapprocher
+					if ( sniper.findPotion("Potion d'invisibilite") != -1 ) // il consomme une potion d'invisibiltï¿½ pour se rapprocher
 					{
 						PotionInvisibilite po  =new PotionInvisibilite();
 						HashMap<Caracteristique, Integer> valeursPotion = po.getCaracts();
