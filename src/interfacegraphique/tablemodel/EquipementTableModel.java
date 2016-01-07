@@ -29,11 +29,10 @@ public class EquipementTableModel extends ElementTableModel<VueEquipement> {
 		
 		// caracteristiques
 		for(Caracteristique car : Caracteristique.values()) {
+			if(car.equals(Caracteristique.ARMURE) || car.equals(Caracteristique.FORCE) || car.equals(Caracteristique.VITESSE))
 			colonnes.add(new InformationColonne<VueEquipement>(car.toString(), 40, Integer.class, new ValeurColonneCaract(car)));
 		}
 		
-		// phrase du personnage
-		colonnes.add(new InformationColonne<VueEquipement>("Phrase", 300, String.class, new ValeurColonnePhrase())); 
 	}
    
 }
