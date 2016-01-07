@@ -63,7 +63,7 @@ public class LanceEquipement {
 				caractsEquip.put(Caracteristique.FORCE, valeur);
 				caractsEquip.put(Caracteristique.ARMURE, 0);
 				caractsEquip.put(Caracteristique.VITESSE, 0);
-				nom = "Epee." + valeur;
+				nom = "Arme." + valeur;
 			}
 			else if(indice == 1)
 			{
