@@ -779,6 +779,25 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 		vueP.setInventaire(indice, refObjet);
 	}
 	
+	public void bois(Potion p, int refRMI) throws RemoteException{
+		
+		VuePersonnage vuePersonnage = personnages.get(refRMI);
+		
+		// increment de la caracteristique
+		HashMap<Caracteristique, Integer> valeursPotion = p.getCaracts();
+		
+		if(vuePersonnage.getElement().getCaract(Caracteristique.DUREE) > 0)
+			vuePersonnage.getElement().delPotionActive();
+		vuePersonnage.getElement().addPotionActive(p);
+		
+		for(Caracteristique c : valeursPotion.keySet()) {
+			this.incrementeCaractElement(vuePersonnage, c, valeursPotion.get(c));
+		}
+         if ( vuePersonnage.getElement().findPotion(p.getNom()) !=  -1)
+        	 this.ejecteInventaire(vuePersonnage.getElement().findPotion(p.getNom()),refRMI);
+         
+		vuePersonnage.getElement().delPotion(p);
+	}
 
 	@Override
 	public boolean ramassePotion(int refRMI, int refPotion) throws RemoteException {
