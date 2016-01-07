@@ -18,7 +18,7 @@ import serveur.element.PotionInvisibilite;
 import serveur.element.PotionVitesse;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
-import serveur.interaction.Interaction;;
+import serveur.interaction.Interaction;
 /**
  * Strategie d'un personnage. 
  */
