@@ -56,6 +56,7 @@ public abstract class ElementTableModel<V extends VueElement<?>> extends Abstrac
 		}
 	}
 	
+	
 	/**
 	 * Affiche le nom.
 	 *

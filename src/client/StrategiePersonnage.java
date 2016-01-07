@@ -126,7 +126,12 @@ public class StrategiePersonnage {
 					// ramassage
 					console.setPhrase("Je ramasse une potion");
 					arene.ramassePotion(refRMI, refCible);
-
+				}
+				else if(elemPlusProche instanceof Equipement){ //equipement
+					// ramassage
+					console.setPhrase("Je ramasse un equipement");
+					arene.ramasseEquipement(refRMI, refCible);
+					
 				} else { // personnage
 					// duel
 					console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
@@ -282,7 +287,7 @@ public class StrategiePersonnage {
 				else{ // si voisins, mais plus eloignes et non stuff
 					// je vais vers le plus proche
 					console.setPhrase("Je vais vers " + elemPlusProche.getNom());
-					if ( sniper.findPotion("Potion d'invisibilite") != -1 ) // il consomme une potion d'invisibilté pour se rapprocher
+					if ( sniper.findPotion("Potion d'invisibilite") != -1 ) // il consomme une potion d'invisibiltï¿½ pour se rapprocher
 					{
 						PotionInvisibilite po  =new PotionInvisibilite();
 						HashMap<Caracteristique, Integer> valeursPotion = po.getCaracts();

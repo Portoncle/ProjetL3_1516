@@ -17,6 +17,7 @@ import javax.swing.Timer;
 import serveur.element.Caracteristique;
 import serveur.vuelement.VueElement;
 import serveur.vuelement.VueEquipement;
+import serveur.vuelement.VueInventaire;
 import serveur.vuelement.VuePersonnage;
 import serveur.vuelement.VuePotion;
 import utilitaires.Constantes;
@@ -44,6 +45,8 @@ public class AreneJPanel extends JPanel {
 	 * Liste de tous les equipements connectes a l'interface.
 	 */
 	private List<VueEquipement> equip = new ArrayList<VueEquipement>();
+	
+	private List<VueInventaire> inventaire = new ArrayList<VueInventaire>();
 	
 	
 	/**
@@ -346,10 +349,11 @@ public class AreneJPanel extends JPanel {
 	}
 	
 	/* Necessaire pour afficher l'équipement */
-	public void setVues(List<VuePersonnage> personnages, List<VuePotion> potions, List<VueEquipement> equip) {
+	public void setVues(List<VuePersonnage> personnages, List<VuePotion> potions, List<VueEquipement> equip, List<VueInventaire> inventaire) {
 		this.potions = potions;
 		this.personnages = personnages;
 		this.equip = equip;
+		this.inventaire = inventaire;
 	}
 
 	/**

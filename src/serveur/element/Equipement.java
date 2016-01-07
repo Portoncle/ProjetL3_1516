@@ -11,11 +11,11 @@ public class Equipement extends Element {
 	private static final long serialVersionUID = 1L;
 	
 	/**
-	 * Constructeur d'une potion avec un nom, le groupe qui l'a envoyee et ses 
-	 * caracteristiques (ajoutees lorsqu'un Personnage ramasse cette potion).
-	 * @param nom nom de la potion
-	 * @param groupe groupe d'etudiants de la potion
-	 * @param caracts caracteristiques de la potion
+	 * Constructeur d'un equipement avec un nom, le groupe qui l'a envoyee et ses 
+	 * caracteristiques (ajoutees lorsqu'un Personnage ramasse cette equipement).
+	 * @param nom nom de l'equipement
+	 * @param groupe groupe d'etudiants de l'equipement
+	 * @param caracts caracteristiques de l'equipement
 	 */
 	public Equipement(String nom, String groupe, HashMap<Caracteristique, Integer> caracts, int indice) {
 		super(nom, groupe, caracts);
