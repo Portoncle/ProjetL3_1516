@@ -247,7 +247,7 @@ public class StrategiePersonnage {
 						    PotionInvisibilite po = new PotionInvisibilite ();
 							arene.bois(po,refRMI );
 						    
-							
+							ass.getElement().delPotion(po);
 							console.setPhrase("Je consomme une Potion d'invisibilite");
 							
 						}

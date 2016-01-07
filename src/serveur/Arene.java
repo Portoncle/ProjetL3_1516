@@ -736,9 +736,12 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 	public void ejecteEquip(int refRMI) {
 		equip.remove(refRMI);
 	}
-	public void ejecteInventaire(int indice) {
+	public void ejecteInventaireEquipement(int indice) {
 		inventaire.remove(tabRefEquip[indice]);
 	}	
+	public void ejecteInventairePotion(int refRMI) {
+		inventaire.remove(refRMI);
+	}
 	
 
 	
@@ -799,8 +802,7 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 		}
 		
 		vuePersonnage.getElement().delPotion(p);
-		
-							
+	
 	}
 
 	@Override
