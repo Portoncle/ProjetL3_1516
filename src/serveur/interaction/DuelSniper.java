@@ -1,7 +1,7 @@
 package serveur.interaction;
 
 import java.rmi.RemoteException;
-import java.util.HashMap;
+
 import java.util.logging.Level;
 
 import serveur.Arene;
@@ -50,13 +50,7 @@ public class DuelSniper extends Duel {
 			if( pAttaquant.findPotion("Potion de coup crtitique") != -1)
 			{
 		    	Potion po = new PotionCC();	 
-				pAttaquant.getPotion( pAttaquant.findPotion("Potion de coup crtitique"));
-				HashMap<Caracteristique, Integer> valeursPotion = po.getCaracts();
-				
-				for(Caracteristique c : valeursPotion.keySet()) {
-					arene.incrementeCaractElement(attaquant, c, valeursPotion.get(c));
-				}
-				this.attaquant.getElement().addPotionActive(po);
+		    	arene.bois(po,attaquant.getRefRMI());
 				logs(Level.INFO, "Je prend une potion de coup critique!");
 				
 			}

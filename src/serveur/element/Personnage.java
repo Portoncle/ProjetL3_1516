@@ -184,11 +184,11 @@ public class Personnage extends Element {
 	/* Supprimer potion */
 	public void delPotion(Potion p)
 	{
-		if(this.consommable[0].equals(p))
+		if(this.consommable[0].getNom().compareTo(p.getNom()) == 0)
 		{
 			this.consommable[0] = null;
 		}
-		if(this.consommable[1].equals(p))
+		if(this.consommable[1].getNom().compareTo(p.getNom()) == 0)
 		{
 			this.consommable[1] = null;
 		}

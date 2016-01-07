@@ -12,6 +12,7 @@ import serveur.element.Personnage;
 import serveur.element.Potion;
 import serveur.element.PotionForce;
 import serveur.element.PotionVie;
+import serveur.element.PotionVitesse;
 import serveur.vuelement.VueElement;
 
 import serveur.vuelement.VuePersonnage;
@@ -53,7 +54,7 @@ public class Ramassage extends Interaction<VueElement<?>> {
 					//Test si l'inventaire est plein, si c'est un guerrier, si la potion est de vie ou de force
 					if((attaquant.getElement().isFull()) || 
 							(attaquant.getElement().getNom().compareTo("Garen") == 0) || 
-							(p instanceof PotionVie) || (p instanceof PotionForce)){
+							(p instanceof PotionVie) || (p instanceof PotionForce) || (p instanceof PotionVitesse)){
 						if(p.getCaract(Caracteristique.DUREE) > 0){
 							if(attaquant.getElement().getCaract(Caracteristique.DUREE) > 0)
 								attaquant.getElement().delPotionActive();
@@ -74,7 +75,7 @@ public class Ramassage extends Interaction<VueElement<?>> {
 					else{
 						attaquant.getElement().addPotion((Potion)p);
 						arene.setPhrase(attaquant.getRefRMI(), "Potion ajoutee à l'inventaire!");
-						arene.ajoutInventairePotion(p, defenseur.getRefRMI(), attaquant.getRefRMI());
+						arene.ajouteInventaire(p, defenseur.getRefRMI(), attaquant.getRefRMI(), attaquant.getElement().findPotion(p.getNom()));
 					}
 					//suppression de la potion
 					arene.ejectePotion(defenseur.getRefRMI());
@@ -106,10 +107,10 @@ public class Ramassage extends Interaction<VueElement<?>> {
 						pers.getStuff()[eq.getIndice()].getCaracts().get(cTemp) < eq.getCaracts().get(cTemp))
 						{
 						if(pers.getStuff()[eq.getIndice()] != null){
-							arene.ejecteInventaireEquipement(eq.getIndice());
+							arene.ejecteInventaire(eq.getIndice());
 						}
 						pers.addStuff(eq);
-						arene.ajouteInventaireEquipement(eq,defenseur.getRefRMI(),attaquant.getRefRMI(),eq.getIndice());
+						arene.ajouteInventaire(eq,defenseur.getRefRMI(),attaquant.getRefRMI(),eq.getIndice());
 						arene.setPhrase(attaquant.getRefRMI(), "Je m'equipe " + str);
 					}
 					/* Sinon on le detruit */

@@ -79,10 +79,6 @@ public interface IArene extends Remote {
 	public void ajoutePotion(Potion potion, Point position) throws RemoteException;
 	
 	public void ajouteEquipement(Equipement eq, Point position) throws RemoteException;
-	
-	public void ajouteInventaireEquipement(Equipement eq, int refObjet, int refPerso, int indice) throws RemoteException;
-	
-	public void ajoutInventairePotion(Potion p, int refObjet, int refPerso) throws RemoteException;
 	/**************************************************************************
 	 * Accesseurs sur les elements du serveur. 
 	 **************************************************************************/

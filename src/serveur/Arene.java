@@ -112,7 +112,7 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 	/*
 	 * Tableau contenant les ref des objet de l'inventaire
 	 */
-	private int tabRefEquip[] = new int[3];
+	private int tabRef[] = new int[3];
 	
 	/**
 	 * Constructeur de l'arene.
@@ -736,11 +736,8 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 	public void ejecteEquip(int refRMI) {
 		equip.remove(refRMI);
 	}
-	public void ejecteInventaireEquipement(int indice) {
-		inventaire.remove(tabRefEquip[indice]);
-	}	
-	public void ejecteInventairePotion(int refRMI) {
-		inventaire.remove(refRMI);
+	public void ejecteInventaire(int indice) {
+		inventaire.remove(tabRef[indice]);
 	}
 	
 
@@ -772,18 +769,12 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 		logElements();
 	}
 	
-	public void ajouteInventaireEquipement(Equipement eq, int refObjet, int refPerso, int indice) throws RemoteException{
-		VueInventaire vueInv = new VueInventaire(eq,refObjet, null,refPerso);
+	public void ajouteInventaire(Element e, int refObjet, int refPerso, int indice) throws RemoteException{
+		VueInventaire vueInv = new VueInventaire(e,refObjet, null,refPerso);
 		
 		//ajout de l'équipement a la liste
 		inventaire.put(refObjet, vueInv);
-		tabRefEquip[indice] = refObjet;
-	}
-	
-	public void ajoutInventairePotion(Potion p, int refObjet, int refPerso) throws RemoteException{
-		VueInventaire vueInv = new VueInventaire(p,refObjet, null,refPerso);
-		//ajout de la potion a la liste
-		inventaire.put(refObjet, vueInv);	
+		tabRef[indice] = refObjet;
 	}
 	
 	public void bois(Potion p,int refRMI) throws RemoteException{
@@ -800,7 +791,9 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 		for(Caracteristique c : valeursPotion.keySet()) {
 			this.incrementeCaractElement(vuePersonnage, c, valeursPotion.get(c));
 		}
-		
+         if ( vuePersonnage.getElement().findPotion(p.getNom()) !=  -1)
+        	 this.ejecteInventaire(vuePersonnage.getElement().findPotion(p.getNom()));
+         
 		vuePersonnage.getElement().delPotion(p);
 	
 	}
