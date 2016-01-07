@@ -1,6 +1,5 @@
 package serveur.interaction;
 
-import java.awt.Point;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -30,7 +29,7 @@ public class DuelAssassin extends Duel {
 		super(arene, attaquant, defenseur);
 	}
 	
-	@Override
+	
 	public void interagit() {
 		try {
 			
@@ -41,14 +40,16 @@ public class DuelAssassin extends Duel {
 			int chanceDeCrit = pAttaquant.getCaract(Caracteristique.COUPCRITIQUE);
 			int armure = pDefenseur.getCaract(Caracteristique.ARMURE);
 			
-			int perteVie = forceAttaquant * armure/100 ;
+			int perteVie;
 			
-		   
-			  
-		    if( pAttaquant.findPotion("Potion de coup crtitique") != -1)
+			if ( armure == 0)
+				perteVie = forceAttaquant ;
+			else
+				perteVie = forceAttaquant * (armure/100);
+			
+			if( pAttaquant.findPotion("Potion de coup crtitique") != -1)
 			{
 		    	Potion po = new PotionCC();	 
-				pAttaquant.getPotion( pAttaquant.findPotion("Potion de coup crtitique"));
 				HashMap<Caracteristique, Integer> valeursPotion = po.getCaracts();
 				
 				for(Caracteristique c : valeursPotion.keySet()) {
@@ -59,36 +60,31 @@ public class DuelAssassin extends Duel {
 				
 			}
 			
-			Point positionEjection = positionEjection(defenseur.getPosition(), attaquant.getPosition(), forceAttaquant);
-
-			// ejection du defenseur
-			defenseur.setPosition(positionEjection);
-
-			// degats
-			
 			if ( perteVie > 0) //Il a subit des degats
 			{
 				
-			    arene.incrementeCaractElement(defenseur, Caracteristique.ARMURE, 0); //l'armure est cassee on la remet a 0
+			   
 				int rnd = Calculs.nombreAleatoire (0,100);
-				if ( rnd < chanceDeCrit) //Si il crit
-				{
-					perteVie = (int) (perteVie + forceAttaquant*0.3 ) ;
-					arene.incrementeCaractElement(defenseur,Caracteristique.VIE, -perteVie);
-					logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + " fait un coup critque ("
+			 
+					if ( rnd < chanceDeCrit) //Si il crit
+					{
+						perteVie = (int) (perteVie + forceAttaquant*0.3 ) ;
+						arene.incrementeCaractElement(defenseur,Caracteristique.VIE, -perteVie);
+						logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + " fait un coup critque ("
+								+ perteVie + " points de degats) a " + Constantes.nomRaccourciClient(defenseur));
+					}
+					else
+					{
+					arene.incrementeCaractElement(defenseur, Caracteristique.VIE,- perteVie);
+					
+					logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + " colle une beigne ("
 							+ perteVie + " points de degats) a " + Constantes.nomRaccourciClient(defenseur));
-				}
-				else
-				{
-				arene.incrementeCaractElement(defenseur, Caracteristique.VIE,- perteVie);
-				
-				logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + " colle une beigne ("
-						+ perteVie + " points de degats) a " + Constantes.nomRaccourciClient(defenseur));
-				}
+					}
 			
 			}
-			else
-				arene.incrementeCaractElement(defenseur, Caracteristique.ARMURE, armure- forceAttaquant);
+			  
+			
+		
 			// initiative
 			incrementeInitiative(defenseur);
 			decrementeInitiative(attaquant);
@@ -97,4 +93,6 @@ public class DuelAssassin extends Duel {
 			logs(Level.INFO, "\nErreur lors d'une attaque : " + e.toString());
 		}
 	}
+
 }
+

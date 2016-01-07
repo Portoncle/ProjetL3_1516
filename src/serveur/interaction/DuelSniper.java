@@ -40,7 +40,12 @@ public class DuelSniper extends Duel {
 			int chanceDeCrit = pAttaquant.getCaract(Caracteristique.COUPCRITIQUE);
 			int armure = pDefenseur.getCaract(Caracteristique.ARMURE);
 			
-			int perteVie = forceAttaquant - (armure/100) ;
+			int perteVie;
+			
+			if ( armure == 0)
+				perteVie = forceAttaquant ;
+			else
+				perteVie = forceAttaquant * (armure/100);
 			
 			if( pAttaquant.findPotion("Potion de coup crtitique") != -1)
 			{
@@ -55,15 +60,15 @@ public class DuelSniper extends Duel {
 				logs(Level.INFO, "Je prend une potion de coup critique!");
 				
 			}
-			/* Il a subit des degats */
-			if ( perteVie > 0)
+			if ( perteVie > 0) //Il a subit des degats
 			{
+				
+			   
 				int rnd = Calculs.nombreAleatoire (0,100);
 				int chanceDeTir = Calculs.nombreAleatoire(1,4);
 				if (chanceDeTir == 4 ) 
 				{
-					 /* Si il crit */
-					if ( rnd < chanceDeCrit)
+					if ( rnd < chanceDeCrit) //Si il crit
 					{
 						perteVie = (int) (perteVie + forceAttaquant*0.3 ) ;
 						arene.incrementeCaractElement(defenseur,Caracteristique.VIE, -perteVie);
@@ -82,10 +87,9 @@ public class DuelSniper extends Duel {
 				 logs(Level.INFO, Constantes.nomRaccourciClient(attaquant) + "Rate son tir" );
 				
 			}
-			else
-				arene.incrementeCaractElement(defenseur, Caracteristique.ARMURE, armure- forceAttaquant);
 			
-			/* Initiative */
+		
+			// initiative
 			incrementeInitiative(defenseur);
 			decrementeInitiative(attaquant);
 			
@@ -93,6 +97,6 @@ public class DuelSniper extends Duel {
 			logs(Level.INFO, "\nErreur lors d'une attaque : " + e.toString());
 		}
 	}
+
 }
-	
 

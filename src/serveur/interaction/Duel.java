@@ -37,9 +37,13 @@ public class Duel extends Interaction<VuePersonnage> {
 			int forceAttaquant = pAttaquant.getCaract(Caracteristique.FORCE);
 			int chanceDeCrit = pAttaquant.getCaract(Caracteristique.COUPCRITIQUE);
 			int armure = pDefenseur.getCaract(Caracteristique.ARMURE);
+			int perteVie;
 			
-			int perteVie = forceAttaquant - (armure/100) ;
-		
+			if  ( armure == 0)
+				perteVie = forceAttaquant  ;
+			else
+				perteVie = forceAttaquant * (armure/100);
+				
 			Point positionEjection = positionEjection(defenseur.getPosition(), attaquant.getPosition(), forceAttaquant);
 
 			// ejection du defenseur
@@ -68,8 +72,6 @@ public class Duel extends Interaction<VuePersonnage> {
 				}
 			
 			}
-			else
-				arene.incrementeCaractElement(defenseur, Caracteristique.ARMURE, armure- forceAttaquant);
 			// initiative
 			incrementeInitiative(defenseur);
 			decrementeInitiative(attaquant);

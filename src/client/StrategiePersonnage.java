@@ -18,7 +18,7 @@ import serveur.element.PotionInvisibilite;
 import serveur.element.PotionVitesse;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
-import serveur.interaction.Interaction;
+
 /**
  * Strategie d'un personnage. 
  */
@@ -220,14 +220,18 @@ public class StrategiePersonnage {
 				}
 				
 				// sinon, aller vers l'ennemi s'il a moins de vie que la force de l'assassin
-				else{
-					if(elemPlusProche.getCaract(Caracteristique.VIE) < assassin.getCaract(Caracteristique.FORCE)){
+				else if(elemPlusProche.getCaract(Caracteristique.VIE) < assassin.getCaract(Caracteristique.FORCE))
+				{
 						console.setPhrase("Je vais vers " + elemPlusProche.getNom());
 						arene.deplace(refRMI, refCible);
-					}
-
-					else{ // Sinon fuit 
+				}
+				else{ // Sinon fuit 
 						console.setPhrase("Je fuis");
+						
+						Potion tab[] = new Potion[2];
+						tab=assassin.getConsommable();
+						
+						console.setPhrase ("vide "+assassin.isEmpty());
 						if ( assassin.findPotion("Potion d'invisibilite") != -1 )
 						{
 							PotionInvisibilite po  = new PotionInvisibilite();
@@ -253,7 +257,7 @@ public class StrategiePersonnage {
 						}
 
 						arene.deplace(refRMI, 0); 
-					}
+					
 				}
 			}
 		}
@@ -361,10 +365,6 @@ public class StrategiePersonnage {
 		}
 		
 	}
-	
-
-	
-	
 	
 	
 	
@@ -498,32 +498,34 @@ public class StrategiePersonnage {
 					console.setPhrase("Je vais vers " + elemPlusProche.getNom());
 					arene.deplace(refRMI, refCible);
 				}
-				
-				while ( ! shaolin.isEmpty() ) //il consomme toute ces potion pour se preparer au combat
+				else
 				{
-					if ( shaolin.findPotion("Potion d'invisibilite") != -1 )
+					while ( ! shaolin.isEmpty() ) //il consomme toute ces potion pour se preparer au combat
 					{
-						PotionInvisibilite po = new PotionInvisibilite();
-						HashMap<Caracteristique, Integer> valeursPotion = po.getCaracts();
-						
-						for(Caracteristique c : valeursPotion.keySet()) {
-							shaolin.incrementeCaract( c, valeursPotion.get(c));
+						if ( shaolin.findPotion("Potion d'invisibilite") != -1 )
+						{
+							PotionInvisibilite po = new PotionInvisibilite();
+							HashMap<Caracteristique, Integer> valeursPotion = po.getCaracts();
+							
+							for(Caracteristique c : valeursPotion.keySet()) {
+								shaolin.incrementeCaract( c, valeursPotion.get(c));
+							}
+							shaolin.addPotionActive(po);
+							console.setPhrase("Je consomme une Potion d'invisibilite");
+							
 						}
-						shaolin.addPotionActive(po);
-						console.setPhrase("Je consomme une Potion d'invisibilite");
-						
-					}
-					else if ( shaolin.findPotion("Potion de coup critique") != -1 )
-					{
-						PotionCC po  =new PotionCC();
-						HashMap<Caracteristique, Integer> valeursPotion = po.getCaracts();
-						
-						for(Caracteristique c : valeursPotion.keySet()) {
-							shaolin.incrementeCaract( c, valeursPotion.get(c));
+						else if ( shaolin.findPotion("Potion de coup critique") != -1 )
+						{
+							PotionCC po  =new PotionCC();
+							HashMap<Caracteristique, Integer> valeursPotion = po.getCaracts();
+							
+							for(Caracteristique c : valeursPotion.keySet()) {
+								shaolin.incrementeCaract( c, valeursPotion.get(c));
+							}
+							shaolin.addPotionActive(po);
+							console.setPhrase("Je consomme de coup critique");
+							
 						}
-						shaolin.addPotionActive(po);
-						console.setPhrase("Je consomme de coup critique");
-						
 					}
 				}
 				// else = personnage. Arret en attente d'attaque pour se defendre
