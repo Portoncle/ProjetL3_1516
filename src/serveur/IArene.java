@@ -189,7 +189,6 @@ public interface IArene extends Remote {
 	 */
 	public boolean lanceAttaque(int refRMI, int refAdv) throws RemoteException;
 	public boolean lanceAttaqueSniper(int refRMI, int refAdv) throws RemoteException;
-	public boolean lanceAttaqueAssassin(int refRMI, int refAdv) throws RemoteException;
 	public boolean lanceAttaqueVampire(int refRMI, int refCible) throws RemoteException;
 	
 	

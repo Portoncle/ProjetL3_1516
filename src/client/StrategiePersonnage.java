@@ -18,7 +18,7 @@ import serveur.element.PotionInvisibilite;
 import serveur.element.PotionVitesse;
 import utilitaires.Calculs;
 import utilitaires.Constantes;
-import serveur.interaction.Interaction;;
+
 /**
  * Strategie d'un personnage. 
  */
@@ -208,7 +208,7 @@ public class StrategiePersonnage {
 				}
 				else{ // Personnage
 					console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
-					arene.lanceAttaqueAssassin(refRMI, refCible);
+					arene.lanceAttaque(refRMI, refCible);
 				}
 			}
 			else { // si voisins, mais plus eloignes
@@ -220,13 +220,12 @@ public class StrategiePersonnage {
 				}
 				
 				// sinon, aller vers l'ennemi s'il a moins de vie que la force de l'assassin
-				else{
-					if(elemPlusProche.getCaract(Caracteristique.VIE) < assassin.getCaract(Caracteristique.FORCE)){
+				else if(elemPlusProche.getCaract(Caracteristique.VIE) < assassin.getCaract(Caracteristique.FORCE))
+				{
 						console.setPhrase("Je vais vers " + elemPlusProche.getNom());
 						arene.deplace(refRMI, refCible);
-					}
-
-					else{ // Sinon fuit 
+				}
+				else{ // Sinon fuit 
 						console.setPhrase("Je fuis");
 						if ( assassin.findPotion("Potion d'invisibilite") != -1 )
 						{
@@ -253,7 +252,7 @@ public class StrategiePersonnage {
 						}
 
 						arene.deplace(refRMI, 0); 
-					}
+					
 				}
 			}
 		}
@@ -361,10 +360,6 @@ public class StrategiePersonnage {
 		}
 		
 	}
-	
-
-	
-	
 	
 	
 	
@@ -498,6 +493,7 @@ public class StrategiePersonnage {
 					console.setPhrase("Je vais vers " + elemPlusProche.getNom());
 					arene.deplace(refRMI, refCible);
 				}
+				
 				// personnage
 				else{ 
 					console.setPhrase("Pret pour defense");
@@ -527,13 +523,14 @@ public class StrategiePersonnage {
 							console.setPhrase("Je consomme de coup critique");
 							
 						}
+					}
+
 				}
 				
 				// else = personnage. Arret en attente d'attaque pour se defendre
 			}
 		}
 	}
-}
 	
 	
 	
