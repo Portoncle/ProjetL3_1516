@@ -24,11 +24,13 @@ import serveur.element.Personnage;
 import serveur.element.Potion;
 import serveur.interaction.Deplacement;
 import serveur.interaction.Duel;
+import serveur.interaction.DuelAssassin;
 import serveur.interaction.DuelSniper;
 import serveur.interaction.DuelVampire;
 import serveur.interaction.Ramassage;
 import serveur.vuelement.VueElement;
 import serveur.vuelement.VueEquipement;
+import serveur.vuelement.VueInventaire;
 import serveur.vuelement.VuePersonnage;
 import serveur.vuelement.VuePotion;
 import utilitaires.Calculs;
@@ -88,6 +90,11 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 	 * Associe les references RMI et les equipements connectes au serveur.
 	 */
 	protected Hashtable<Integer, VueEquipement> equip = null;
+	
+	/**
+	 * Associe les references RMI et les equipements de l'inventaire connectes au serveur.
+	 */
+	protected Hashtable<Integer, VueInventaire> inventaire = null;
 
 	/**
 	 * Vrai si la partie est terminee.
@@ -101,7 +108,12 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 	 * Gestionnaire des logs.
 	 */
 	protected LoggerProjet logger;
-
+	
+	/*
+	 * Tableau contenant les ref des objet de l'inventaire
+	 */
+	private int tabRef[] = new int[3];
+	
 	/**
 	 * Constructeur de l'arene.
 	 * @param port le port de connexion
@@ -123,6 +135,7 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 		personnages = new Hashtable<Integer, VuePersonnage>();
 		potions = new Hashtable<Integer, VuePotion>();
 		equip = new Hashtable<Integer, VueEquipement>();
+		inventaire = new Hashtable<Integer, VueInventaire>();
 		personnagesMorts = new ArrayList<VuePersonnage>();
 		
 		this.logger = logger;
@@ -583,6 +596,11 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 	}
 
 	@Override
+	public List<VueInventaire> getInventaire() throws RemoteException {
+		return new ArrayList<VueInventaire>(inventaire.values());
+	}
+	
+	@Override
 	public HashMap<Integer, Point> getVoisins(int refRMI) throws RemoteException {
 		HashMap<Integer, Point> res = new HashMap<Integer, Point>();
 	
@@ -717,6 +735,9 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 	}	
 	public void ejecteEquip(int refRMI) {
 		equip.remove(refRMI);
+	}
+	public void ejecteInventaire(int indice) {
+		inventaire.remove(tabRef[indice]);
 	}	
 	
 
@@ -746,6 +767,14 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 				Constantes.nomCompletClient(vueEq) + " (" + refRMI + ")");
 		
 		logElements();
+	}
+	
+	public void ajouteInventaire(Element e, int refObjet, int refPerso, int indice) throws RemoteException{
+		VueInventaire vueInv = new VueInventaire(e,refObjet, null,refPerso);
+		
+		//ajout de l'équipement a la liste
+		inventaire.put(refObjet, vueInv);
+		tabRef[indice] = refObjet;
 	}
 	
 
@@ -878,6 +907,72 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 		return res;
 	}
 	
+	public boolean lanceAttaqueAssassin(int refRMI, int refRMIAdv) throws RemoteException {
+		boolean res = false;
+		
+		VuePersonnage client = personnages.get(refRMI);
+		VuePersonnage clientAdv = personnages.get(refRMIAdv);
+		
+		if (personnages.get(refRMI).isActionExecutee()) {
+			// si une action a deja ete executee
+			logActionDejaExecutee(refRMI);
+			
+		} else {
+			// sinon, on tente de jouer l'interaction
+			IConsole console = consoleFromRef(refRMI);
+			IConsole consoleAdv = consoleFromRef(refRMIAdv);
+			
+			int distance = Calculs.distanceChebyshev(personnages.get(refRMI).getPosition(), 
+					personnages.get(refRMIAdv).getPosition());
+
+			// on teste la distance entre les personnages
+			if (distance <= Constantes.DISTANCE_MIN_INTERACTION) {
+				Personnage pers = (Personnage) elementFromRef(refRMI);
+				Personnage persAdv = (Personnage) elementFromRef(refRMIAdv);
+				
+				// on teste que les deux personnages soient en vie
+				if (pers.estVivant() && persAdv.estVivant()) {
+					console.log(Level.INFO, Constantes.nomClasse(this), 
+							"J'attaque " + nomRaccourciClient(refRMIAdv));
+					consoleAdv.log(Level.INFO, Constantes.nomClasse(this), 
+							"Je me fait attaquer par " + nomRaccourciClient(refRMI));
+					
+					logger.info(Constantes.nomClasse(this), nomRaccourciClient(refRMI) + 
+							" attaque " + nomRaccourciClient(consoleAdv.getRefRMI()));
+			
+					new DuelAssassin(this, client, clientAdv).interagit();
+					personnages.get(refRMI).executeAction();
+					
+					// si l'adversaire est mort
+					if (!persAdv.estVivant()) {
+						setPhrase(refRMI, "Je tue " + nomRaccourciClient(consoleAdv.getRefRMI()));
+						console.log(Level.INFO, Constantes.nomClasse(this), 
+								"Je tue " + nomRaccourciClient(refRMI));
+						
+						logger.info(Constantes.nomClasse(this), nomRaccourciClient(refRMI) + 
+								" tue " + nomRaccourciClient(consoleAdv.getRefRMI()));
+					}
+					
+					res = true;
+				} else {
+					logger.warning(Constantes.nomClasse(this), nomRaccourciClient(refRMI) + 
+							" a tente d'interagir avec "+nomRaccourciClient(refRMIAdv)+", alors qu'il est mort...");
+					
+					console.log(Level.WARNING, Constantes.nomClasse(this), 
+							nomRaccourciClient(refRMIAdv) + " est deja mort !");
+				}
+			} else {
+				logger.warning(Constantes.nomClasse(this), nomRaccourciClient(refRMI) + 
+						" a tente d'interagir avec "+nomRaccourciClient(refRMIAdv) + 
+						", alors qu'il est trop eloigne... Distance de chebyshev = " + distance);
+				
+				console.log(Level.WARNING, "AVERTISSEMENT ARENE", 
+						nomRaccourciClient(refRMIAdv) + " est trop eloigne !\nDistance = " + distance);
+			}
+		}
+		
+		return res;
+	}
 	public boolean lanceAttaqueSniper(int refRMI, int refRMIAdv) throws RemoteException {
 		boolean res = false;
 		
@@ -1205,6 +1300,10 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 	public void lancePotion(Potion potion, Point position, String motDePasse) throws RemoteException {}
 	
 	public void lanceEquipement(Equipement eq, Point position, String motDePasse) throws RemoteException {}
+
+
+
+		
 
 	
 }

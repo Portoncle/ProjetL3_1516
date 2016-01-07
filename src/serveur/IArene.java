@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.HashMap;
+import java.util.List;
 
 import client.controle.IConsole;
 import serveur.element.Element;
@@ -11,6 +12,7 @@ import serveur.element.Personnage;
 import serveur.element.Potion;
 import serveur.element.Equipement;
 import serveur.vuelement.VueElement;
+import serveur.vuelement.VueInventaire;
 
 /**
  * Definit les methodes qui pourront s'appliquer a l'arene par le reseau.
@@ -73,8 +75,6 @@ public interface IArene extends Remote {
 	public void ajoutePotion(Potion potion, Point position) throws RemoteException;
 	
 	public void ajouteEquipement(Equipement eq, Point position) throws RemoteException;
-	
-
 	/**************************************************************************
 	 * Accesseurs sur les elements du serveur. 
 	 **************************************************************************/
@@ -189,6 +189,7 @@ public interface IArene extends Remote {
 	 */
 	public boolean lanceAttaque(int refRMI, int refAdv) throws RemoteException;
 	public boolean lanceAttaqueSniper(int refRMI, int refAdv) throws RemoteException;
+	public boolean lanceAttaqueAssassin(int refRMI, int refAdv) throws RemoteException;
 	public boolean lanceAttaqueVampire(int refRMI, int refCible) throws RemoteException;
 	
 	
@@ -258,6 +259,8 @@ public interface IArene extends Remote {
 	public void lancePotion(Potion potion, Point position, String motDePasse) throws RemoteException;
 
 	public void lanceEquipement(Equipement eq, Point position, String motDePasse) throws RemoteException;
+
+	List<VueInventaire> getInventaire() throws RemoteException;
 
 	
 }

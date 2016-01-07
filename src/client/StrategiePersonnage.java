@@ -152,7 +152,12 @@ public class StrategiePersonnage {
 					// ramassage
 					console.setPhrase("Je ramasse une potion");
 					arene.ramassePotion(refRMI, refCible);
-
+				}
+				else if(elemPlusProche instanceof Equipement){ //equipement
+					// ramassage
+					console.setPhrase("Je ramasse un equipement");
+					arene.ramasseEquipement(refRMI, refCible);
+					
 				} else { // personnage
 					// duel
 					console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
@@ -208,7 +213,7 @@ public class StrategiePersonnage {
 				}
 				else{ // Personnage
 					console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
-					arene.lanceAttaque(refRMI, refCible);
+					arene.lanceAttaqueAssassin(refRMI, refCible);
 				}
 			}
 			else { // si voisins, mais plus eloignes
@@ -227,6 +232,11 @@ public class StrategiePersonnage {
 				}
 				else{ // Sinon fuit 
 						console.setPhrase("Je fuis");
+						
+						Potion tab[] = new Potion[2];
+						tab=assassin.getConsommable();
+						
+						console.setPhrase ("vide "+assassin.isEmpty());
 						if ( assassin.findPotion("Potion d'invisibilite") != -1 )
 						{
 							PotionInvisibilite po  = new PotionInvisibilite();
@@ -473,7 +483,10 @@ public class StrategiePersonnage {
 					console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
 					arene.lanceAttaque(refRMI, refCible);
 				}
-				// else Equipement, non interesse
+				else{
+					console.setPhrase("J'erre...");
+					arene.deplace(refRMI, 0); 
+				}
 			}
 			// si voisin, mais plus eloignes
 			else
@@ -497,6 +510,7 @@ public class StrategiePersonnage {
 				// personnage
 				else{ 
 					console.setPhrase("Pret pour defense");
+				}
 					while ( ! shaolin.isEmpty() ) //il consomme toute ces potion pour se preparer au combat
 					{
 						if ( shaolin.findPotion("Potion d'invisibilite") != -1 )
@@ -530,7 +544,7 @@ public class StrategiePersonnage {
 				// else = personnage. Arret en attente d'attaque pour se defendre
 			}
 		}
-	}
+	
 	
 	
 	
