@@ -288,11 +288,11 @@ public class StrategiePersonnage {
 	/**********/
 	private void execStratSniper(Personnage sniper,Point position, HashMap<Integer, Point> voisins, IArene arene, int refRMI) throws RemoteException {
 
-		// je n'ai pas de voisins, j'erre
-		//J'utilise la potion de vitesse pour chercher une cible plus vite
+		/* Pas de voisin */
 		if (voisins.isEmpty()) {
 			logs(Level.INFO, "Je prend une potion de coup critique!");
-
+			
+			/* Si possede potion vitesse */
 			if ( sniper.findPotion("Potion de vitesse") != -1 )
 			{
 				PotionVitesse po =new PotionVitesse();
@@ -309,49 +309,27 @@ public class StrategiePersonnage {
 			console.setPhrase("J'erre...");
 			arene.deplace(refRMI, 0); 
 			
-		} 
+		}
+		/* Il a des voisins */
 		else{
 			int refCible = Calculs.chercheElementProche(position, voisins);
 			int distPlusProche = Calculs.distanceChebyshev(position, arene.getPosition(refCible));
 	
 			Element elemPlusProche = arene.elementFromRef(refCible);
 	
-			if(distPlusProche <= 20) { // si suffisamment proches
-				// j'interagis directement
-				if(elemPlusProche instanceof Personnage){ // personnage
-					// duel
+			/* Si on voit des elements */
+			if(distPlusProche <= 30) { 
+				/* Si un personage est assez proche, tirer */
+				if(elemPlusProche instanceof Personnage && distPlusProche <= 20){
 					console.setPhrase("Je fais un duel avec " + elemPlusProche.getNom());
-					 arene.lanceAttaqueSniper(refRMI, refCible);
+					arene.lanceAttaqueSniper(refRMI, refCible);
 				}
-				
-				else if(elemPlusProche instanceof Potion){ // potion
-					if(distPlusProche == Constantes.DISTANCE_MIN_INTERACTION){
-						// ramassage
-						console.setPhrase("Je ramasse une potion");
-						arene.ramassePotion(refRMI, refCible);
-					}
-					else{
-						console.setPhrase("Je vais vers " + elemPlusProche.getNom());
-						arene.deplace(refRMI, refCible);
-					}
-				} 
-				
-				else{ // equipement
-					console.setPhrase("J'erre...");
-					arene.deplace(refRMI, 0); 
-				}
-				
-			} 
-			else{ 
-				if(elemPlusProche instanceof Equipement){ // equipement
-					 // si equipement
-					console.setPhrase("J'erre...");
-					arene.deplace(refRMI, 0); 
-				}
-				else{ // si voisins, mais plus eloignes et non stuff
-					// je vais vers le plus proche
+				/* Personnage pas a portee de tir */
+				else
+				{
 					console.setPhrase("Je vais vers " + elemPlusProche.getNom());
-					if ( sniper.findPotion("Potion d'invisibilite") != -1 ) // il consomme une potion d'invisibilt� pour se rapprocher
+					/* Consomme invisibilite si possible */
+					if ( sniper.findPotion("Potion d'invisibilite") != -1 )
 					{
 						PotionInvisibilite po  =new PotionInvisibilite();
 						HashMap<Caracteristique, Integer> valeursPotion = po.getCaracts();
@@ -361,16 +339,34 @@ public class StrategiePersonnage {
 						}
 						sniper.addPotionActive(po);
 						console.setPhrase("Je consomme une Potion d'invisibilite");
-						
 					}
+					/* Se rapproche de la cible */
 					arene.deplace(refRMI, refCible);
 				}
-
 			}
+				
+				/* Si c'est une potion */
+				else if(elemPlusProche instanceof Potion){
+					
+					/* Ramassage ou deplacement */
+					if(distPlusProche <= Constantes.DISTANCE_MIN_INTERACTION){
+						console.setPhrase("Je ramasse une potion");
+						arene.ramassePotion(refRMI, refCible);
+					}
+					else{
+						console.setPhrase("Je vais vers " + elemPlusProche.getNom());
+						arene.deplace(refRMI, refCible);
+					}
+				} 
+				
+				/* Si c'est un equipement */
+				else{
+					console.setPhrase("J'erre...");
+					arene.deplace(refRMI, 0); 
+				}
+				
+			} 
 		}
-		
-	}
-	
 	
 	
 	
