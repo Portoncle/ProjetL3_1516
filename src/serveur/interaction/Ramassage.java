@@ -74,7 +74,7 @@ public class Ramassage extends Interaction<VueElement<?>> {
 					else{
 						attaquant.getElement().addPotion((Potion)p);
 						arene.setPhrase(attaquant.getRefRMI(), "Potion ajoutee à l'inventaire!");
-						arene.ajoutInventairePotion(p, defenseur.getRefRMI(), attaquant.getRefRMI());
+						arene.ajouteInventaire(p, defenseur.getRefRMI(), attaquant.getRefRMI(), attaquant.getElement().findPotion(p.getNom()));
 					}
 					//suppression de la potion
 					arene.ejectePotion(defenseur.getRefRMI());
@@ -109,7 +109,7 @@ public class Ramassage extends Interaction<VueElement<?>> {
 							arene.ejecteInventaire(eq.getIndice());
 						}
 						pers.addStuff(eq);
-						arene.ajouteInventaireEquipement(eq,defenseur.getRefRMI(),attaquant.getRefRMI(),eq.getIndice());
+						arene.ajouteInventaire(eq,defenseur.getRefRMI(),attaquant.getRefRMI(),eq.getIndice());
 						arene.setPhrase(attaquant.getRefRMI(), "Je m'equipe " + str);
 					}
 					/* Sinon on le detruit */
