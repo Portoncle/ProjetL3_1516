@@ -16,7 +16,7 @@ public class LanceEquipement {
 
 	public static void main(String[] args) {
 		
-		String groupe = "G2"; 
+		String groupe = "G2";
 		
 		/* init des arguments */
 		int port = Constantes.PORT_DEFAUT;
@@ -44,15 +44,12 @@ public class LanceEquipement {
 		
 		
 		HashMap<Caracteristique, Integer> caractsEquip = new HashMap<Caracteristique, Integer>();
-		
-		
-		
-		
-		// creation du logger
+		/* creation du logger */
 		LoggerProjet logger = null;
 		
-		
+		/*******************************************/
 		/* On va creer aleatoirement un equipement */
+		/*******************************************/
 		int indice;
 		String nom = null;
 		indice = Calculs.nombreAleatoire(0, 2);
@@ -91,8 +88,9 @@ public class LanceEquipement {
 		
 		
 		
-		
+		/************************************/
 		/* On cree une instance d'equipement*/
+		/************************************/
 		try {
 			IArene arene = (IArene) java.rmi.Naming.lookup(Constantes.nomRMI(ipArene, port, "Arene"));
 			logger.info("Lanceur", "Lancement de l'équipement sur le serveur...");
