@@ -50,6 +50,9 @@ public class VuePersonnage extends VueElement<Personnage> implements Comparable<
 	 * @param position position courante
 	 * @param ref reference RMI
 	 */
+	
+	private int inventaire[] = new int[5];
+	
 	public VuePersonnage(String adresseIp, Personnage personnage, int nbTours, 
 			Point position, int ref) {
 		
@@ -57,6 +60,17 @@ public class VuePersonnage extends VueElement<Personnage> implements Comparable<
 		this.adresseIp = adresseIp;
 		this.actionExecutee = false;
 		this.NB_TOURS = nbTours;
+		for (int i = 0; i < inventaire.length; i++) {
+			inventaire[i] = 0;
+		}
+	}
+	
+	public void setInventaire(int indice, int ref){
+		inventaire[indice]= ref;
+	}
+	
+	public int[] getInventaire(){
+		return inventaire;
 	}
 	
 	/**

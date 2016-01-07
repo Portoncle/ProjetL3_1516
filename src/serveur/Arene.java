@@ -109,11 +109,6 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 	 */
 	protected LoggerProjet logger;
 	
-	/*
-	 * Tableau contenant les ref des objet de l'inventaire
-	 */
-	private int tabRef[] = new int[3];
-	
 	/**
 	 * Constructeur de l'arene.
 	 * @param port le port de connexion
@@ -721,6 +716,11 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 	 * @param refRMI reference du personnage a ejecter
 	 */
 	protected void ejectePersonnage(int refRMI) {
+		VuePersonnage pers = personnages.get(refRMI);
+		for(int ref: pers.getInventaire()){
+			if(ref != 0)
+				inventaire.remove(ref);
+		}
 		if(personnages.remove(refRMI) != null) {
 			logger.info(Constantes.nomClasse(this), "Console " + refRMI + " ejectee du registre !");
 		}
@@ -736,7 +736,8 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 	public void ejecteEquip(int refRMI) {
 		equip.remove(refRMI);
 	}
-	public void ejecteInventaire(int indice) {
+	public void ejecteInventaire(int indice, int refRMI) {
+		int tabRef[] = personnages.get(refRMI).getInventaire();
 		inventaire.remove(tabRef[indice]);
 	}	
 	
@@ -771,12 +772,32 @@ public class Arene extends UnicastRemoteObject implements IAreneIHM, Runnable {
 	
 	public void ajouteInventaire(Element e, int refObjet, int refPerso, int indice) throws RemoteException{
 		VueInventaire vueInv = new VueInventaire(e,refObjet, null,refPerso);
+		VuePersonnage vueP = personnages.get(refPerso);
 		
 		//ajout de l'équipement a la liste
 		inventaire.put(refObjet, vueInv);
-		tabRef[indice] = refObjet;
+		vueP.setInventaire(indice, refObjet);
 	}
 	
+	public void bois(Potion p, int refRMI) throws RemoteException{
+		
+		VuePersonnage vuePersonnage = personnages.get(refRMI);
+		
+		// increment de la caracteristique
+		HashMap<Caracteristique, Integer> valeursPotion = p.getCaracts();
+		
+		if(vuePersonnage.getElement().getCaract(Caracteristique.DUREE) > 0)
+			vuePersonnage.getElement().delPotionActive();
+		vuePersonnage.getElement().addPotionActive(p);
+		
+		for(Caracteristique c : valeursPotion.keySet()) {
+			this.incrementeCaractElement(vuePersonnage, c, valeursPotion.get(c));
+		}
+         if ( vuePersonnage.getElement().findPotion(p.getNom()) !=  -1)
+        	 this.ejecteInventaire(vuePersonnage.getElement().findPotion(p.getNom()),refRMI);
+         
+		vuePersonnage.getElement().delPotion(p);
+	}
 
 	@Override
 	public boolean ramassePotion(int refRMI, int refPotion) throws RemoteException {
