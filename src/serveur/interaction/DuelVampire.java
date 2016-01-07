@@ -38,7 +38,13 @@ public class DuelVampire extends Duel {
 			int chanceDeCrit = pAttaquant.getCaract(Caracteristique.COUPCRITIQUE);
 			int armure = pDefenseur.getCaract(Caracteristique.ARMURE);
 			
-			int perteVie = forceAttaquant - (armure/100) ;
+			int perteVie;
+			
+			if ( armure == 0)
+				perteVie = forceAttaquant ;
+			else
+				perteVie = forceAttaquant * (armure/100);
+			
 		
 			Point positionEjection = positionEjection(defenseur.getPosition(), attaquant.getPosition(), forceAttaquant);
 
@@ -50,7 +56,7 @@ public class DuelVampire extends Duel {
 			if ( perteVie > 0) //Il a subit des degats
 			{
 				
-			    arene.incrementeCaractElement(defenseur, Caracteristique.ARMURE, 0); //l'armure est cassee on la remet a 0
+			 
 				int rnd = Calculs.nombreAleatoire (0,100);
 				if ( rnd < chanceDeCrit) //Si il crit
 				{
@@ -73,8 +79,7 @@ public class DuelVampire extends Duel {
 				}
 			
 			}
-			else
-				arene.incrementeCaractElement(defenseur, Caracteristique.ARMURE, armure- forceAttaquant);
+			
 			// initiative
 			incrementeInitiative(defenseur);
 			decrementeInitiative(attaquant);
