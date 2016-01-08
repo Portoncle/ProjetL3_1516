@@ -7,14 +7,13 @@ import java.util.HashMap;
 import java.util.List;
 
 import client.controle.IConsole;
-import serveur.element.Caracteristique;
+
 import serveur.element.Element;
 import serveur.element.Personnage;
 import serveur.element.Potion;
 import serveur.element.Equipement;
 import serveur.vuelement.VueElement;
 
-import serveur.vuelement.VuePersonnage;
 
 import serveur.vuelement.VueInventaire;
 
