@@ -204,16 +204,21 @@ public class Personnage extends Element {
 		{
 			return -1;
 		}
-		else if(this.consommable[0].getNom().compareTo(p) == 0)
+		if(this.consommable[0] != null)
 		{
-			return 0;
+			if(this.consommable[0].getNom().compareTo(p) == 0)
+			{
+				return 0;
+			}
 		}
-		else if (this.consommable[1].getNom().compareTo(p) == 0)
+		else if(this.consommable[1] != null)
 		{
-			return 1;
+			if (this.consommable[1].getNom().compareTo(p) == 0)
+			{
+				return 1;
+			}
 		}
-		else
-			return -1;
+		return -1;
 	}
 	
 	

@@ -107,7 +107,7 @@ public class Ramassage extends Interaction<VueElement<?>> {
 						pers.getStuff()[eq.getIndice()].getCaracts().get(cTemp) < eq.getCaracts().get(cTemp))
 						{
 						if(pers.getStuff()[eq.getIndice()] != null){
-							arene.ejecteInventaire(eq.getIndice());
+							arene.ejecteInventaire(eq.getIndice(), attaquant.getRefRMI());
 						}
 						pers.addStuff(eq);
 						arene.ajouteInventaire(eq,defenseur.getRefRMI(),attaquant.getRefRMI(),eq.getIndice());
